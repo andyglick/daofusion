@@ -1,158 +1,74 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<groupId>com.anasoft.os</groupId>
+		<artifactId>daofusion-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.anasoft.os</groupId>
-	<artifactId>daofusion-parent</artifactId>
+	<artifactId>daofusion-site</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1.0-SNAPSHOT</version>
-	<name>DAO Fusion</name>
-	
-	<url>http://opensource.anasoft.sk/daofusion</url>
-	<inceptionYear>2008</inceptionYear>
-	
-	<organization>
-		<name>ANASOFT</name>
-		<url>http://www.anasoft.com/</url>
-	</organization>
-	
-	<issueManagement>
-		<system>GoogleCode</system>
-		<url>http://code.google.com/p/daofusion/issues/list</url>
-	</issueManagement>
-	
-	<scm>
-		<url>http://code.google.com/p/daofusion/source/browse/tags/daofusion-1.0.0</url>
-		<connection>scm:svn:http://daofusion.googlecode.com/svn/tags/daofusion-1.0.0</connection>
-		<developerConnection>scm:svn:https://daofusion.googlecode.com/svn/tags/daofusion-1.0.0</developerConnection>
-	</scm>
-	
-	<licenses>
-		<license>
-			<name>GNU LESSER GENERAL PUBLIC LICENSE</name>
-			<url>http://www.gnu.org/licenses/lgpl.txt</url>
-		</license>
-	</licenses>
-	
-	<developers>
-		<developer>
-			<id>vojtech.szocs</id>
-			<name>Vojtech Szocs</name>
-			<email>vojtech.szocs@anasoft.sk</email>
-			<organization>ANASOFT</organization>
-		</developer>
-		<developer>
-			<id>igor.mihalik</id>
-			<name>Igor Mihalik</name>
-			<email>igor.mihalik@anasoft.sk</email>
-			<organization>ANASOFT</organization>
-		</developer>
-	</developers>
-	
-	<modules>
-		<module>daofusion-core</module>
-		<module>daofusion-test</module>
-	</modules>
+	<name>DAO Fusion project site</name>
 	
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>4.5</junit.version>
+		<df>DAO Fusion</df>
+		<df-short>daofusion</df-short>
+		<df-core>daofusion-core</df-core>
+		<df-test>daofusion-test</df-test>
+		<df-core-latestStableVersion>1.0.0</df-core-latestStableVersion>
+		<df-test-latestStableVersion>1.0.0</df-test-latestStableVersion>
+		<df-groupIdPath>com/anasoft/os</df-groupIdPath>
+		
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<doxia-module-highlight.version>1.0-alpha-11</doxia-module-highlight.version>
 	</properties>
-	
-	<distributionManagement>
-		<repository>
-			<id>com.anasoft.os.repository.releases</id>
-			<name>ANASOFT OpenSource releases</name>
-			<url>dav:https://anasoft-os-repo.googlecode.com/svn/repository/releases</url>
-			<layout>default</layout>
-		</repository>
-		<snapshotRepository>
-			<id>com.anasoft.os.repository.snapshots</id>
-			<name>ANASOFT OpenSource snapshots</name>
-			<url>dav:https://anasoft-os-repo.googlecode.com/svn/repository/snapshots</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-		<site>
-			<id>com.anasoft.os.site</id>
-			<name>ANASOFT OpenSource site</name>
-			<url>scp://shadow.ana.sk/home/http/vhosts/opensource.anasoft.sk/htdocs/daofusion/</url>
-		</site>
-	</distributionManagement>
-	
-	<repositories>
-		<repository>
-			<id>com.springsource.repository.bundles.release</id>
-			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
-			<url>http://repository.springsource.com/maven/bundles/release</url>
-		</repository>
-	</repositories>
-	
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 	
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<artifactId>maven-site-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
+					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
 				</configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
+				<!--<dependencies>
+					<dependency>
+						<groupId>sk.dvsk.maven</groupId>
+						<artifactId>doxia-module-highlight</artifactId>
+						<version>${doxia-module-highlight.version}</version>
+					</dependency>
+				</dependencies>-->
 			</plugin>
 		</plugins>
 	</build>
 	
-	<profiles>
-		<profile>
-			<id>release</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<configuration>
-							<encoding>${project.build.sourceEncoding}</encoding>
-						</configuration>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<configuration>
+					<webAccessUrl>${project.parent.scm.url}</webAccessUrl>
+					<anonymousConnection>${project.parent.scm.connection}</anonymousConnection>
+					<developerConnection>${project.parent.scm.developerConnection}</developerConnection>
+					<checkoutDirectoryName>${df-short}</checkoutDirectoryName>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>license</report>
+							<report>project-team</report>
+							<report>issue-tracking</report>
+							<report>scm</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 	
 </project>
