@@ -1,0 +1,31 @@
+#banner {
+	height: 100px;
+	background: url(../images/top-fill.gif);
+}
+
+li {
+	list-style-type: square;
+}
+
+h1,h2 {
+	color: #333333;
+	font-size: 17px;
+}
+
+h4 {
+	margin: 6px 0px 4px 0px;
+	color: #333333;
+}
+
+#leftColumn {
+	width: 220px;
+}
+
+#bodyColumn {
+	margin-left: 250px;
+}
+
+#navcolumn img {
+	margin-bottom: 10px;
+	margin-left: 10px;
+}

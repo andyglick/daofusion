@@ -1,0 +1,72 @@
+ ----
+ Release Policy
+ ----
+ Vojtech Szocs
+ ----
+ 25 May 2009
+ ----
+
+Release Policy
+  
+  ${df} uses the following policy for official project releases:
+  
+  * <Preparing release>
+  
+    * Create new tag from the target branch.
+  
+    * Update project versions within <<<pom.xml>>> files and commit changes.
+  
+  []
+  
+  * <Deploying artifacts into remote repository>
+  
+    * Within the tag root directory, execute "<<<mvn clean deploy -Prelease>>>"
+  
+  []
+  
+  * <Deploying project site into remote web server>
+  
+    * Within the site root directory, execute "<<<mvn clean site-deploy>>>"
+  
+  []
+  
+  * <Updating related resources>
+  
+    * Update the "Downloads" page on {{{ ${df-googleCodeUrl} } GoogleCode}}.
+  
+    * Post a release announcement to the {{{http://groups.google.com/group/dao-fusion/browse_thread/thread/31ce6fa45f443f6c} Release notes thread}}
+      on our {{{./google-groups.html} discussion group}}.
+  
+  []
+  
+* Release versioning
+  
+  Each release has a version in format <<<major.minor.bugfix>>>:
+  
+  * <<<major>>> number change indicates fundamental changes in project architecture that may break backwards compatibility
+  
+  * <<<minor>>> number change indicates new functionality that may cause slight API changes
+  
+  * <<<bugfix>>> number change indicates bugfixes, performance enhancements and minor functionality additions that don't break the general API
+  
+* General conventions
+  
+  Each tag should be created from a corresponding <maintenance branch> upon a new project release. Maintenance branch is a branch that follows
+  the <<<major.minor.x>>> naming convention. Only bugfixes, performance enhancements and minor functionality additions that don't break the general
+  API may be committed to the maintenance branch.
+  
+  New functionality that may cause API changes or changes in project architecture should be considered as part of new <feature release>. New
+  maintenance branch and a corresponding site project should be created for each and every feature release.
+  
+  Exactly one <${df-site}> project is maintained for each maintenance branch. The site project needs to be updated upon any changes done within
+  the branch as soon as possible. This includes site contents as well as the release changelog.
+  
+* Maven artifact versioning
+  
+  Artifact versions within <<<pom.xml>>> files reflect the versioning policy in a way that is appropriate for Maven projects:
+  
+  * <<<SNAPSHOT>>> for the trunk
+  
+  * <<<major.minor-SNAPSHOT>>> for maintenance branches
+  
+  * <<<major.minor.bugfix>>> for tags (releases)

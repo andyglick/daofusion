@@ -1,0 +1,106 @@
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+	
+	<properties>
+		<title>Release changelog</title>
+	</properties>
+	
+	<body>
+		<release version="SNAPSHOT" date="N/A" description="Current development (trunk)">
+			<action dev="vojtech.szocs" type="fix">
+				Corrected cascade type definitions on Customer and Order entities within daofusion-test.
+				This could potentionally cause ConstraintViolationExceptions when deleting related entities.
+			</action>
+		</release>
+		
+		<release version="1.1.1" date="2009-04-24" description="Maintenance release of the 1.1.x branch">
+			<action dev="vojtech.szocs" type="fix" issue="2" system="GoogleCode">
+				Fixed issue "Request for merging functionality - NestedPropertyCriteria".
+			</action>
+			<action dev="vojtech.szocs" type="fix" issue="3" system="GoogleCode">
+				Fixed issue "Problem with findSubCriteria in com.anasoft.os.daofusion.criteria.NestedPropertyCriteria - incorrect result criteria hierarchy".
+			</action>
+			<action dev="vojtech.szocs" type="fix" issue="4" system="GoogleCode">
+				Fixed issue "org.h2.jdbc.JdbcSQLException thrown after running core integration tests for H2 database".
+			</action>
+			<action dev="vojtech.szocs" type="update">
+				Persistent property name constant NAME changed to _NAME in PersistentEnumeration.
+			</action>
+			<action dev="vojtech.szocs" type="update">
+				CriteriaTransferObjectCountWrapperTest updated to use @Mock annotations in conjunction
+				with MockitoJUnitRunner.
+			</action>
+			<action dev="vojtech.szocs" type="add">
+				Added LGPL license under src/main/resources/license directory.
+			</action>
+		</release>
+		
+		<release version="1.1.0" date="2009-03-19" description="Initial release of the the 1.1.x branch">
+			<action dev="vojtech.szocs" type="fix" issue="1" system="GoogleCode">
+				Fixed issue "H2: NestedPropertyCriteria created by NestedPropertyCriteriaBasedConverter fails
+				within AbstractHibernateEntityDao#count()". Implementation includes a server-side CriteriaTransferObject
+				wrapper for entity instance count purposes (CriteriaTransferObjectCountWrapper) along with the
+				corresponding unit test.
+			</action>
+			<action dev="vojtech.szocs" type="update">
+				Updated BaseHibernateDataAccessor#rowCount() method - now a check is made whether the "rowCount"
+				projection results in a single Integer value (if not, a warning is logged and zero is returned).
+			</action>
+			<action dev="vojtech.szocs" type="update">
+				Updated Javadoc within PersistentEntityDao / AbstractHibernateEntityDao / BaseHibernateDataAccessor
+				to clarify things about the "rowCount" projection stuff.
+			</action>
+			<action dev="vojtech.szocs" type="update">
+				Updated AbstractHibernateEntityDaoTest: performing instance count on a result set with multiple instances,
+				which is shaped by FilterCriterion instances.
+			</action>
+			<action dev="igor.mihalik" type="update">
+				FilterAndSortMapping#apply() method now checks if FilterAndSortCriteria contains any filter values
+				prior to adding corresponding FilterCriterion into the NestedPropertyCriteria.
+			</action>
+			<action dev="igor.mihalik" type="update">
+				Updated NestedPropertyCriteriaBasedConverterTest: converting criteria transfer object that contains
+				FilterAndSortCriteria instances without any filter values.
+			</action>
+			<action dev="igor.mihalik" type="add">
+				Added test-scoped Mockito dependency to the parent POM.
+			</action>
+			<action dev="vojtech.szocs" type="add">
+				Added test-scoped "slf4j-simple" dependency to the parent POM (default SLF4J binding for unit tests).
+			</action>
+			<action dev="vojtech.szocs" type="remove">
+				Removed dependency to "slf4j-jcl" from daofusion-core POM. This way, users have the possibility
+				to specify desired SLF4J binding on their own.
+			</action>
+			<action dev="vojtech.szocs" type="remove">
+				Removed dependency to "maven-eclipse-plugin" from the parent POM.
+			</action>
+		</release>
+		
+		<release version="1.0.1" date="2009-02-26" description="Maintenance release of the 1.0.x branch">
+			<action dev="vojtech.szocs" type="fix">
+				Removed "final" keyword for fields within CriteriaTransferObject and FilterAndSortCriteria
+				to allow proper class serialization.
+			</action>
+			<action dev="vojtech.szocs" type="fix">
+				Added default constructor with "protected" visibility into FilterAndSortCriteria to allow
+				proper class deserialization.
+			</action>
+			<action dev="vojtech.szocs" type="add">
+				Added "clearFilterValues" method into FilterAndSortCriteria.
+			</action>
+			<action dev="vojtech.szocs" type="add">
+				Added convenience constructor into FilterCriterion regarding single filter object value path
+				or a single direct value for a specific NestedPropertyJoinType.
+			</action>
+		</release>
+		
+		<release version="1.0.0" date="2009-02-18" description="Initial release">
+			<action dev="vojtech.szocs" type="add">
+        		Initial release.
+      		</action>
+		</release>
+	</body>
+	
+</document>

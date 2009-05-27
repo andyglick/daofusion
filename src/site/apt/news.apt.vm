@@ -1,0 +1,80 @@
+ ----
+ ${df} news
+ ----
+ Vojtech Szocs
+ ----
+ 25 May 2009
+ ----
+
+${df} news
+  
+* 2009-05-25
+  
+  ${df} team is happy to announce the availability of {{{./tutorial/hellodao.html} Hello, DAO!}} tutorial. <Hello, DAO!> aims to help developers get familiar with ${df}
+  concepts using popular web application technologies and tools.
+  
+  We are currently preparing for a new feature release - see the {{{./roadmap.html} roadmap}} for more information about project milestones and their progress. Stay tuned,
+  <<${df} 1.2.0>> is on its way!
+  
+* 2009-04-24
+  
+  <<${df} 1.1.1>> has been released. Check out the {{{./changes-report.html} changelog}} for more information about this release.
+  
+  There are several important things we want to point out in addition to the new release:
+  
+  * ${df} now has its own {{{./google-groups.html} discussion group}} hosted on {{{http://groups.google.com/} Google Groups}}. This is the place to discuss your questions,
+    ideas, new features or known issues.
+  
+  []
+  
+  * There are discussions going on about the {{{http://groups.google.com/group/dao-fusion/browse_thread/thread/e1ece1641af9c970} bitemporal pattern}} which is intended
+    to be part of ${df} 1.2 feature release (see the {{{http://groups.google.com/group/dao-fusion/browse_thread/thread/31ce6fa45f443f6c} Release notes thread}} for more
+    information).
+  
+    <We would also like to encourage you to post any topics regarding possible functionality / API changes since now is the right time for such decisions (e.g. what you
+    would like to see in the next feature release).>
+  
+  []
+  
+  Please note that this is essentially the last release of the 1.1.x branch.
+  
+* 2009-04-02
+  
+  ${df} site generation is now powered by {{{http://code.google.com/p/m2-site-tools/} m2-site-tools}}. The most notable change is the use of highlighted code snippets
+  throughout the project documentation.
+  
+  ${df} and {{{http://en.wikipedia.org/wiki/Open_source_software} open source software}} were also key themes during our project presentation here at {{{http://www.anasoft.com/} ANASOFT}}.
+  
+* 2009-03-19
+  
+  <<${df} 1.1.0>> has been released.
+  
+  {{{./changes-report.html} Lots of changes}} and site updates in this release. ${df} also celebrates its first month of being publicly available!
+  
+* 2009-03-05
+  
+  ${df} was briefly mentioned at the {{{http://groups.adobe.com/posts/c39c490d91} Slovakia FUG meeting}} held at {{{http://www.fei.stuba.sk/generate_page.php?page_id=793} Faculty of Electrical Engineering and Information Technology}},
+  Slovak University of Technology in Bratislava, Slovakia.
+  
+  During a short break, Vojtech summarized the benefits of {{{http://www.adobe.com/products/flex/} Flex}} / Java symbiosis as the next generation of rich internet applications.
+  The FUG was led by our Flex enthusiasts {{{http://groups.adobe.com/people/7e5361c49f} Tegi}} and {{{http://groups.adobe.com/people/2c1bf4a17e} Eugen}}. A short promo of this
+  meeting can be found {{{http://groups.adobe.com/posts/dc5aae5cf2} here}}.
+  
+* 2009-02-26
+  
+  <<${df} 1.0.1>> has been released.
+  
+  See the {{{./changes-report.html} changelog}} for more information about this release.
+  
+* 2009-02-18
+  
+  We have released ${df} as our contribution to the open-source Java community.
+  
+  <${df} aims to help Java developers build their server-side DAO layers with ease, doing most of the usual heavy lifting and providing support for common DAO-related tasks.
+  ${df} introduces conventions and best practices into DAO layer development in terms of a consistent and extensible persistent entity model and standard persistent entity DAO
+  interfaces / abstract implementations which already provide most of the usual DAO functionality. ${df} introduces the criteria transfer object (CTO) pattern which proves
+  to be useful for application scenarios with loose coupling between the client and the server. Last but not least, ${df} provides an out-of-the-box integration test support
+  that ensures proper test coverage of core DAO functionality and enables you to write your own custom integration tests for the chosen database at the same time.>
+  
+  The mission of ${df} is simple - <<build more reliable, maintainable and testable DAO layers>> using leading technologies such as {{{http://java.sun.com/developer/technicalArticles/J2EE/jpa/} Java Persistence API}}
+  (JPA) and {{{http://www.hibernate.org/} Hibernate}}.

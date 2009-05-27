@@ -1,0 +1,17 @@
+ ----
+ ${df} on Google Code
+ ----
+ Vojtech Szocs
+ ----
+ 25 May 2009
+ ----
+
+${df} on Google Code
+  
+  ${df} uses services provided by {{{http://code.google.com/} Google Code}} with regard to:
+  
+  * {{{./source-repository.html} source code repository}} (or visit {{{ ${df-googleCodeUrl} } Google Code project page}} directly)
+  
+  * {{{./issue-tracking.html} issue tracker}}
+  
+  * {{{ ${anasoft-os-repo-googleCodeUrl} } Maven artifact repository}}
