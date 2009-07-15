@@ -20,6 +20,11 @@
         Added bitemporal pattern support that extends the standard persistent entity model along with corresponding
         test cases.
       </action>
+      <action dev="igor.mihalik" type="remove">
+        Removed advisor-based transaction configuration in testContext-hibernate-baseIntegration.xml (daofusion-test)
+        which duplicates "tx:annotation-driven" namespace configuration and results in duplicate transaction proxy
+        creation over @Transactional beans.
+      </action>
       <action dev="igor.mihalik" type="add">
         Added compile-scoped Joda Time dependency to daofusion-core POM.
       </action>
