@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 24 April 2009
+ 17 July 2009
  ----
 
 Transaction Management
@@ -77,12 +77,12 @@ External resources
   
   This section summarizes hints that apply to the <declarative transaction model> support within ORM frameworks such as Hibernate.
   
-** My DAOs fail to perform database updates without any exceptions being thrown
+** My DAOs fail to do database updates without any exceptions being thrown
   
   You have to set up and use transactions within the context of DAO method calls so that Hibernate knows when to trigger the synchronization between its object cache and the database.
   No transactions, no fun.
   
-** My service methods that use DAO operations won't roll back transactions properly on exceptions
+** My methods that use DAO operations fail to roll back transactions properly on exceptions
   
   By default, a transaction will be rolled back automatically <<only when a runtime (unchecked) exception is caught>>. You must provide transaction rollback support for checked exceptions
   manually. This is one of the most common pitfalls when using transactions altogether. If you don't specify such rollback support for checked exceptions that might occur within a transaction,
@@ -108,7 +108,7 @@ External resources
   
   Why should one (always) prefer the <<<SUPPORTS>>> transaction propagation mode against <<<NOT_SUPPORTED>>> regarding read-only operations? The answer is simple - invoking such read-only
   operation in the context of an existing transaction will cause the query to read data from the database transaction log, whereas running without a transaction scope (<<<NOT_SUPPORTED>>>)
-  will case the query to read unchanged data.
+  will cause the query to read unchanged data.
   
 ** Using <<<REQUIRES_NEW>>> and <<<NOT_SUPPORTED>>> transaction propagation modes
   
