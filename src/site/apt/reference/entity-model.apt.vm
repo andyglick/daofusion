@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 27 May 2009
+ 17 July 2009
  ----
 
 Persistent entity model
@@ -43,18 +43,24 @@ External resources
 * {Introduction}
   
   Development of a DAO layer for a specific project usually starts out with the task of domain model definition. You can think of a domain model as a description of the business
-  problem in terms of entities and their relations. Domain model definition phase usually comes after collecting business requirements for the given project, most typically in some
-  form of business analysis using notations such as {{{http://en.wikipedia.org/wiki/Unified_Modeling_Language} UML}}.
+  problem in terms of entities and their relations. Domain model definition phase usually comes after analyzing collected business requirements, depicted by notations such as
+  {{{http://en.wikipedia.org/wiki/Unified_Modeling_Language} UML}}.
   
-  Having the domain model defined, the next logical step is to implement it in Java via persistent entities. Persistent entities are classes that implement entities of the business
-  problem which are intended to be stored within the underlying database.
+  In general, a domain model isn't something that gets done at the beginning and remains unchanged as the project progresses. This statement would be true if you're able to get
+  a fully understood picture of your business requirements and ensure that these requirements will not change (in other words, an ideal project analysis and a customer who is willing
+  to sacrifice the possibility to change his requirements). In reality, each and every project comes with an inherent unpredictability of requirements. One solution of dealing with
+  ever changing requirements is to apply an {{{http://www.martinfowler.com/articles/newMethodology.html} agile methodology}} which adapts to changes as they come, developing your
+  domain model in predictable iterations that are short enough to get a valuable feedback on the progress of your project.
+  
+  Having the domain model defined, the next step is to implement it in Java via persistent entities. Persistent entities are classes that implement entities of the business problem
+  which are intended to be stored within the underlying database.
   
   Each persistent entity follows a standard lifecycle as declared by the {{{http://java.sun.com/developer/technicalArticles/J2EE/jpa/} JPA}} specification:
   
   * After its creation, the entity starts out in the <transient> state. Being transient means that it is not managed within the persistence context yet. Transient instances have
     usually some properties set by the user before their persistence.
   
-  * Persisting a transient entity results in associating the entity with the persistence context and saving it into the database, according to transaction boundaries and associated
+  * Persisting a transient entity results in associating the entity with the persistence context and storing it into the database, according to transaction boundaries and associated
     flush mode. From now on, the entity is being managed within the current persistence session - it's in the <attached> state.
   
   * When the associated persistence session ends or an entity gets evicted from the current session, it is treated as <detached>. A detached entity needs to be reattached to the
@@ -64,10 +70,10 @@ External resources
   
   ${df} provides a standard persistent entity model with out-of-the-box default implementations for you to build on.
   
-  <<<Persistable>>> interface represents a generic persistent entity contract using single primary key column type as the class parameter. This parameter is used by the <<<PersistentEntityDao>>>
+  <<<Persistable>>> interface represents a generic persistent entity contract using a single primary key column type as the class parameter. This parameter is used by the <<<PersistentEntityDao>>>
   when querying for entities by their id's and is therefore mandatory. However, this doesn't mean that users cannot define custom primary keys in their entities - see the
   <<<Persistable>>> Javadoc for more information about simple and composite primary key approaches as well as other useful hints. As for the inheritance mapping strategy, it is up to the
-  user to mark specific root nodes within the persistent entity hierarchy via the <<<Inheritance>>> annotation as appropriate (keep in mind that the default JPA inheritance strategy is set
+  user to mark specific root nodes within the persistent entity hierarchy using the <<<Inheritance>>> annotation as appropriate (keep in mind that the default JPA inheritance strategy is set
   to <single table per class> along with its implications on the underlying database schema).
   
   <<<PersistentEntity>>> is an abstract implementation of the <<<Persistable>>> interface for an entity managed within the JPA persistence context. It defines an automatically-generated id field
@@ -81,18 +87,18 @@ External resources
   <<<MutablePersistentEntity>>> features the version-based {{{http://en.wikipedia.org/wiki/Optimistic_locking} optimistic locking strategy}} support via a version field and is generally
   recommended for standard mutable domain-specific objects.
   
-  <<<ImmutablePersistentEntity>>> is marked as <<<Immutable>>> so that any updates performed by Hibernate on this entity will be silently ignored. You can use this entity class for domain-specific
+  <<<ImmutablePersistentEntity>>> is marked as <<<Immutable>>> so that any updates performed by Hibernate on this entity are silently ignored. You can use this entity class for domain-specific
   objects which are not allowed to be changed after their persistence.
   
-  Last but not least, <<<PersistentEnumeration>>> as an extension of the <<<PersistentEntity>>> using <<<Long>>> as the primary key column type is suitable for situations when you need dynamic
-  enumerations to be stored within the database. <<<PersistentEnumeration>>> contains a name field with unique, not-updatable and not-null constraints which can be used by the
+  Last but not least, <<<PersistentEnumeration>>> as an extension of the <<<PersistentEntity>>> using <<<Long>>> as the primary key column type is suitable for scenarios when you need to store
+  dynamic enumerations within the database. <<<PersistentEnumeration>>> contains a name field with unique, not-updatable and not-null constraints which can be used by the
   <<<PersistentEnumerationDao>>> for string-based enumeration lookup. Unlike <<<PersistentEntity>>>, <<<PersistentEnumeration>>> provides the <hashCode> / <equals> method implementation based
-  on the name field. Note that the <<<PersistentEnumeration>>> does not contain a version field like <<<MutablePersistentEntity>>> does - users can add this field in enumeration subclasses
-  on their own if they require version-based optimistic locking strategy support.
+  on the name field. Note that the <<<PersistentEnumeration>>> does not contain a version field - users can add this field in enumeration subclasses if they require version-based optimistic
+  locking strategy support for their persistent enumerations.
   
 * {Implementing <hashCode> / <equals> (synthetic generated value approach)}
   
-  Implementing <hashCode> / <equals> methods correctly can be sometimes very tricky and can lead to strange errors regarding the application behavior. As mentioned above,
+  Implementing <hashCode> / <equals> methods correctly can be very tricky and lead to strange errors regarding the application behavior. As mentioned above,
   there are basically two approaches to their implementation. The following code demonstrates the synthetic generated value approach based on the <<<UUID>>> class:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-model-OidBasedMutablePersistentEntity.java}
@@ -109,11 +115,11 @@ External resources
   
   Note that the getter and setter for the <orderItems> field are marked as protected to avoid direct list manipulation - <<<OneToMany(mappedBy = "order")>>> annotation defines a 1:N bidirectional
   relationship between <<<Order>>> and <<<OrderItem>>> classes. Instead, there are two public methods which handle the bidirectional relationship properly and are intended to be used for the <orderItems>
-  list manipulation (<addOrderItem> and <removeOrderItem>). Last but not least, the <getUnmodifiableOrderItemList> method returns an unmodifiable list of <<<OrderItem>>> instances for inspecting
-  <orderItems> list values in a read-only fashion.
+  list manipulation (<addOrderItem> and <removeOrderItem>). The <getUnmodifiableOrderItemList> method returns an unmodifiable list of <<<OrderItem>>> instances for inspecting <orderItems> list
+  values in a read-only fashion.
   
-  Our sample persistent entity contains one extra method performing a simple business logic (calculating the total price of an order). The general rule of thumb here is to put all
-  the major business logic into the service layer to avoid entity classes getting messed up with logic and tight coupling over time. However, for the most simple cases such as this
+  Our sample persistent entity contains one extra method that performs a simple business logic (calculating the total price of an order). The general rule of thumb is to put all
+  the major business logic into the service layer to avoid entity classes getting cluttered with logic and tight coupling over time. However, for the most simple cases such as this
   one, this is an acceptable solution.
   
 * {Sample persistent enumeration}
@@ -122,7 +128,29 @@ External resources
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-model-SamplePersistentEnumeration.java}
   
-  You could add an extra description field to the enumeration class if necessary but basically that's all about it.
+  You could add an extra description field to the enumeration class but basically that's all about it. Don't forget to call the <setName> method on your persistent enumerations before saving
+  them into the database.
+  
+* {Implementing <clone>}
+  
+  The following code shows how to implement the <clone> operation on a persistent entity:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-model-SampleCloneablePersistentEntity.java}
+  
+  When a user calls the <clone> method on our sample entity, following actions are taken:
+  
+  * <<<PersistentEntity>>>'s <clone> method ensures that the id field gets nullified after the shallow copy
+  
+  * <<<MutablePersistentEntity>>>'s <clone> method ensures that the version field gets nullified after the shallow copy
+  
+  * <<<OidBasedMutablePersistentEntity>>>'s <clone> method ensures that the oid field is re-generated after the shallow copy
+  
+  * <<<Order>>>'s <clone> method ensures that all references to mutable objects are cloned after the shallow copy
+  
+  []
+  
+  The bottom line is that all persistent entity copies (clones) are inherently treated as transient. Cloning a persistent entity therefore represents an alternative to calling its constructor
+  and creating a deep structure copy of this entity. This also means that all mutable objects referenced by the entity must implement the <<<Cloneable>>> interface as well.
   
 * {FAQ}
   

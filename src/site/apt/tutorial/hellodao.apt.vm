@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 16 June 2009
+ 17 July 2009
  ----
 
 Hello, DAO! tutorial
@@ -12,15 +12,19 @@ Hello, DAO! tutorial
   
   * {{{http://java.sun.com/javaee/5/docs/tutorial/doc/bnafd.html} Java Servlet API}} (Java EE)
   
-  * {{{http://code.google.com/webtoolkit/} Google Web Toolkit}} (presentation logic and RPC support) / {{{http://code.google.com/p/smartgwt/} SmartGWT}} (fancy UI widgets)
+  * {{{http://code.google.com/webtoolkit/} Google Web Toolkit}} (presentation logic and RPC support)
   
-  * {{{http://maven.apache.org/} Maven}} (managing the project build) / {{{http://ant.apache.org/} Ant}} (GWT module compilation)
+  {{{http://code.google.com/p/smartgwt/} SmartGWT}} (fancy UI widgets)
+  
+  * {{{http://maven.apache.org/} Maven}} (managing the overall project build)
+  
+  * {{{http://ant.apache.org/} Ant}} (GWT module compilation as part of the project build)
   
   []
   
   Hey, but where is {{{http://static.springframework.org/spring/docs/2.5.x/reference/index.html} Spring}} ? The truth is, our sample application doesn't use Spring at all during its runtime. Why?
   
-  * to prove ${df} usability in unmanaged application environments (no Spring or EJB container)
+  * to prove ${df} usability in non-managed application environments (no Spring or EJB container)
   
   * to think more deeply about concepts such as the <Open EntityManager In View> pattern
   

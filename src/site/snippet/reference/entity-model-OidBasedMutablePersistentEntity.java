@@ -6,11 +6,11 @@ public abstract class OidBasedMutablePersistentEntity extends MutablePersistentE
 
     @NaturalId
     @Column(length = OID_COLUMN_LENGTH, name = OID_COLUMN_NAME,
-            unique = true, updatable = false, nullable = false)
+        unique = true, updatable = false, nullable = false)
     private String oid;
 
     public OidBasedMutablePersistentEntity() {
-        oid = UUID.randomUUID().toString();
+        oid = generateOid();
     }
 
     public String getOid() {
@@ -31,13 +31,30 @@ public abstract class OidBasedMutablePersistentEntity extends MutablePersistentE
 
     @Override
     public final boolean equals(Object obj) {
-        if (this == obj) 
+        if (this == obj) {
             return true;
-        if (obj == null) 
+        }
+        if (obj == null) {
             return false;
-        if (!(obj instanceof OidBasedMutablePersistentEntity)) 
+        }
+        if (!(obj instanceof OidBasedMutablePersistentEntity)) {
             return false;
-        return (oid == null) ? false : oid.equals(((OidBasedMutablePersistentEntity) obj).oid);
+        }
+
+        OidBasedMutablePersistentEntity other = (OidBasedMutablePersistentEntity) obj;
+
+        return (oid == null) ? false : oid.equals(other.oid);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        OidBasedMutablePersistentEntity clone = OidBasedMutablePersistentEntity.class.cast(super.clone());
+        clone.oid = generateOid();
+        return clone;
+    }
+
+    protected String generateOid() {
+        return UUID.randomUUID().toString();
     }
 
 }
