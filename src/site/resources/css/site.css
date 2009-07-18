@@ -29,3 +29,8 @@ h4 {
 	margin-bottom: 10px;
 	margin-left: 10px;
 }
+
+tt {
+  color: #8A0808;
+  font-size: 13px;
+}
