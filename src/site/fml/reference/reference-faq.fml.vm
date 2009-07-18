@@ -21,7 +21,7 @@
 		<faq id="entity-model-2">
 			<question>What are the most common pitfalls regarding the business key approach?</question>
 			<answer>
-				<p>Business key approach essentially combines the object identity and object value concepts together which results in certain
+				<p>Business key approach essentially combines object identity and object value concepts together, which results in certain
 				limitations:
 					<ul>
 						<li>uniqueness of the business key might be broken if any of the "semi"-unique attributes change</li>
@@ -36,20 +36,20 @@
 		</faq>
 		
 		<faq id="entity-model-3">
-			<question>Does it actually make sense to write persistent entity classes just after defining the business domain? What about
+			<question>Does it actually make sense to write persistent entity classes right after defining the business domain? What about
 			the "ERD &gt; generated schema &gt; optimized schema &gt; Java class generation" approach?</question>
 			<answer>
 				<p>This is mostly a matter of preference (or individual tastes) within software companies. Both approaches have their pros
 				and cons and the choice usually depends on the proportion between Java developers and DBAs involved.</p>
-				<p>Starting out with persistence entity model promotes rapid prototyping and iterative Java-centric application development
-				- any changes within the business domain can be applied directly into the code without touching the underlying database schema.
-				In case of the schema-driven approach, the additional step of updating (or regenerating) persistent entity classes due to schema
-				updates can often lead to broken code since the optimized and denormalized database schema usually doesn't reflect the original
-				domain model (things usually get worse with more frequent schema updates in late project phases). On the other hand, having an
-				optimized schema that uses various database features such as views, triggers, stored procedures and table spaces ensures better
-				performance regarding complex queries and higher data volumes.</p>
-				<p>A combination of both approaches (writing persistent entity classes first and optimizing database schema after things get
-				stable or during performance testing) is undoubtedly reasonable for small to mid-sized projects.</p>
+				<p>Starting out with persistence entity model promotes rapid prototyping and iterative code-centric application development
+				- any changes in the business domain can be applied directly into the code without the need to change the underlying database
+				schema manually. In case of the schema-driven approach, the additional step of updating (or regenerating) persistent entity classes
+				due to manual schema updates can often lead to broken code since the optimized and denormalized database schema usually doesn't
+				reflect the original object-oriented domain model (things usually get worse with more frequent schema updates in late project
+				phases). On the other hand, having an optimized schema that uses various database features such as views, triggers, stored procedures
+				and table spaces ensures better performance regarding complex queries and higher data volumes.</p>
+				<p>A combination of both approaches (writing persistent entity classes first and optimizing the schema manually during performance
+				testing) is undoubtedly reasonable for small to mid-sized projects.</p>
 			</answer>
 		</faq>
 		
@@ -101,7 +101,7 @@
 			entity class?</question>
 			<answer>
 				<p>The real question is - how can ${df} make assumptions about the way you want to implement <em>hashCode</em> / <em>equals</em> methods?
-				It cannot - you have to choose the implementation pattern for yourself. See the <tt>Persistable</tt> Javadoc for more information about
+				It can't - you have to choose the implementation pattern for yourself. See the <tt>Persistable</tt> Javadoc for more information about
 				the two basic implementation patterns and their comparison (business key versus synthetic generated value approach).</p>
 			</answer>
 		</faq>
@@ -128,100 +128,11 @@ public abstract class CustomPersistentEnumeration extends PersistentEnumeration 
 		</faq>
 		
 		<faq id="entity-model-8">
-			<question>How can I add explicit <em>clone</em> operation support for my entities?</question>
-			<answer>
-				<p><tt>PersistentEntity</tt> as well as its abstract subclasses support the <em>clone</em> operation implicitly - they contain
-				a custom <em>clone</em> method implementation that nullifies certain fields (<em>id</em> and <em>version</em>), without implementing
-				the <tt>Cloneable</tt> interface on their own. If you want to add explicit <em>clone</em> support for your persistent entities,
-				you can do something like this (assume that you follow the synthetic generated value approach for implementing <em>hashCode</em> / <em>equals</em> methods):</p>
-				<pre class="brush: java">
-@MappedSuperclass
-public abstract class OidBasedMutablePersistentEntity extends MutablePersistentEntity {
-
-    public static final int OID_COLUMN_LENGTH = 36;
-    public static final String OID_COLUMN_NAME = "object_id";
-
-    @NaturalId
-    @Column(length = OID_COLUMN_LENGTH, name = OID_COLUMN_NAME,
-            unique = true, updatable = false, nullable = false)
-    private String oid;
-
-    public OidBasedMutablePersistentEntity() {
-        oid = generateOid();
-    }
-
-    public String getOid() {
-        return oid;
-    }
-
-    protected void setOid(String oid) {
-        this.oid = oid;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((oid == null) ? 0 : oid.hashCode());
-        return result;
-    }
-
-    @Override
-    public final boolean equals(Object obj) {
-        if (this == obj) 
-            return true;
-        if (obj == null) 
-            return false;
-        if (!(obj instanceof OidBasedMutablePersistentEntity)) 
-            return false;
-        return (oid == null) ? false : oid.equals(((OidBasedMutablePersistentEntity) obj).oid);
-    }
-
-    protected String generateOid() {
-        return UUID.randomUUID().toString();
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        OidBasedMutablePersistentEntity clone = OidBasedMutablePersistentEntity.class.cast(super.clone());
-        // clone will have a newly generated oid value
-        clone.oid = generateOid();
-        return clone;
-    }
-
-}
-
-@Entity
-public abstract class Employee extends OidBasedMutablePersistentEntity implements Cloneable {
-
-    @Column(nullable = true)
-    private String name;
-    
-    // getter and setter omitted
-
-    @Override
-    public Supplier clone() throws CloneNotSupportedException {
-        // CloneNotSupportedException should never happen since
-        // PersistentEntity supports the clone operation
-        return Supplier.class.cast(super.clone());
-    }
-
-}
-
-@Entity
-public class JavaDeveloper extends Employee {
-
-    // no need to override clone here
-
-}</pre>
-			</answer>
-		</faq>
-		
-		<faq id="entity-model-9">
 			<question>I get a strange behavior when using <tt>PersistentEnumeration</tt> subclasses.</question>
 			<answer>
 				<p>Did you set the name field value properly after constructing the entity? If not, the whole <em>hashCode</em> / <em>equals</em> method
-				contract relying on the name field is broken.</p>
+				contract relying on the name field is broken (not mentioning that the name field has to be unique for the given enumeration type in order
+				to persist it into the database).</p>
 			</answer>
 		</faq>
 	</part>
@@ -232,9 +143,9 @@ public class JavaDeveloper extends Employee {
 		<faq id="core-dao-classes-1">
 			<question>Why is the <tt>PersistentEntityDao</tt> interface bound to a specific entity class?</question>
 			<answer>
-				<p>In order to make things simple and type-safe, an association between a <tt>PersistentEntityDao</tt> and managed <tt>Persistable</tt>
-				class needs to be declared. Furthermore, coupling a DAO interface to the managed entity class allows you to define a custom (domain-specific)
-				DAO interface with methods applicable only to the given persistent entity.</p>
+				<p>In order to make things generic and type safe, an association between a <tt>PersistentEntityDao</tt> and managed <tt>Persistable</tt>
+				root class needs to be declared. Furthermore, coupling a DAO interface to the managed entity class allows you to define a custom (domain-specific)
+				DAO interface with methods applicable to the given persistent entity type (including its subclasses).</p>
 			</answer>
 		</faq>
 		
@@ -243,10 +154,10 @@ public class JavaDeveloper extends Employee {
 			<answer>
 				<p>The real question is - why should ${df} enforce a specific transaction handling mechanism at all? What if someone wants to handle
 				transactions manually using the <tt>programmatic transaction model</tt> or create transactional AOP proxies using the
-				<tt>declarative transaction model</tt>? This would essentially compromise the generic nature of the DAO concept - you have to choose
+				<tt>declarative transaction model</tt>? This would essentially break the generic nature of the DAO concept - you have to choose
 				a specific transaction strategy based on a transaction model as well as transaction attributes that best suit specific business requirements
 				of your project</p>
-				<p>See <a href="../technote/transaction-management.html">Transaction Management</a> tech notes for more information about transaction handling.</p>
+				<p>See the <a href="../technote/transaction-management.html">transaction management</a> page for more information about handling transactions.</p>
 			</answer>
 		</faq>
 		

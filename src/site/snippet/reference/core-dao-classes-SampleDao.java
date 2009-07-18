@@ -34,7 +34,8 @@ public interface OrderDao extends PersistentEntityDao<Order, Long> {
 }
 
 @Component
-public class OrderDaoImpl extends EntityManagerAwareEntityDao<Order, Long> implements OrderDao {
+public class OrderDaoImpl extends EntityManagerAwareEntityDao<Order, Long>
+        implements OrderDao {
 
     public Class<Order> getEntityClass() {
         return Order.class;

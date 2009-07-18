@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 18 March 2009
+ 18 July 2009
  ----
 
 Core DAO classes
@@ -40,26 +40,35 @@ Related tech notes
   
 * {Introduction}
   
-  So, you have your domain model implemented using the {{{./entity-model.html} persistent entity model}}. The next step is to write the actual DAO classes operating on your
-  domain model. These classes essentially form your DAO layer - now this is the part when the real fun begins!
+  So, you have your business domain model implemented using the standard {{{./entity-model.html} persistent entity model}}. The next step is to write the actual DAO classes working with
+  your persistent entities. These classes essentially form the core of your DAO layer - now this is the part when the real fun begins!
   
 * {DAO class overview}
   
   ${df} provides standard DAO interfaces and abstract implementations based on {{{http://java.sun.com/javaee/technologies/persistence.jsp} JPA}} / {{{http://www.hibernate.org/} Hibernate}}
-  persistence APIs for you to extend. This way, generic DAO operations and actual business-related DAO operations are cleanly separated from each other, having a significant impact
-  on overall code maintainability.
+  persistence APIs for you to extend. This way, generic DAO operations and actual business-related operations are cleanly separated from each other, having a significant impact on the
+  overall code maintainability.
   
-  <<<PersistentEntityDao>>> interface represents a generic persistent entity DAO contract defining the standard set of DAO operations for the given entity type (specified as a class
-  parameter). <<<PersistentEntityDao>>> works with <<<Persistable>>> instances which use a single primary key column type. Each <<<PersistentEntityDao>>> implementation must define the associated
-  implicit persistent entity class via the <getEntityClass> method - this is the entity the given DAO works with. However, this doesn't mean that each single persistent entity has
-  to have its own DAO implementation - standard DAO methods work with subclasses of the implicit persistent entity class so that you can have a generic entity DAO for multiple
-  entities which share a common base class (this feature is particularly useful in case of persistent enumerations).
+  <<<PersistentEntityDao>>> interface represents a generic persistent entity DAO contract defining the standard set of operations for the given entity type (specified as a class
+  parameter). <<<PersistentEntityDao>>> works with <<<Persistable>>> instances which use a single primary key column type to denote their database identity. Each <<<PersistentEntityDao>>>
+  implementation must define the associated implicit persistent entity class via the <getEntityClass> method - this is the root entity the given DAO works with. Users can therefore choose
+  between two strategies of associating DAOs with persistent entities:
+  
+  * one DAO interface per single entity
+  
+  * one DAO interface per entity hierarchy
+  
+  []  
+  
+  Note that <<<PersistentEntityDao>>> contains methods that work with subclasses of the implicit entity class as well as convenience methods working with the implicit entity class directly.
+  Having one DAO interface for an entity hierarchy is particularly useful when using persistent enumerations (instances sharing the same set of properties are primarily distinguished by their
+  type).
   
   Here is a brief <<<PersistentEntityDao>>> method listing for you to get a basic idea of the standard DAO functionality:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/core-dao-classes-PersistentEntityDao.java}
   
-  As you can see, there are several kinds of operations defined by this interface for the given entity class:
+  As you can see, there are several kinds of operations defined by this interface for the given entity class and its subclasses:
   
   * basic {{{http://en.wikipedia.org/wiki/Create,_read,_update_and_delete} CRUD}} (create, read, update and delete) operations
   
@@ -69,34 +78,41 @@ Related tech notes
   
   []
   
-  Note that each method accepting the <Class\<S\> targetEntityClass> parameter has a "direct" version without this parameter, replacing it by the implicit persistent entity class for
-  convenience. Even with this simple set of DAO operations, you are able to cover most of the DAO functionality for your entity classes without having to worry about any Hibernate-specific
+  Note that each method accepting the <Class\<S\> targetEntityClass> parameter has a "direct" (convenience) version without this parameter that works with the implicit persistent entity class.
+  For example:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/core-dao-classes-PersistentEntityDao-MethodVersions.java}
+  
+  Even with this simple set of operations, you are able to cover most of the DAO functionality for your entity classes without having to worry about any Hibernate-specific
   implementation details.
   
-  <<<PersistentEnumerationDao>>> as an extension of the <<<PersistentEntityDao>>> interface works with <<<PersistentEnumeration>>> instances. The goal of this interface is to define useful lookup
-  operations using the name field declared by <<<PersistentEnumeration>>>:
+  <<<PersistentEnumerationDao>>> as an extension of the <<<PersistentEntityDao>>> interface works with <<<PersistentEnumeration>>> instances. The goal of this interface is to define useful
+  lookup operations using the name field declared by <<<PersistentEnumeration>>>:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/core-dao-classes-PersistentEnumerationDao.java}
   
+  Note that <<<PersistentEnumerationDao>>> follows the same method pattern as <<<PersistentEntityDao>>> shown above.
+  
   <<<BaseHibernateDataAccessor>>> is the base class for all standard DAO implementations, providing data access through JPA / Hibernate persistence APIs. This class requires you to implement
-  the abstract <getHibernateEntityManager> method which serves as the entry point for Hibernate <<<Session>>> instances:
+  the abstract <getHibernateEntityManager> method which serves as the access point to Hibernate <<<Session>>> instances:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/core-dao-classes-BaseHibernateDataAccessor.java}
   
   The reason for declaring an abstract <getHibernateEntityManager> method is to give users free hands when it comes to entity manager instance lookup. The most convenient
   method implementation pattern is to rely on entity manager instance injection via the <<<PersistenceContext>>> annotation (within the JPA persistence context) and simply returning the
-  injected instance. Alternatively, the entity manager instance can be created directly via the <<<EntityManagerFactory>>>. ${df} doesn't restrict you when defining the entity manager lookup
-  strategy - it just tells you to implement it the way you prefer. Note that all data access happens solely through the {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}}
-  to ensure database portability and therefore makes ${df} generic across multiple databases.
+  injected instance. Alternatively, the entity manager instance can be created directly via the <<<EntityManagerFactory>>>. ${df} doesn't restrict you regarding the entity manager lookup
+  strategy - it just asks you to implement it the way you prefer. Note that all data access happens solely through the {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}}
+  to ensure database portability. This makes ${df} generic and reusable across multiple database vendors (assuming the provided {{{https://www.hibernate.org/hib_docs/v3/api/org/hibernate/dialect/Dialect.html} dialect}}
+  is up to date for the given database).
   
-  There are two abstract DAO implementations for the two DAO interfaces mentioned above: <<<AbstractHibernateEntityDao>>> and <<<AbstractHibernateEnumerationDao>>> (the latter one simply extends
-  the basic <<<AbstractHibernateEntityDao>>> implementation).
+  There are two abstract implementations for the two DAO interfaces mentioned above: <<<AbstractHibernateEntityDao>>> and <<<AbstractHibernateEnumerationDao>>> (the latter one simply extends
+  the generic <<<AbstractHibernateEntityDao>>> implementation). These two classes are the ones you will extend when building your custom DAO implementations.
   
   ${df} tries to do its best when it comes to defining persistent entity query constraints via the <<<PersistentEntityCriteria>>> interface. You are, however, free to use the underlying
-  <Hibernate Criteria API> on your own using the <getHibernateCriteria>, <getSession> and <rowCount> methods. ${df} doesn't try to hide the <Hibernate Criteria API> away from you, it just defines
+  <Hibernate Criteria API> on your own using the <getHibernateCriteria>, <getSession> and <getCriteria> methods. ${df} doesn't try to hide the <Hibernate Criteria API> away from you, it just defines
   its own flexible {{{./entity-criteria-api.html} persistent entity criteria API}} that should cover 90% of the most typical use cases out there. In fact, using the <Hibernate Criteria API> directly
   in your DAO implementations should be the last resort for all but the most complex cases where a custom <<<PersistentEntityCriteria>>> implementation is not possible (remember that even custom
-  <<<PersistentEntityCriteria>>> implementations can be efficiently and consistently reused between multiple DAOs as opposed to the direct <Hibernate Criteria API> approach).
+  <<<PersistentEntityCriteria>>> implementations can be efficiently and consistently reused between multiple DAOs as opposed to using <Hibernate Criteria API> directly in your DAO implementations).
   
 * {Managing transactions}
   
@@ -110,24 +126,25 @@ Related tech notes
   Standard persistent entity DAO implementations don't care about transactions - but should they? What if someone wants to handle transactions manually using the <programmatic transaction model>
   or create transactional AOP proxies using the <declarative transaction model>? To maintain the generic nature of the DAO concept, ${df} lets its users handle transactions within the context
   of DAO method calls completely on their own. The use of a specific transaction strategy based on a transaction model as well as proper transaction attributes always depend on specific business
-  requirements of your project and should be therefore carefully considered in terms of concurrency, performance and data integrity.
+  requirements of your project and should be therefore carefully considered in terms of concurrency, performance and data integrity. See the {{{../technote/transaction-management.html} transaction management}}
+  page for more information on this topic.
   
 * {Sample persistent entity DAO}
   
-  Let's build a sample persistent entity DAO on top of <<<PersistentEntityDao>>> / <<<AbstractHibernateEntityDao>>> classes. There are basically two ways to do this:
+  Let's build a sample persistent entity DAO on top of <<<PersistentEntityDao>>> / <<<AbstractHibernateEntityDao>>> classes. There are basically two ways to accomplish this task:
   
-  * have a separate business-related DAO interface apart from its implementation (this is the way you should go in all but the most simple cases)
+  * have a separate business-related DAO interface apart from its implementation (this is the preferred approach in all but the most simple cases)
   
-  * have them both together in a single DAO class
+  * have them both together in a single DAO class without declaring a separate DAO interface
   
   []
   
-  As a solid Java developer having things like code maintainability always in mind (not mentioning those hot chicks in the marketing department), you would write your DAO classes like this:
+  As a solid Java developer having things like code maintainability always in mind (not mentioning those hot chicks in the marketing department), you might write your DAO classes like this:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/core-dao-classes-SampleDao.java}
   
-  Note that this example uses Spring's JPA support (<<<PersistenceAnnotationBeanPostProcessor>>>) to inject open entity manager instance into the <<<EntityManagerHolder>>>.
-  <<<EntityManagerAwareEntityDao>>> acts as a base class for domain-specific DAO implementations, providing the <getHibernateEntityManager> method implementation via the <<<EntityManagerHolder>>>.
+  In this example we use Spring's JPA support to inject an open entity manager instance into the <<<EntityManagerHolder>>> bean. <<<EntityManagerAwareEntityDao>>> acts as a base class
+  for domain-specific DAO implementations, providing the <getHibernateEntityManager> method implementation via the <<<EntityManagerHolder>>>.
   
 * {FAQ}
   

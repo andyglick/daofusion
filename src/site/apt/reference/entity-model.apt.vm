@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 17 July 2009
+ 18 July 2009
  ----
 
 Persistent entity model
@@ -18,11 +18,15 @@ Sections
   
   * {{{./entity-model.html#Persistent_entity_model_overview} Persistent entity model overview}}
   
-  * {{{./entity-model.html#Implementing_hashCode__equals_synthetic_generated_value_approach} Implementing hashCode and equals (synthetic generated value approach)}}
+  * {{{./entity-model.html#Implementing_hashCode_and_equals_via_synthetic_object_id} Implementing <hashCode> and <equals> via synthetic object id}}
   
   * {{{./entity-model.html#Sample_persistent_entity} Sample persistent entity}}
   
   * {{{./entity-model.html#Sample_persistent_enumeration} Sample persistent enumeration}}
+  
+  * {{{./entity-model.html#Implementing_clone} Implementing <clone>}}
+  
+  * {{{./entity-model.html#Using_composite_primary_keys} Using composite primary keys}}
   
   * {{{./entity-model.html#FAQ} FAQ}}
   
@@ -52,8 +56,8 @@ External resources
   ever changing requirements is to apply an {{{http://www.martinfowler.com/articles/newMethodology.html} agile methodology}} which adapts to changes as they come, developing your
   domain model in predictable iterations that are short enough to get a valuable feedback on the progress of your project.
   
-  Having the domain model defined, the next step is to implement it in Java via persistent entities. Persistent entities are classes that implement entities of the business problem
-  which are intended to be stored within the underlying database.
+  Having the domain model defined and understood, the next step is to implement it in Java via persistent entities. Persistent entities are classes that implement entities of the business
+  problem which are intended to be stored within the underlying database.
   
   Each persistent entity follows a standard lifecycle as declared by the {{{http://java.sun.com/developer/technicalArticles/J2EE/jpa/} JPA}} specification:
   
@@ -70,17 +74,16 @@ External resources
   
   ${df} provides a standard persistent entity model with out-of-the-box default implementations for you to build on.
   
-  <<<Persistable>>> interface represents a generic persistent entity contract using a single primary key column type as the class parameter. This parameter is used by the <<<PersistentEntityDao>>>
-  when querying for entities by their id's and is therefore mandatory. However, this doesn't mean that users cannot define custom primary keys in their entities - see the
-  <<<Persistable>>> Javadoc for more information about simple and composite primary key approaches as well as other useful hints. As for the inheritance mapping strategy, it is up to the
+  <<<Persistable>>> interface represents a generic persistent entity contract using a single {{{http://en.wikipedia.org/wiki/Primary_key} primary key}} column type as the class parameter. This parameter
+  is used by the <<<PersistentEntityDao>>> when querying for entities by their id's and is therefore mandatory. However, this doesn't mean that users cannot define custom primary keys in their entities
+  - see the <<<Persistable>>> Javadoc for more information about simple and composite primary key approaches as well as other useful hints. As for the inheritance mapping strategy, it is up to the
   user to mark specific root nodes within the persistent entity hierarchy using the <<<Inheritance>>> annotation as appropriate (keep in mind that the default JPA inheritance strategy is set
   to <single table per class> along with its implications on the underlying database schema).
   
   <<<PersistentEntity>>> is an abstract implementation of the <<<Persistable>>> interface for an entity managed within the JPA persistence context. It defines an automatically-generated id field
   of the given type using the <<<Id>>> and <<<GeneratedValue>>> annotations. Note that the <<<PersistentEntity>>> does NOT provide any special <hashCode> / <equals> method implementation - this is a task
   left to be done by the user, depending on the chosen method implementation pattern. See the <<<Persistable>>> Javadoc for more information about the two basic implementation patterns and
-  their comparison (business key versus synthetic generated value approach). On the other hand, <<<PersistentEntity>>> implicitly supports the <clone> operation without implementing the <<<Cloneable>>>
-  interface on its own. Subclasses can therefore implement the <<<Cloneable>>> interface to indicate explicit <clone> support.
+  their comparison (business key versus synthetic generated value approach).
   
   There are two specialized abstract classes derived from <<<PersistentEntity>>> which use <<<Long>>> as the primary key column type: <<<MutablePersistentEntity>>> and <<<ImmutablePersistentEntity>>>.
   
@@ -96,7 +99,11 @@ External resources
   on the name field. Note that the <<<PersistentEnumeration>>> does not contain a version field - users can add this field in enumeration subclasses if they require version-based optimistic
   locking strategy support for their persistent enumerations.
   
-* {Implementing <hashCode> / <equals> (synthetic generated value approach)}
+  <<<PersistentEntity>>> as well as its abstract subclasses support the <clone> operation implicitly - they contain a custom <clone> implementation that nullifies certain fields
+  (id and version), without implementing the <<<Cloneable>>> interface on their own. <<<PersistentEntity>>> subclasses can therefore implement the <<<Cloneable>>> interface to indicate
+  explicit <clone> support.
+  
+* {Implementing <hashCode> and <equals> via synthetic object id}
   
   Implementing <hashCode> / <equals> methods correctly can be very tricky and lead to strange errors regarding the application behavior. As mentioned above,
   there are basically two approaches to their implementation. The following code demonstrates the synthetic generated value approach based on the <<<UUID>>> class:
@@ -119,7 +126,7 @@ External resources
   values in a read-only fashion.
   
   Our sample persistent entity contains one extra method that performs a simple business logic (calculating the total price of an order). The general rule of thumb is to put all
-  the major business logic into the service layer to avoid entity classes getting cluttered with logic and tight coupling over time. However, for the most simple cases such as this
+  the major business logic into the service layer to avoid entity classes getting cluttered up with logic and tight coupling. However, for the most simple cases such as this
   one, this is an acceptable solution.
   
 * {Sample persistent enumeration}
@@ -151,6 +158,10 @@ External resources
   
   The bottom line is that all persistent entity copies (clones) are inherently treated as transient. Cloning a persistent entity therefore represents an alternative to calling its constructor
   and creating a deep structure copy of this entity. This also means that all mutable objects referenced by the entity must implement the <<<Cloneable>>> interface as well.
+  
+* {Using composite primary keys}
+  
+  <<TODO - example of PK class + entity - from Puto's project!>>
   
 * {FAQ}
   
