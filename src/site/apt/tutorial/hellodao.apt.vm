@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 17 July 2009
+ 18 July 2009
  ----
 
 Hello, DAO! tutorial
@@ -14,7 +14,7 @@ Hello, DAO! tutorial
   
   * {{{http://code.google.com/webtoolkit/} Google Web Toolkit}} (presentation logic and RPC support)
   
-  {{{http://code.google.com/p/smartgwt/} SmartGWT}} (fancy UI widgets)
+  * {{{http://code.google.com/p/smartgwt/} SmartGWT}} (fancy UI widgets)
   
   * {{{http://maven.apache.org/} Maven}} (managing the overall project build)
   
@@ -38,9 +38,9 @@ Instructions
 http://daofusion.googlecode.com/svn/trunk/samples/hello-dao/
 +--+
   
-  If you use {{{http://www.eclipse.org/} Eclipse IDE}}, you can generate Eclipse project files via "<<<mvn eclipse:eclipse>>>".
+  If you use {{{http://www.eclipse.org/} Eclipse IDE}}, you can generate Eclipse project files via <<<mvn eclipse:eclipse>>>.
   
-  Next, start the application via "<<<mvn jetty:run>>>". It can take some time though since Maven needs to look for required dependencies. Please note that <Hello, DAO!> uses
+  Next, start the application via <<<mvn jetty:run>>>. It can take some time though since Maven needs to look for required dependencies. Please note that <Hello, DAO!> uses
   an embedded {{{http://www.h2database.com/} H2}} database instance running <<in the same JVM>> as the application itself.
   
   Once you see something like <<<[INFO] Started Jetty Server>>> on the console, you can launch the application by pointing your browser to:

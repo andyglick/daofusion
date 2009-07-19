@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 18 March 2009
+ 19 July 2009
  ----
 
 Persistent entity criteria API
@@ -30,8 +30,6 @@ External resources
   
   * {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}}
   
-  * {{{http://en.wikipedia.org/wiki/Visitor_pattern} Visitor pattern}}
-  
   []
   
 * {Overview}
@@ -43,59 +41,109 @@ External resources
 * {Introduction}
   
   Having your {{{./entity-model.html} domain model}} along with associated {{{./core-dao-classes.html} DAO classes}} implemented brings you to a question that might have arisen
-  during the brief <<<PersistentEntityDao>>> method listing: what is actually the <<<PersistentEntityCriteria>>> interface? This section explains the persistent entity criteri
+  when inspecting <<<PersistentEntityDao>>> query methods: what is actually the <<<PersistentEntityCriteria>>> interface? This section explains the persistent entity criteria
   concept in detail so that you can bring the standard DAO functionality to a whole new level.
   
 * {Persistent entity criteria API overview}
   
-  If you look at the generic <<<AbstractHibernateEntityDao>>> implementation you will notice that it merely delegates the basic DAO operations to the underlying Hibernate <<<Session>>>. Things
-  should be easy, right? One of the main benefits of having a standard DAO interface though is the ability to define a custom criteria API that should cover 90% of the most typical
-  use cases out there. This is exactly the purpose of the <<<PersistentEntityCriteria>>> interface and associated classes - to shield an average user from any Hibernate-specific implementation
-  details while not restricting advanced users from using the underlying {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}} directly if needed at
-  the same time. In fact, using the <Hibernate Criteria API> directly in your DAO implementations should be the last resort for all but the most complex cases where a custom <<<PersistentEntityCriteria>>>
-  implementation is not possible (remember that even custom <<<PersistentEntityCriteria>>> implementations can be efficiently and consistently reused between multiple DAOs as opposed to the direct
-  <Hibernate Criteria API> approach).
+  If you look at the generic <<<AbstractHibernateEntityDao>>> implementation you will notice that it merely delegates its DAO operations to the underlying Hibernate <<<Session>>>. Things
+  should be easy, right? One of the main benefits of having a standard DAO interface is the ability to define a custom criteria API that should cover 90% of the most typical use cases out there.
+  This is exactly the purpose of the <<<PersistentEntityCriteria>>> interface and associated classes - to shield an average user from any Hibernate-specific implementation details allowing advanced
+  users to use the underlying {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}} directly if necessary at the same time. In fact, using the
+  <Hibernate Criteria API> directly in your DAO implementations should be the last resort for all but the most complex cases where a custom <<<PersistentEntityCriteria>>> implementation is not possible
+  (remember that even custom <<<PersistentEntityCriteria>>> implementations can be efficiently and consistently reused between multiple DAOs as opposed to the direct <Hibernate Criteria API> approach).
   
   <<<PersistentEntityCriteria>>> interface defines the general contract for persistent entity query constraints bound to the underlying Hibernate <<<Criteria>>> instance. ${df} enforces the use of
-  <Hibernate Criteria API> under the hood to ensure database portability, making it generic across multiple databases (no dynamic HQL / SQL generation involved).
+  <Hibernate Criteria API> under the hood to ensure database portability (no dynamic HQL / SQL generation involved). This makes ${df} generic and reusable across multiple database vendors (assuming
+  the provided {{{https://www.hibernate.org/hib_docs/v3/api/org/hibernate/dialect/Dialect.html} dialect}} is up to date for the given database).
   
   Let's take a brief look at this interface to get a basic understanding of the criteria API concept:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-PersistentEntityCriteria.java}
   
   As you can see, there is no rocket science going on here - implementations of the <<<PersistentEntityCriteria>>> interface are merely responsible for updating the Hibernate <<<Criteria>>>
-  instance according to any query constraints they define.
+  instance according to any query constraints they define. The simplicity of this interface is intentional so that users can write their own implementations with full control over Hibernate
+  <<<Criteria>>> instance processing. Note that the <<<AbstractHibernateEntityDao>>> uses this interface when constructing the Hibernate <<<Criteria>>> instance via <<<BaseHibernateDataAccessor>>>'s
+  <getCriteria> method before setting any projections and requesting results via the <Hibernate Criteria API>.
   
-  <<<AbstractHibernateEntityDao>>> uses this interface when constructing the Hibernate <<<Criteria>>> instance via <<<BaseHibernateDataAccessor>>>'s <getCriteria> method before setting any projections
-  and requesting results via the <Hibernate Criteria API>.
+  <<<AbstractCriterionGroup>>> represents the base class for <<<PersistentEntityCriteria>>> implementations that manage <<<PersistentEntityCriterion>>> instances to define individual query constraints.
+  <<<AbstractCriterionGroup>>> defines the contract for paging criteria (<firstResult> and <maxResults>) as well as the application of such criteria to the target Hibernate <<<Criteria>>> instance
+  via the <applyPagingCriteria> method. This class also provides a basic implementation of <<<PersistentEntityCriteria>>>'s <apply> method:
   
-  <<<NestedPropertyCriteria>>> is the default general purpose <<<PersistentEntityCriteria>>> implementation acting as a list-based container for <<<NestedPropertyCriterion>>> instances.
-  <<<NestedPropertyCriteria>>> implements the <apply> method regarding associated criterion subclasses using the {{{http://en.wikipedia.org/wiki/Visitor_pattern} visitor pattern}}, providing
-  a default <<<NestedPropertyCriterionVisitor>>> implementation that visits all <<<NestedPropertyCriterion>>> instances (the target Hibernate <<<Criteria>>> instance is updated for each visited
-  criterion in the process). The reason for using the <visitor pattern> representing a centralized criterion hierarchy processor is that many criterion instances share some common aspects, such as:
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-AbstractCriterionGroup-ApplyMethod.java}
   
-  * map of association paths with corresponding subcriteria (Hibernate <<<Criteria>>>) instances created from the <targetCriteria> (<subCriteriaMap>) - shared by all <<<NestedPropertyCriterion>>> instances
+  <<<AbstractCriterionGroup>>> uses the {{{http://en.wikipedia.org/wiki/Visitor_pattern} visitor pattern}} to impose centralized <<<PersistentEntityCriterion>>> processing in terms of applying individual
+  query constraints (<<<PersistentEntityCriterion>>> instances) to the target Hibernate <<<Criteria>>> instance. The <getCriterionVisitor> method is declared as abstract so that arbitrary visitor
+  implementations can be used in <<<AbstractCriterionGroup>>> subclasses:
   
-  * filter object as an optional source of filter values - shared by all <<<FilterCriterion>>> instances
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-AbstractCriterionGroup-GetCriterionVisitorMethod.java}
+  
+  So, what is this <<<PersistentEntityCriterion>>> interface all about? <<<PersistentEntityCriterion>>> represents an abstraction of a single query constraint that uses the visitor pattern as shown above
+  for applying its query constraints into the target Hibernate <<<Criteria>>> instance:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-PersistentEntityCriterion.java}
+  
+  Note that you can implement this interface on your own if you want to plug in your custom criterion implementations in conjunction with an appropriate <<<AbstractCriterionGroup>>> and a corresponding
+  criterion visitor.
+  
+  So far, this has been all too generic. The reason why we built such abstractions above the default <<<PersistentEntityCriteria>>> implementation is to make ${df} entity criteria API as flexible
+  and extensible as possible. We encourage users to provide their own <<<PersistentEntityCriteria>>> implementations in special or more complex cases in favor of using <Hibernate Criteria API> directly.
+  
+  <<<NestedPropertyCriteria>>> is the default general purpose <<<PersistentEntityCriteria>>> implementation based on the <<<AbstractCriterionGroup>>> in conjunction with <<<NestedPropertyCriterion>>>
+  instances. <<<NestedPropertyCriteria>>> implements the query constraint application logic regarding specific <<<NestedPropertyCriterion>>> subclasses via default <<<NestedPropertyCriterionVisitor>>>
+  implementation (returned as the result of the <getCriterionVisitor> method):
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-NestedPropertyCriterionVisitor.java}
+  
+  In addition to managing <<<NestedPropertyCriterion>>> instances and providing a visitor that is able to process them, the <<<NestedPropertyCriteria>>> contains features that are common to either
+  all or certain <<<NestedPropertyCriterion>>> instances:
+  
+  * filter object as an optional source of filter values (shared by all <<<FilterCriterion>>> instances)
+  
+  * use of an <<<AssociationPathRegister>>> for preprocessing root Hibernate <<<Criteria>>> regarding nested subcriteria (defined by <<<NestedPropertyCriterion>>> via the <<<AssociationPath>>>)
   
   []
   
-  Since the <<<NestedPropertyCriterion>>> supports a nested property of the target persistent entity (starting at the target persistent entity as the root object and navigating through
-  associated objects as necessary), it is vital for the <<<NestedPropertyCriteria>>> to handle this kind of functionality via the <subCriteriaMap> as a result of <targetCriteria> "preprocessing"
-  (Hibernate uses the concept of nested <<<Criteria>>> instances for this purpose). From the end-user's perspective, <<<NestedPropertyCriteria>>> also provides methods that support the paging
-  functionality as well as the filter object concept.
+  <<<NestedPropertyCriterion>>> supports a nested property of a persistent entity, starting at the target persistent entity as the root object and navigating through associated objects as necessary.
+  In other words, <<<NestedPropertyCriterion>>> enables you to write a criterion that spans over multiple entities, reaching the desired property of the desired entity from the root object just like
+  a tentacle.
   
-  So, what's the <<<NestedPropertyCriterion>>> all about? <<<NestedPropertyCriterion>>> represents an abstract persistent entity criterion that supports a nested property of the target persistent
-  entity. The target property is specified via the <propertyPath> - a dot-separated logical path to the target property to which the criterion applies, starting at the target persistent
-  entity as the root object and navigating through associated objects as necessary. For example:
+  <<TODO: image of tentacle - root entity, associated entities, final entity/property>>
   
-  * <<<firstName>>> points to a direct (simple) entity property
+  <<<NestedPropertyCriterion>>> is essentially a combination of two factors:
   
-  * <<<projectManager.contactInfo.phone>>> points to a nested entity property
+  * <<<AssociationPath>>> which points to the given property of the target persistent entity
+  
+  * <targetPropertyName> denoting target property of the given persistent entity
   
   []
   
-  Note that a nested (non-direct) persistent entity property needs to be joined with the root persistent entity by specifying an appropriate <<<NestedPropertyJoinType>>>.
+  In Hibernate, you would normally use the <createCriteria> method to create constraints for nested properties of the given root entity. However, you would have to manage nested <<<Criteria>>>
+  instances on your own regarding their reuse across multiple criterion instances (two criterion instances can share a common association path "prefix"). This can ultimately bring you to the
+  {{{http://opensource.atlassian.com/projects/hibernate/browse/HHH-879} duplicate association path}} <Hibernate Criteria API> issue which has serious implications on the way of writing complex
+  queries operating with nested properties.
+  
+  Now this is the part when <<<AssociationPathRegister>>> kicks in. <<<AssociationPathRegister>>> is simply a map of <<<AssociationPath>>> instances and corresponding Hibernate <<<Criteria>>>
+  to be reused when modifying the root <<<Criteria>>> instance. <<<NestedPropertyCriteria>>> uses this class to initialize Hibernate <<<Subcriteria>>> mappings in a safe way, avoiding the
+  duplicate association path issue that might have arisen during the criterion visitor execution. <<<AssociationPathRegister>>> is essentially a thin wrapper around the given <<<Criteria>>>
+  instance that gets initialized with existing <<<Subcriteria>>> mappings at construction time. It is therefore safe to create multiple <<<AssociationPathRegister>>> instances operating on
+  the same <<<Criteria>>>. The best part is that you can use this class to modify <<<Criteria>>> instances in a safe way on your own as well:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-AssociationPathRegisterUsage.java}
+  
+  There are a few new classes mentioned in the sample code shown above:
+  
+  * <<<AssociationPathElement>>> - single element of an <<<AssociationPath>>> that contains the <value> corresponding with the given persistent entity property name, as well as the optional
+    <joinType> which specifies the type of join to use when creating related <<<Subcriteria>>> rooted under the parent <<<Criteria>>> instance
+  
+  * <<<AssociationPath>>> - ordered list of association path elements which point to the given property of a persistent entity, starting at the target persistent entity as the root object
+    and navigating through associated objects as necessary (note that the association path doesn't include the target property itself, it's just a path to that property)
+  
+  * <<<NestedPropertyJoinType>>> - enumeration of possible database join types applicable to <<<AssociationPathElement>>> instances
+  
+  []
+  
+  All of the classes listed above are immutable by design so that you can safely reuse their instances across your code.
   
 * {Property criterion classes}
   
