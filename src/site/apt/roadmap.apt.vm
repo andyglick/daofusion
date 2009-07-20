@@ -2,8 +2,9 @@
  ${df} roadmap
  ----
  Michal Jemala
+ Vojtech Szocs
  ----
- 16 June 2009
+ 20 July 2009
  ----
 
 ${df} roadmap
@@ -47,5 +48,11 @@ ${df} roadmap
   * any issues that come up until release (code base stabilization)
   
   * release of <<${df} 1.2.0>>
+  
+  []
+  
+1.2.1
+  
+  * removal of code marked as deprecated
   
   []
