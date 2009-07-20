@@ -3,13 +3,13 @@
  ----
  Vojtech Szocs
  ----
- 18 March 2009
+ 20 July 2009
  ----
 
 Criteria transfer object pattern
   
   Use the criteria transfer object (CTO) pattern to construct client-side versions of persistent entity criteria instances and pass them through the chosen communication mechanism
-  to the remote server-side component, employing a CTO converter for seamless CTO-to-criteria transformation.
+  to remote server-side components, employing a CTO converter for seamless CTO-to-criteria transformation.
   
 Sections
   
@@ -43,23 +43,23 @@ External resources
   
   Even though the criteria transfer object (CTO) pattern might sound like a buzzword, it's actually a concept that aims for application scenarios with loose coupling between the client
   and the server. The primary goal here is to enable clients to construct <serializable> versions of persistent entity criteria instances (criteria transfer objects) and pass them through
-  the chosen communication mechanism to remote components which can convert them into <<<PersistentEntityCriteria>>> seamlessly.
+  the chosen communication mechanism to remote components which can convert them into corresponding <<<PersistentEntityCriteria>>> seamlessly.
   
-  Using this concept, building complex data grids that use filtering, sorting and paging functionality can be accomplished in a very easy way, assuming that:
+  Using this concept, building complex data grids that use filtering, sorting and paging functionality can be accomplished in a very efficient and easy way, assuming that:
   
-  * GUI changes within grid elements (filter value widgets, sorted column headers, paging options, etc.) will change the corresponding CTO accordingly
+  * GUI changes within grid elements (filter value widgets, sorted column headers, paging widgets, etc.) will change the corresponding CTO accordingly
   
-  * data refresh operation will pass the CTO as an argument of a remote method call using the chosen communication mechanism, receiving requested results and populating the data grid thereafter
+  * grid's data fetch operation will pass the actual CTO as an argument of a remote method call using the chosen communication mechanism, receiving requested results and populating the data grid thereafter
   
   []
   
   Besides standard Java based client-server application scenarios, the CTO pattern proves to be useful within the world of {{{http://en.wikipedia.org/wiki/Rich_Internet_application} RIA}}
   (rich internet application) technologies such as {{{http://code.google.com/webtoolkit/} Google Web Toolkit}} or {{{http://www.adobe.com/products/flex/} Flex}}. In general, any client technology
-  that allows direct or indirect modification of the Java based CTO instance can benefit from the CTO pattern.
+  that allows direct or indirect modification of the Java based CTO instance can benefit from using the CTO pattern.
   
-  One important thing to note here is that the CTO pattern defines client-side persistent entity criteria transfer object model along with its server-side processing (the "request"
-  part of the client-server communication). CTO pattern does NOT define "response" the server-side component should produce after retrieving results based on converted CTO instance
-  - this is a task left to the developer based on the {{{http://java.sun.com/blueprints/corej2eepatterns/Patterns/TransferObject.html} transfer object}} strategy for the given project.
+  One important thing to note here is that the CTO pattern defines a client-side persistent entity criteria transfer object model along with its server-side processing (the "request"
+  part of the client-server communication). CTO pattern does NOT define a "response" the server-side component should produce after retrieving results based on converted CTO instance
+  - this is a task left to developers based on the {{{http://java.sun.com/blueprints/corej2eepatterns/Patterns/TransferObject.html} transfer object}} strategy for the given project.
   
 * {CTO class overview (client)}
   
@@ -74,7 +74,7 @@ External resources
   process. Note that it is common to pass multiple filter values to a single <<<FilterAndSortCriteria>>> instance - a good example would be a date property of an entity which needs to fall
   between two boundary values.
   
-  Note that it is important to bind GUI changes within grid elements (filter value widgets, sorted column headers, paging options, etc.) to the associated CTO instance, for example:
+  Note that it is important to bind GUI changes within grid elements (filter value widgets, sorted column headers, paging widgets, etc.) to the associated CTO instance, for example:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/cto-pattern-CriteriaTransferObjectUsage.java}
   

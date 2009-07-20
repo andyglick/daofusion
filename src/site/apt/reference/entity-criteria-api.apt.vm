@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 19 July 2009
+ 20 July 2009
  ----
 
 Persistent entity criteria API
@@ -30,6 +30,8 @@ External resources
   
   * {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}}
   
+  * {{{http://en.wikipedia.org/wiki/Visitor_pattern} Visitor pattern}}
+  
   []
   
 * {Overview}
@@ -48,14 +50,14 @@ External resources
   
   If you look at the generic <<<AbstractHibernateEntityDao>>> implementation you will notice that it merely delegates its DAO operations to the underlying Hibernate <<<Session>>>. Things
   should be easy, right? One of the main benefits of having a standard DAO interface is the ability to define a custom criteria API that should cover 90% of the most typical use cases out there.
-  This is exactly the purpose of the <<<PersistentEntityCriteria>>> interface and associated classes - to shield an average user from any Hibernate-specific implementation details allowing advanced
+  This is exactly the purpose of the <<<PersistentEntityCriteria>>> interface and associated classes - to shield an average user from any Hibernate-specific implementation details, while allowing advanced
   users to use the underlying {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}} directly if necessary at the same time. In fact, using the
-  <Hibernate Criteria API> directly in your DAO implementations should be the last resort for all but the most complex cases where a custom <<<PersistentEntityCriteria>>> implementation is not possible
-  (remember that even custom <<<PersistentEntityCriteria>>> implementations can be efficiently and consistently reused between multiple DAOs as opposed to the direct <Hibernate Criteria API> approach).
+  <Hibernate Criteria API> directly in your DAO classes should be the last resort for all but the most complex cases where a custom <<<PersistentEntityCriteria>>> implementation is not possible
+  (remember that even a custom <<<PersistentEntityCriteria>>> implementation can be efficiently and consistently reused between multiple DAOs as opposed to the direct <Hibernate Criteria API> approach).
   
   <<<PersistentEntityCriteria>>> interface defines the general contract for persistent entity query constraints bound to the underlying Hibernate <<<Criteria>>> instance. ${df} enforces the use of
-  <Hibernate Criteria API> under the hood to ensure database portability (no dynamic HQL / SQL generation involved). This makes ${df} generic and reusable across multiple database vendors (assuming
-  the provided {{{https://www.hibernate.org/hib_docs/v3/api/org/hibernate/dialect/Dialect.html} dialect}} is up to date for the given database).
+  <Hibernate Criteria API> under the hood to ensure database portability (no dynamic HQL / JPQL / SQL generation involved). This makes ${df} generic and reusable across multiple database vendors, assuming
+  the provided {{{https://www.hibernate.org/hib_docs/v3/api/org/hibernate/dialect/Dialect.html} dialect}} is up to date for the given database.
   
   Let's take a brief look at this interface to get a basic understanding of the criteria API concept:
   
@@ -63,7 +65,7 @@ External resources
   
   As you can see, there is no rocket science going on here - implementations of the <<<PersistentEntityCriteria>>> interface are merely responsible for updating the Hibernate <<<Criteria>>>
   instance according to any query constraints they define. The simplicity of this interface is intentional so that users can write their own implementations with full control over Hibernate
-  <<<Criteria>>> instance processing. Note that the <<<AbstractHibernateEntityDao>>> uses this interface when constructing the Hibernate <<<Criteria>>> instance via <<<BaseHibernateDataAccessor>>>'s
+  <<<Criteria>>> processing. Note that the <<<AbstractHibernateEntityDao>>> uses this interface when constructing the Hibernate <<<Criteria>>> instance via <<<BaseHibernateDataAccessor>>>'s
   <getCriteria> method before setting any projections and requesting results via the <Hibernate Criteria API>.
   
   <<<AbstractCriterionGroup>>> represents the base class for <<<PersistentEntityCriteria>>> implementations that manage <<<PersistentEntityCriterion>>> instances to define individual query constraints.
@@ -74,11 +76,9 @@ External resources
   
   <<<AbstractCriterionGroup>>> uses the {{{http://en.wikipedia.org/wiki/Visitor_pattern} visitor pattern}} to impose centralized <<<PersistentEntityCriterion>>> processing in terms of applying individual
   query constraints (<<<PersistentEntityCriterion>>> instances) to the target Hibernate <<<Criteria>>> instance. The <getCriterionVisitor> method is declared as abstract so that arbitrary visitor
-  implementations can be used in <<<AbstractCriterionGroup>>> subclasses:
+  implementations can be used by <<<AbstractCriterionGroup>>> subclasses.
   
-%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-AbstractCriterionGroup-GetCriterionVisitorMethod.java}
-  
-  So, what is this <<<PersistentEntityCriterion>>> interface all about? <<<PersistentEntityCriterion>>> represents an abstraction of a single query constraint that uses the visitor pattern as shown above
+  So, what is this <<<PersistentEntityCriterion>>> interface all about? <<<PersistentEntityCriterion>>> represents an abstraction of a single constraint that uses the visitor pattern as shown above
   for applying its query constraints into the target Hibernate <<<Criteria>>> instance:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-PersistentEntityCriterion.java}
@@ -87,7 +87,7 @@ External resources
   criterion visitor.
   
   So far, this has been all too generic. The reason why we built such abstractions above the default <<<PersistentEntityCriteria>>> implementation is to make ${df} entity criteria API as flexible
-  and extensible as possible. We encourage users to provide their own <<<PersistentEntityCriteria>>> implementations in special or more complex cases in favor of using <Hibernate Criteria API> directly.
+  and extensible as possible. We encourage users to provide their own <<<PersistentEntityCriteria>>> implementations in special or complex cases in favor of using the <Hibernate Criteria API> directly.
   
   <<<NestedPropertyCriteria>>> is the default general purpose <<<PersistentEntityCriteria>>> implementation based on the <<<AbstractCriterionGroup>>> in conjunction with <<<NestedPropertyCriterion>>>
   instances. <<<NestedPropertyCriteria>>> implements the query constraint application logic regarding specific <<<NestedPropertyCriterion>>> subclasses via default <<<NestedPropertyCriterionVisitor>>>
@@ -104,11 +104,8 @@ External resources
   
   []
   
-  <<<NestedPropertyCriterion>>> supports a nested property of a persistent entity, starting at the target persistent entity as the root object and navigating through associated objects as necessary.
-  In other words, <<<NestedPropertyCriterion>>> enables you to write a criterion that spans over multiple entities, reaching the desired property of the desired entity from the root object just like
-  a tentacle.
-  
-  <<TODO: image of tentacle - root entity, associated entities, final entity/property>>
+  <<<NestedPropertyCriterion>>> supports a nested property of a persistent entity, starting at the given persistent entity as the root object and navigating through associated objects as necessary.
+  In other words, <<<NestedPropertyCriterion>>> enables you to write a criterion that spans over multiple entities, reaching the desired property of the desired entity from the root object.
   
   <<<NestedPropertyCriterion>>> is essentially a combination of two factors:
   
@@ -118,10 +115,10 @@ External resources
   
   []
   
-  In Hibernate, you would normally use the <createCriteria> method to create constraints for nested properties of the given root entity. However, you would have to manage nested <<<Criteria>>>
-  instances on your own regarding their reuse across multiple criterion instances (two criterion instances can share a common association path "prefix"). This can ultimately bring you to the
+  In Hibernate, you would normally use <<<Session>>>'s <createCriteria> method to create constraints for nested properties of the given root entity. However, you would have to manage nested
+  <<<Criteria>>> on your own regarding their reuse across multiple criterion instances (two criterion instances can share a common association path "prefix"). This can ultimately bring you to the
   {{{http://opensource.atlassian.com/projects/hibernate/browse/HHH-879} duplicate association path}} <Hibernate Criteria API> issue which has serious implications on the way of writing complex
-  queries operating with nested properties.
+  queries for nested entity properties.
   
   Now this is the part when <<<AssociationPathRegister>>> kicks in. <<<AssociationPathRegister>>> is simply a map of <<<AssociationPath>>> instances and corresponding Hibernate <<<Criteria>>>
   to be reused when modifying the root <<<Criteria>>> instance. <<<NestedPropertyCriteria>>> uses this class to initialize Hibernate <<<Subcriteria>>> mappings in a safe way, avoiding the
@@ -131,12 +128,12 @@ External resources
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-AssociationPathRegisterUsage.java}
   
-  There are a few new classes mentioned in the sample code shown above:
+  There are a few more classes mentioned in the sample code shown above:
   
-  * <<<AssociationPathElement>>> - single element of an <<<AssociationPath>>> that contains the <value> corresponding with the given persistent entity property name, as well as the optional
+  * <<<AssociationPathElement>>> - single element of an <<<AssociationPath>>> that contains the <value> corresponding to the given persistent entity property name, as well as the optional
     <joinType> which specifies the type of join to use when creating related <<<Subcriteria>>> rooted under the parent <<<Criteria>>> instance
   
-  * <<<AssociationPath>>> - ordered list of association path elements which point to the given property of a persistent entity, starting at the target persistent entity as the root object
+  * <<<AssociationPath>>> - ordered list of association path elements which point to the given property of a persistent entity, starting at the given persistent entity as the root object
     and navigating through associated objects as necessary (note that the association path doesn't include the target property itself, it's just a path to that property)
   
   * <<<NestedPropertyJoinType>>> - enumeration of possible database join types applicable to <<<AssociationPathElement>>> instances
@@ -149,39 +146,49 @@ External resources
   
   Let's take a look at two <<<NestedPropertyCriterion>>> subclasses that are intended for direct use in conjunction with <<<NestedPropertyCriteria>>>: <<<FilterCriterion>>> and <<<SortCriterion>>>.
   
-  <<<FilterCriterion>>> defines filter constraints for the given entity property via the <<<PropertyFilterCriterionProvider>>> interface. A custom <<<PropertyFilterCriterionProvider>>> implementation
+  <<<FilterCriterion>>> defines filter constraints for the given entity property via the <<<FilterCriterionProvider>>> interface. A custom <<<FilterCriterionProvider>>> implementation
   is used to construct a Hibernate <<<Criterion>>> instance regarding the filter criterion as well as deciding whether to actually use the provided <<<Criterion>>> instance:
   
-%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-PropertyFilterCriterionProvider.java}
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-FilterCriterionProvider.java}
   
-  There are basically two ways to pass data to the custom <<<PropertyFilterCriterionProvider>>> implementation from within the <<<FilterCriterion>>>:
+  There are basically two ways to pass data to the custom <<<FilterCriterionProvider>>> implementation from within the <<<FilterCriterion>>> (both of which are optional):
   
-  * by specifying <filterObjectValuePaths> - array of dot-separated logical paths pointing to values reachable from the root filter object (same concept as the <propertyPath> mentioned above)
+  * by specifying <filterObjectValuePaths> - array of dot-separated logical paths pointing to values reachable from the root filter object (these paths are resolved against the filter object
+    via Java reflection)
   
   * by providing filter values directly via the <directValues> object array
   
   []
   
-  Note that the <filterObjectValuePaths> will be translated into <filterObjectValues> during the criterion instance processing within the default <<<NestedPropertyCriterionVisitor>>>
-  implementation. The <enabled> method (called before each <getCriterion> method invocation) can be used for disabling the <<<PropertyFilterCriterionProvider>>> implementation from actually
-  being used at all - this can be helpful in certain situations, such as:
+  Note that <filterObjectValuePaths> will be resolved into actual <filterObjectValues> during the criterion instance processing within the default <<<NestedPropertyCriterionVisitor>>>
+  implementation. The <enabled> method (called before each <getCriterion> method invocation) can be used for disabling the <<<FilterCriterionProvider>>> implementation from being used
+  at all - this can be helpful in certain situations, such as:
   
-  * filter value inconsistency (the <<<PropertyFilterCriterionProvider>>> is unable to build the corresponding <<<Criterion>>> instance due to missing or null data)
+  * filter value inconsistency (the <<<FilterCriterionProvider>>> is unable to build the corresponding <<<Criterion>>> instance due to missing or incorrect data)
   
   * manual filter switch (the user wants to have control over when this provider should be active)
   
   []
   
-  By having full control over the Hibernate <<<Criterion>>> instance creation via the <<<PropertyFilterCriterionProvider>>> interface, the user is able to define even the most complex property
-  criteria with ease without having to worry about any nested subcriteria details. For example:
+  By having full control over Hibernate <<<Criterion>>> creation via the <<<FilterCriterionProvider>>> interface, the user is able to define even the most complex property criteria with
+  ease, without having to worry about any nested subcriteria details. For example:
   
-%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-PropertyFilterCriterionProviderUsage.java}
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-FilterCriterionProviderUsage.java}
   
-  The combination of <filterObjectValuePaths> and <directValues> enables you to define your own filter value strategy - a single filter object as the source of filter values, direct
-  value approach or even a combination of the two.
+  The combination of <filterObjectValuePaths> and <directValues> allows you to define your own filter value strategy - a single filter object as the source of filter values, direct
+  value approach or even a combination of the two. For simple cases that use one (or none) of these strategies, <<<SimpleFilterCriterionProvider>>> might suit your needs as well:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-FilterCriterionProviderUsageSimple.java}
+  
+  Note that the <<<SimpleFilterCriterionProvider>>> implements the <enabled> method for you with an option to check for non-null values within the value array (depending on the chosen strategy).
   
   <<<SortCriterion>>>, on the other hand, defines sort constraints for the given entity property using two boolean parameters: <sortAscending> and <ignoreCase> (the latter works only for
   string-based properties). Note that the <<<SortCriterion>>> is always "enabled" when present within the <<<NestedPropertyCriteria>>>.
+  
+  <<<FilterCriterion>>> and <<<SortCriterion>>> classes feature {{{http://en.wikipedia.org/wiki/Builder_pattern} builders}} for convenient instance creation: <<<FilterCriterionBuilder>>>
+  and <<<SortCriterionBuilder>>>. For example:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-CriterionBuilderUsage.java}
   
 * {Sample DAO using both filter value strategies}
   
@@ -190,25 +197,26 @@ External resources
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-criteria-api-SampleDaoUsingBothFilterValueStrategies.java}
   
-  In this example, <<<QueryDefinition>>> represents a generic persistent entity query that supports filtering, sorting and paging capabilities of the underlying <<<NestedPropertyCriteria>>>
-  implementation (notice that a single sort property is supported in this case though). The user is responsible for initializing the <filterObject> as well as its associated objects properly
-  according to filter constraints bound to it before passing it to the <getOrders> method as part of the <<<QueryDefinition>>>. By modifying the state of the <filterObject>, the user is able
-  to change the actual filter criteria that use filter object values without touching the underlying <<<NestedPropertyCriteria>>> in any way. This is essentially the main purpose of the filter
-  object approach - to separate the criteria definition from the actual filter values accessible from a single object.
+  In this example, <<<QueryDefinition>>> represents a generic persistent entity query supporting filtering, sorting and paging capabilities of the underlying <<<NestedPropertyCriteria>>>
+  implementation (notice that a single sort property is supported in this case for simplicity). The user is responsible for initializing the <filterObject> as well as the associated objects
+  properly according to filter constraints bound to it before passing it to the <getOrders> method. By modifying the state of the <filterObject>, the user is able to change the actual filter
+  criteria bound to filter object values without touching the underlying <<<NestedPropertyCriteria>>> in any way. This is essentially the main purpose of the filter object approach - to
+  separate criteria definition from the actual filter values accessible from a single object. Note that the <<<AssociationPath.ROOT>>> is just a fancy looking alias to an empty association
+  path (intended for use with direct entity properties).
   
-  One important thing to note here is that our sample DAO implementation is stateless, which is generally recommended for most cases. Stateless DAOs can be efficiently managed as
-  {{{http://en.wikipedia.org/wiki/Singleton_pattern} singleton}} beans (e.g. within a Spring context) and injected into service classes without having to worry about
-  {{{http://en.wikipedia.org/wiki/Thread-safety} thread safety}} issues. This is especially true for web applications where each request is bound to a dedicated worker thread.
+  One important thing to note here is that our sample DAO implementation is stateless, which is generally the best way to go for most cases. Stateless DAOs can be efficiently managed as
+  {{{http://en.wikipedia.org/wiki/Singleton_pattern} singletons}} (e.g. within a Spring context) and injected into service classes without having to worry about
+  {{{http://en.wikipedia.org/wiki/Thread-safety} thread safety}} issues. This is especially true for web applications with each request being bound to a dedicated worker thread.
   
-  In general, the filter object approach is especially useful in applications where GUI changes can be seamlessly propagated to the server, modifying the filter object instance of the given
+  In general, the filter object approach is useful in applications where GUI changes can be seamlessly propagated to the server, modifying the filter object instance of the given
   server-side component (for example, a {{{http://java.sun.com/javaee/javaserverfaces/} Java Server Faces}} managed bean bound to web page using server-side AJAX callback handlers). Note that
-  the abstract <<<PropertyFilterCriterionProvider>>> implementations in the above example ensure that corresponding <<<FilterCriterion>>> instances won't be processed unless the filter data is
-  consistent (the filter criteria won't be applied unless the filter object or <minOrderItemCount> contain proper values).
+  the <<<SimpleFilterCriterionProvider>>> class ensures that our sample <<<FilterCriterion>>> instances won't be processed unless the filter data is consistent (filter criteria won't be applied
+  unless the filter object or <minOrderItemCount> contain proper values).
   
   In certain scenarios where the client side and server side connect more loosely to each other using a custom communication mechanism (e.g. <GWT RPC> for {{{http://code.google.com/webtoolkit/} Google Web Toolkit}}
   or {{{http://en.wikipedia.org/wiki/Action_Message_Format} AMF}} for {{{http://www.adobe.com/products/flex/} Flex}}), direct filter object changes are not possible since the client side typically
-  uses some local data model bound to the GUI and calls remote services when necessary. Although it is possible to change the filter object accordingly using some server-side request processor,
-  it is much more convenient to use the {{{./cto-pattern.html} criteria transfer object pattern}} in this situation.
+  uses some local data model bound to the GUI together with remote service calls. Although it's possible to change the filter object accordingly using some server-side request processor,
+  it is much more convenient to use the {{{./cto-pattern.html} criteria transfer object pattern}} such situations.
   
 * {FAQ}
   

@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 18 July 2009
+ 20 July 2009
  ----
 
 Persistent entity model
@@ -161,7 +161,14 @@ External resources
   
 * {Using composite primary keys}
   
-  <<TODO - example of PK class + entity - from Puto's project!>>
+  The following code shows how to use composite primary keys in persistent entities (<hashCode> / <equals> methods are implemented via the business key approach):
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-model-SamplePersistentEntityWithCompositePk.java}
+  
+  Implementing <hashCode> / <equals> methods via the business key approach imposes certain limitations on "semi"-unique attributes of the business key. The reason behind these limitations lies in the
+  fact that the business key essentially combines two orthogonal concepts: object identity and object state. Uniqueness of the business key might be broken if any of the "semi"-unique attributes change.
+  Additionally, a persistent entity instance has to have all "semi"-unique attributes set in advance (e.g. within its constructor) for <hashCode> / <equals> methods to work properly. Synthetic generated
+  value approach, on the other hand, tries to separate object identity and object value concepts from each other by adding an auto-generated object identity field.
   
 * {FAQ}
   

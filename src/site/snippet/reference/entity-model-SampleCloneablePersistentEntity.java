@@ -34,7 +34,9 @@ public class Order extends OidBasedMutablePersistentEntity implements Cloneable 
             clone.customer = Customer.class.cast(this.customer.clone());
 
             return clone;
-        } catch (CloneNotSupportedException e) {
+        }
+
+        catch (CloneNotSupportedException e) {
             // shouldn't happen if all mutable objects are cloneable
             throw new Error(e);
         }

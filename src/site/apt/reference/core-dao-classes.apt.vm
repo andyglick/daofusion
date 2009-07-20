@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 18 July 2009
+ 20 July 2009
  ----
 
 Core DAO classes
@@ -102,8 +102,8 @@ Related tech notes
   method implementation pattern is to rely on entity manager instance injection via the <<<PersistenceContext>>> annotation (within the JPA persistence context) and simply returning the
   injected instance. Alternatively, the entity manager instance can be created directly via the <<<EntityManagerFactory>>>. ${df} doesn't restrict you regarding the entity manager lookup
   strategy - it just asks you to implement it the way you prefer. Note that all data access happens solely through the {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}}
-  to ensure database portability. This makes ${df} generic and reusable across multiple database vendors (assuming the provided {{{https://www.hibernate.org/hib_docs/v3/api/org/hibernate/dialect/Dialect.html} dialect}}
-  is up to date for the given database).
+  to ensure database portability. This makes ${df} generic and reusable across multiple database vendors, assuming the provided {{{https://www.hibernate.org/hib_docs/v3/api/org/hibernate/dialect/Dialect.html} dialect}}
+  is up to date for the given database.
   
   There are two abstract implementations for the two DAO interfaces mentioned above: <<<AbstractHibernateEntityDao>>> and <<<AbstractHibernateEnumerationDao>>> (the latter one simply extends
   the generic <<<AbstractHibernateEntityDao>>> implementation). These two classes are the ones you will extend when building your custom DAO implementations.

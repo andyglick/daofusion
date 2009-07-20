@@ -25,8 +25,8 @@
 				limitations:
 					<ul>
 						<li>uniqueness of the business key might be broken if any of the "semi"-unique attributes change</li>
-						<li>persistent entity instance has to have all "semi"-unique attributes set in advance for <em>hashCode</em> / <em>equals</em>
-						methods to work properly</li>
+						<li>persistent entity instance has to have all "semi"-unique attributes set in advance (e.g. within its constructor) for
+						<em>hashCode</em> / <em>equals</em> methods to work properly</li>
 					</ul>
 				</p>
 				<p>On the other hand, using the synthetic generated value approach results in adding the object identity column to the target

@@ -1,10 +1,10 @@
-public interface PropertyFilterCriterionProvider {
+public interface FilterCriterionProvider {
 
     /**
      * Returns a Criterion instance corresponding to the given
      * property of the target persistent entity.
      */
-    public Criterion getCriterion(String targetPropertyName,
+    Criterion getCriterion(String targetPropertyName,
             Object[] filterObjectValues,
             Object[] directValues);
 
@@ -12,7 +12,7 @@ public interface PropertyFilterCriterionProvider {
      * Returns a flag indicating whether to use this provider
      * during the FilterCriterion instance processing.
      */
-    public boolean enabled(Object[] filterObjectValues,
+    boolean enabled(Object[] filterObjectValues,
             Object[] directValues);
 
 }

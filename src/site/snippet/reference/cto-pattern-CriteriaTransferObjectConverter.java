@@ -5,7 +5,7 @@ public interface CriteriaTransferObjectConverter {
      * PersistentEntityCriteria according to property mappings defined by the
      * requested property mapping group.
      */
-    public PersistentEntityCriteria convert(CriteriaTransferObject transferObject,
+    PersistentEntityCriteria convert(CriteriaTransferObject transferObject,
             String mappingGroupName);
 
 }
