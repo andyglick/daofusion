@@ -1,0 +1,58 @@
+ ----
+ Persistent entity model
+ ----
+ Igor Mihalik
+ ----
+ 20 July 2009
+ ----
+
+Temporal pattern
+ 
+  Temporal database is a database with built-in time aspects, e.g. a temporal data model and a temporal version of structured query language.
+
+Sections
+  
+  * {{{./temporal.html#Overview} Overview}}
+  
+  * {{{./temporal.html#Introduction} Introduction}}
+  
+  * {{{./temporal.html#FAQ} FAQ}}
+  
+  []
+  
+External resources
+  
+  * {{{http://en.wikipedia.org/wiki/Temporal_database} Wiki:Temporal Database}}
+  
+  []
+  
+* {Overview}
+  
+  * Project: <${df-core}>
+  
+  * Package reference: <<<com.anasoft.os.daofusion.bitemporal>>>
+  
+* {Introduction}
+
+ 
+  Temporal database is a database with built-in time aspects, e.g. a temporal data model and a temporal version of structured query language.
+
+  More specifically the temporal aspects usually include valid-time and transaction-time. These attributes go together to form bitemporal data.
+
+    * Valid time denotes the time period during which a fact is true with respect to the real world.
+
+    * Transaction time is the time period during which a fact is stored in the database.
+
+    * Bitemporal data combines both Valid and Transaction Time.
+
+  Note that these two time periods do not have to be the same for a single fact. Imagine that we come up with a temporal database storing data about the 18th century. The valid time of these facts is somewhere between 1701 and 1800, whereas the transaction time starts when we insert the facts into the database, for example, January 21, 1998.
+
+  It is possible to have other timelines except Valid Time and Transaction Time, such as Decision Time, in the database. In that case the database would be called a multitemporal database as opposed to a bitemporal database. This approach introduces additional complexities, such as when dealing with the validity of (foreign) keys, however. 
+
+* {TODO}
+
+  TODO....
+
+* {FAQ}
+  
+  We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
