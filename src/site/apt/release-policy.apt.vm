@@ -49,9 +49,11 @@ Release Policy
   
 * General conventions
   
-  Each tag should be created from a corresponding <maintenance branch> upon a new project release. Maintenance branch is a branch that follows
-  the <<<major.minor.x>>> naming convention. Only bugfixes, performance enhancements and minor functionality additions that don't break the general
-  API may be committed to the maintenance branch.
+  Tags should be created from a corresponding <maintenance branch> upon new project release. <Milestones> are part of a transition between
+  two stable releases and their tags can be therefore created directly from the trunk.
+  
+  Maintenance branch is a branch that follows the <<<major.minor.x>>> naming convention. Only bugfixes, performance enhancements and minor
+  functionality additions that don't break the general API may be committed to the maintenance branch.
   
   New functionality that may cause API changes or changes in project architecture should be considered as part of new <feature release>. New
   maintenance branch and a corresponding site project should be created for each and every feature release.
