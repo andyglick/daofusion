@@ -3,22 +3,22 @@
  ----
  Vojtech Szocs
  ----
- 18 July 2009
+ 21 July 2009
  ----
 
 Hello, DAO! tutorial
   
   We have prepared a sample application to help developers get familiar with ${df} concepts using popular web technologies and tools:
   
-  * {{{http://java.sun.com/javaee/5/docs/tutorial/doc/bnafd.html} Java Servlet API}} (Java EE)
+  * {{{http://java.sun.com/javaee/5/docs/tutorial/doc/bnafd.html} Java Servlet API}} - core Java EE API
   
-  * {{{http://code.google.com/webtoolkit/} Google Web Toolkit}} (presentation logic and RPC support)
+  * {{{http://code.google.com/webtoolkit/} Google Web Toolkit}} - presentation logic and RPC support
   
-  * {{{http://code.google.com/p/smartgwt/} SmartGWT}} (fancy UI widgets)
+  * {{{http://code.google.com/p/smartgwt/} SmartGWT}} - fancy UI widgets
   
-  * {{{http://maven.apache.org/} Maven}} (managing the overall project build)
+  * {{{http://maven.apache.org/} Maven}} - managing the overall project build
   
-  * {{{http://ant.apache.org/} Ant}} (GWT module compilation as part of the project build)
+  * {{{http://ant.apache.org/} Ant}} - GWT module compilation as part of the project build
   
   []
   

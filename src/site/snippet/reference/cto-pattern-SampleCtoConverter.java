@@ -1,48 +1,28 @@
-public final class DirectValueCriterionProviders {
+public final class CtoFilterCriterionProviders {
 
-    private static abstract class UnaryDirectValueProvider implements
-            PropertyFilterCriterionProvider {
+    // NestedPropertyCriteriaBasedConverter uses direct filter value approach under the hood
+    private static final FilterDataStrategy STRATEGY = FilterDataStrategy.DIRECT;
 
-        public boolean enabled(Object[] filterObjectValues, Object[] directValues) {
-            return (directValues.length == 1) && (directValues[0] != null);
-        }
-    }
-
-    private static abstract class BinaryDirectValueProvider implements
-            PropertyFilterCriterionProvider {
-
-        public boolean enabled(Object[] filterObjectValues, Object[] directValues) {
-            return (directValues.length == 2) && (directValues[0] != null)
-                    && (directValues[1] != null);
-        }
-    }
-
-    public static final PropertyFilterCriterionProvider LIKE = new UnaryDirectValueProvider() {
-        public Criterion getCriterion(String targetPropertyName, Object[] filterObjectValues,
-                Object[] directValues) {
-
+    public static final FilterCriterionProvider LIKE = new SimpleFilterCriterionProvider(STRATEGY, 1) {
+        public Criterion getCriterion(String targetPropertyName,
+                Object[] filterObjectValues, Object[] directValues) {
             return Restrictions.like(targetPropertyName, directValues[0]);
         }
     };
 
-    public static final PropertyFilterCriterionProvider EQ = new UnaryDirectValueProvider() {
-        public Criterion getCriterion(String targetPropertyName, Object[] filterObjectValues,
-                Object[] directValues) {
-
+    public static final FilterCriterionProvider EQ = new SimpleFilterCriterionProvider(STRATEGY, 1) {
+        public Criterion getCriterion(String targetPropertyName,
+                Object[] filterObjectValues, Object[] directValues) {
             return Restrictions.eq(targetPropertyName, directValues[0]);
         }
     };
 
-    public static final PropertyFilterCriterionProvider BETWEEN = new BinaryDirectValueProvider() {
-        public Criterion getCriterion(String targetPropertyName, Object[] filterObjectValues,
-                Object[] directValues) {
-
+    public static final FilterCriterionProvider BETWEEN = new SimpleFilterCriterionProvider(STRATEGY, 2) {
+        public Criterion getCriterion(String targetPropertyName,
+                Object[] filterObjectValues, Object[] directValues) {
             return Restrictions.between(targetPropertyName, directValues[0], directValues[1]);
         }
     };
-
-    private DirectValueCriterionProviders() {
-    }
 
 }
 
@@ -50,66 +30,54 @@ public class SampleConverter extends NestedPropertyCriteriaBasedConverter {
 
     public static final String MAPPING_GROUP_CUSTOMER = "customer";
 
+    // Customer - name
     public static final String CUSTOMER_NAME_ID = "name";
-    public static final String CUSTOMER_NAME_PATH = "name";
+    public static final AssociationPath CUSTOMER_NAME_APATH = AssociationPath.ROOT;
+    public static final String CUSTOMER_NAME_TARGET = "name";
 
+    // Customer - userProfile - favoriteNumber
     public static final String CUSTOMER_FAVNO_ID = "favNo";
-    public static final String CUSTOMER_FAVNO_PATH = "userProfile.favoriteNumber";
+    public static final AssociationPath CUSTOMER_FAVNO_APATH = new AssociationPath(
+            new AssociationPathElement("userProfile"));
+    public static final String CUSTOMER_FAVNO_TARGET = "favoriteNumber";
 
+    // Customer - accountCreated
     public static final String CUSTOMER_JOINDATE_ID = "joinDate";
-    public static final String CUSTOMER_JOINDATE_PATH = "accountCreated";
+    public static final AssociationPath CUSTOMER_JOINDATE_APATH = AssociationPath.ROOT;
+    public static final String CUSTOMER_JOINDATE_TARGET = "accountCreated";
 
-    public static final String DATE_FORMAT = "yyyy.MM.dd HH:mm";
+    public static final DateConverter DATE_CONVERTER = new DateConverter("yyyy.MM.dd HH:mm");
 
-    public SampleConverter() {
-        addStringMapping(MAPPING_GROUP_CUSTOMER, CUSTOMER_NAME_ID, CUSTOMER_NAME_PATH);
-        addIntegerMapping(MAPPING_GROUP_CUSTOMER, CUSTOMER_FAVNO_ID, CUSTOMER_FAVNO_PATH);
-        addDateMapping(MAPPING_GROUP_CUSTOMER, CUSTOMER_JOINDATE_ID, CUSTOMER_JOINDATE_PATH);
+    public void initMappings() {
+        addStringMapping(MAPPING_GROUP_CUSTOMER, CUSTOMER_NAME_ID,
+                CUSTOMER_NAME_APATH, CUSTOMER_NAME_TARGET);
+
+        addIntegerMapping(MAPPING_GROUP_CUSTOMER, CUSTOMER_FAVNO_ID,
+                CUSTOMER_FAVNO_APATH, CUSTOMER_FAVNO_TARGET);
+
+        addDateMapping(MAPPING_GROUP_CUSTOMER, CUSTOMER_JOINDATE_ID,
+                CUSTOMER_JOINDATE_APATH, CUSTOMER_JOINDATE_TARGET);
     }
 
-    public Date parseDate(String dateString) {
-        try {
-            return new SimpleDateFormat(DATE_FORMAT).parse(dateString);
-        } catch (ParseException e) {
-            // log the exception
-            return null;
-        }
+    private void addStringMapping(String mappingGroupName, String propertyId,
+            AssociationPath associationPath, String targetPropertyName) {
+        addMapping(mappingGroupName, new FilterAndSortMapping<String>(
+                propertyId, associationPath, targetPropertyName,
+                CtoFilterCriterionProviders.LIKE, FilterValueConverters.STRING));
     }
 
-    private void addStringMapping(String mappingGroupName, String propertyId, String propertyPath) {
-
-        addMapping(
-                mappingGroupName,
-                new FilterAndSortMapping(propertyId, propertyPath, DirectValueCriterionProviders.LIKE,
-                        new FilterValueObjectProvider() {
-                            public Object getObject(String stringValue) {
-                                return stringValue;
-                            }
-                        }));
+    private void addIntegerMapping(String mappingGroupName, String propertyId,
+            AssociationPath associationPath, String targetPropertyName) {
+        addMapping(mappingGroupName, new FilterAndSortMapping<Integer>(
+                propertyId, associationPath, targetPropertyName,
+                CtoFilterCriterionProviders.EQ, FilterValueConverters.INTEGER));
     }
 
-    private void addIntegerMapping(String mappingGroupName, String propertyId, String propertyPath) {
-
-        addMapping(
-                mappingGroupName,
-                new FilterAndSortMapping(propertyId, propertyPath, DirectValueCriterionProviders.EQ,
-                        new FilterValueObjectProvider() {
-                            public Object getObject(String stringValue) {
-                                return Integer.valueOf(stringValue);
-                            }
-                        }));
-    }
-
-    private void addDateMapping(String mappingGroupName, String propertyId, String propertyPath) {
-
-        addMapping(
-                mappingGroupName,
-                new FilterAndSortMapping(propertyId, propertyPath, DirectValueCriterionProviders.BETWEEN,
-                        new FilterValueObjectProvider() {
-                            public Object getObject(String stringValue) {
-                                return parseDate(stringValue);
-                            }
-                        }));
+    private void addDateMapping(String mappingGroupName, String propertyId,
+            AssociationPath associationPath, String targetPropertyName) {
+        addMapping(mappingGroupName, new FilterAndSortMapping<Date>(
+                propertyId, associationPath, targetPropertyName,
+                CtoFilterCriterionProviders.BETWEEN, DATE_CONVERTER));
     }
 
 }

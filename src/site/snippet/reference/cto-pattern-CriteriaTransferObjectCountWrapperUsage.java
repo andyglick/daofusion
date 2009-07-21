@@ -1,5 +1,5 @@
-PersistentEntityCriteria criteriaForCount = converter.convert(
+PersistentEntityCriteria countCriteria = converter.convert(
         new CriteriaTransferObjectCountWrapper(transferObject).wrap(),
         myMappingGroup);
 
-// now you can pass "criteriaForCount" into standard count methods safely
+int totalRecords = myDao.count(countCriteria);

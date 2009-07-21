@@ -1,7 +1,11 @@
-private final CriteriaTransferObject cto = new CriteriaTransferObject();
+public class CtoAwareDataGrid extends DefaultDataGrid {
 
-public void onChangeValue(FilterWidget widget) {
-    final String propertyId = widget.getPropertyId();
-    final String value = widget.getValue();
-    cto.get(propertyId).setFilterValue(value);
+    private final CriteriaTransferObject cto = new CriteriaTransferObject();
+
+    public void onChangeValue(FilterWidget widget) {
+        String propertyId = widget.getPropertyId();
+        String value = widget.getValue();
+        cto.get(propertyId).setFilterValue(value);
+    }
+
 }

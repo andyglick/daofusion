@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 17 June 2009
+ 21 July 2009
  ----
 
 Welcome to ${df}
@@ -35,6 +35,10 @@ Welcome to ${df}
   Use the criteria transfer object (CTO) pattern to construct client-side versions of persistent entity criteria instances and pass them through the chosen communication mechanism
   to the remote server-side component, employing a CTO converter for seamless CTO-to-criteria transformation.
   
+  * {{{http://groups.google.com/group/dao-fusion/browse_thread/thread/e1ece1641af9c970} Bitemporal pattern}}
+  
+  <Coming soon!>
+  
   []
   
 * Integration tests
@@ -45,8 +49,9 @@ Welcome to ${df}
 [images/dbsupport.png] ${df} database support
   
   Integration tests interact with the chosen database instance and make sure that all standard DAO implementations are properly and thoroughly tested using a non-trivial sample
-  domain model. Note that ${df} is integration-tested against most popular databases, including {{{http://www.mysql.com/} MySQL}}, {{{http://www.postgresql.org/} PostgreSQL}},
-  {{{http://www.ibm.com/db2} DB2}}, {{{http://www.oracle.com/technology/products/database/oracle10g/index.html} Oracle 10g}} and {{{http://en.wikipedia.org/wiki/Microsoft_SQL_Server} MS SQL Server 2000}}.
+  domain model. Note that ${df} is integration-tested against {{{./reference/integration-tests.html#Standard_database_support} many popular databases}}, including {{{http://www.mysql.com/} MySQL}},
+  {{{http://www.postgresql.org/} PostgreSQL}}, {{{http://www.ibm.com/db2} DB2}}, {{{http://www.oracle.com/technology/products/database/oracle10g/index.html} Oracle 10g}}
+  and {{{http://en.wikipedia.org/wiki/Microsoft_SQL_Server} MS SQL Server 2000}}.
   
 * Getting started
   

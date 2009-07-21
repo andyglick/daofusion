@@ -3,7 +3,7 @@
  ----
  Vojtech Szocs
  ----
- 20 July 2009
+ 21 July 2009
  ----
 
 Core DAO classes
@@ -99,7 +99,7 @@ Related tech notes
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/core-dao-classes-BaseHibernateDataAccessor.java}
   
   The reason for declaring an abstract <getHibernateEntityManager> method is to give users free hands when it comes to entity manager instance lookup. The most convenient
-  method implementation pattern is to rely on entity manager instance injection via the <<<PersistenceContext>>> annotation (within the JPA persistence context) and simply returning the
+  method implementation pattern is to rely on entity manager instance injection via the <<<@PersistenceContext>>> annotation (within the JPA persistence context) and simply returning the
   injected instance. Alternatively, the entity manager instance can be created directly via the <<<EntityManagerFactory>>>. ${df} doesn't restrict you regarding the entity manager lookup
   strategy - it just asks you to implement it the way you prefer. Note that all data access happens solely through the {{{http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Criteria.html} Hibernate Criteria API}}
   to ensure database portability. This makes ${df} generic and reusable across multiple database vendors, assuming the provided {{{https://www.hibernate.org/hib_docs/v3/api/org/hibernate/dialect/Dialect.html} dialect}}

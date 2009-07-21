@@ -1,0 +1,31 @@
+ ----
+ Continuous integration
+ ----
+ Vojtech Szocs
+ ----
+ 21 July 2009
+ ----
+
+Continuous integration
+  
+  ${df} uses an internal {{{http://www.jetbrains.com/teamcity/} TeamCity}} {{{http://en.wikipedia.org/wiki/Continuous_integration} continuous integration}} system
+  which reacts to changes in the {{{source-repository.html} source code repository}}:
+  
+  * trunk (current development)
+  
+  * maintenance branches
+  
+  []
+  
+  This ensures that problems are detected early, with all standard {{{http://en.wikipedia.org/wiki/Unit_testing} unit tests}} and {{{./reference/integration-tests.html} integration tests}}
+  executed after changes caused the project to be rebuilt from scratch.
+  
+* Best practices
+  
+  ${df} developers are encouraged to follow these practices when committing their changes:
+  
+  * all changes must be buildable (no compile errors)
+  
+  * commit often (avoid big-bang commits)
+  
+  []

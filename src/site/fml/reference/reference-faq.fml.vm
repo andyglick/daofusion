@@ -206,32 +206,38 @@ public Class&lt;T&gt; getEntityClass() {
 		</faq>
 		
 		<faq id="entity-criteria-api-2">
-			<question>Why do I have to write my own <tt>PropertyFilterCriterionProvider</tt> implementations?</question>
+			<question>Why do I have to write my own <tt>FilterCriterionProvider</tt> implementations?</question>
 			<answer>
-				<p>Instead of defining rigid filter operators which would need to be mapped into the <em>Hibernate Criteria API</em> anyway, <tt>PropertyFilterCriterionProvider</tt>
+				<p>Instead of defining rigid filter operators which would need to be mapped into the <em>Hibernate Criteria API</em> anyway, <tt>FilterCriterionProvider</tt>
 				allows full control over the Hibernate <tt>Criterion</tt> instance creation using the chosen filter value approach. You are free to use the Hibernate
-				<tt>Restrictions</tt> helper class to define the property criteria you need without having to worry about any nested subcriteria details. And if that
-				weren't enough, <tt>PropertyFilterCriterionProvider</tt> contains the <em>enabled</em> method useful for disabling it in certain situations. So the answer
-				to the question is - to give you full power over the property filtering process.</p>
+				<tt>Restrictions</tt> class to define the property criteria you need without having to worry about any nested subcriteria details. And if that weren't enough,
+				<tt>FilterCriterionProvider</tt> contains the <em>enabled</em> method useful for disabling it in certain situations. Even better, you can use the <tt>SimpleFilterCriterionProvider</tt>
+				as well in case you prefer one filter value approach over another.</p>
+				<p>So the answer to the question is - to give you full power over the property filtering process.</p>
 			</answer>
 		</faq>
 		
 		<faq id="entity-criteria-api-3">
-			<question>Why is <tt>PersistentEntityCriteria</tt> bound strictly to the Hibernate <tt>Criteria</tt> interface?</question>
+			<question>Why is <tt>PersistentEntityCriteria</tt> bound to the Hibernate <tt>Criteria</tt> interface directly?</question>
 			<answer>
 				<p>${df} went a long way from its initial state being just a simple DAO layer above Hibernate. <tt>PersistentEntityCriteria</tt> interface (and in fact
 				the whole ${df} criteria API) is actually the point where ${df} breaks the general JPA / <tt>EntityManager</tt> contract by introducing a direct Hibernate
-				dependency. This makes sense, since ${df} uses Hibernate as its single persistence provider implementation. However, things might change in
-				future due to compatibility reasons with other persistence providers, depending on community feedback.</p>
+				API dependency. This makes sense, since ${df} uses Hibernate as its single persistence provider implementation. However, things might change in future for
+				other persistence providers, depending on community feedback.</p>
 			</answer>
 		</faq>
 		
 		<faq id="entity-criteria-api-4">
-			<question>What does "preprocessing a Hibernate <tt>Criteria</tt> instance regarding possible nested subcriteria" actually mean?</question>
+			<question>What does the "duplicate association path issue" actually mean?</question>
 			<answer>
-				<p>Hibernate uses the concept of nested <tt>Criteria</tt> instances when defining nested property subcriteria. Root <tt>Criteria</tt> preprocessing is necessary
-				in order to avoid the "duplicate association path" <em>Hibernate Criteria API</em> issue which leads to an exception in case of multiple subcriteria with same
-				association paths. ${df} handles this kind of preprocessing for you automatically within the <tt>NestedPropertyCriteria</tt>.</p>
+				<p>In Hibernate, you would normally use <tt>Session</tt>'s <em>createCriteria</em> method to create constraints for nested properties of the given root entity.
+				However, you would have to manage nested <tt>Criteria</tt> on your own regarding their reuse across multiple criterion instances - especially if these instances share
+				a common association path "prefix". Calling <tt>Session</tt>'s <em>createCriteria</em> method using the same association paths multiple times results in exception
+				regarding the <a href="http://opensource.atlassian.com/projects/hibernate/browse/HHH-879">duplicate association path</a>. You have to work around it manually by managing
+				nested <tt>Criteria</tt> instances on your own.</p>
+				<p>${df} provides a class that solves this issue in a very elegant and reusable way: <tt>AssociationPathRegister</tt>. <tt>AssociationPathRegister</tt> maps <tt>AssociationPath</tt>
+				instances into corresponding Hibernate <tt>Criteria</tt> to be reused when modifying the root <tt>Criteria</tt> instance. You can even create multiple <tt>AssociationPathRegister</tt>
+				instances operating on the same <tt>Criteria</tt> and use them to modify the root <tt>Criteria</tt> in a safe way.</p>
 			</answer>
 		</faq>
 		

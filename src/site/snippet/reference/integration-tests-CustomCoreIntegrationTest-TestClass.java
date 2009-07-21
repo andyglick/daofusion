@@ -4,4 +4,6 @@
         BaseHibernateIntegrationTest.PROFILE_DBTYPE_VALUE_LOCAL })
 public class PostgreSQLHibernateEntityDaoTest extends AbstractHibernateEntityDaoTest {
 
+    // standard test methods inherited from the parent
+
 }

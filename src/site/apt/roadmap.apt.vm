@@ -4,7 +4,7 @@
  Michal Jemala
  Vojtech Szocs
  ----
- 20 July 2009
+ 21 July 2009
  ----
 
 ${df} roadmap
@@ -15,9 +15,9 @@ ${df} roadmap
   
   * {{{./roadmap.html#Milestone_1} Milestone 1}}: <<complete>>
   
-  * {{{./roadmap.html#Milestone_2} Milestone 2}}: Mid July 2009
+  * {{{./roadmap.html#Milestone_2} Milestone 2}}: <<complete>>
   
-  * {{{./roadmap.html#Milestone_3} Milestone 3}}: Late July 2009
+  * {{{./roadmap.html#Milestone_3} Milestone 3}}: Early August 2009
   
   []
   
@@ -35,15 +35,15 @@ ${df} roadmap
   
   * {{{http://code.google.com/p/daofusion/issues/detail?id=9} bitemporal pattern}} support
   
-  * revision of reference documentation
-  
-  * step-by-step tutorial for <Hello, DAO!>
+  * complete revision of the reference documentation
   
   []
   
 * {Milestone 3}
   
   * documentation final touches
+  
+  * step-by-step tutorial for <Hello, DAO!>
   
   * any issues that come up until release (code base stabilization)
   
