@@ -60,7 +60,7 @@
 			<item name="Core DAO classes" href="reference/core-dao-classes.html" />
 			<item name="Persistent entity criteria API" href="reference/entity-criteria-api.html" />
 			<item name="Criteria transfer object pattern" href="reference/cto-pattern.html" />
-			<item name="Bitemporal pattern" href="reference/bitemporal.html" />
+			<item name="Bitemporal pattern" href="reference/temporal.html" />
 			<item name="Integration test support" href="reference/integration-tests.html" />
 			<item name="Frequently Asked Questions" href="reference/reference-faq.html" />
 		</menu>
