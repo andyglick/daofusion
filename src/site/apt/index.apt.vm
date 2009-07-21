@@ -35,7 +35,7 @@ Welcome to ${df}
   Use the criteria transfer object (CTO) pattern to construct client-side versions of persistent entity criteria instances and pass them through the chosen communication mechanism
   to the remote server-side component, employing a CTO converter for seamless CTO-to-criteria transformation.
   
-  * {{{http://groups.google.com/group/dao-fusion/browse_thread/thread/e1ece1641af9c970} Bitemporal pattern}}
+  * {{{./reference/bitemporal-pattern.html} Bitemporal pattern}}
   
   <Coming soon!>
   

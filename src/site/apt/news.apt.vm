@@ -10,11 +10,11 @@ ${df} news
   
 * 2009-07-21
   
-  <<${df} milestone 2>> has been released. M2 features the long-awaited {{{http://groups.google.com/group/dao-fusion/browse_thread/thread/e1ece1641af9c970} bitemporal pattern}}
+  <<${df} milestone 2>> has been released. M2 features the long-awaited {{{http://groups.google.com/group/dao-fusion/browse_thread/thread/e1ece1641af9c970} bitemporal}}
   classes as well as other minor improvements. See the {{{./changes-report.html} changelog}} for more information about this milestone release.
   
   The reference documentation has been revised from the ground up to reflect the current state. As announced before, the {{{./reference/entity-criteria-api.html} entity criteria API}}
-  embraced most changes during our refactoring. Igor started to work on the {{{./reference/temporal.html} bitemporal reference}} as well. The reference {{{./reference/reference-faq.html} FAQ}}
+  embraced most changes during our refactoring. Igor started to work on the {{{./reference/bitemporal-pattern.html} bitemporal reference}} as well. The reference {{{./reference/reference-faq.html} FAQ}}
   is still halfway finished though and will be done in M3.
   
   The {{{./roadmap.html} roadmap}} has been updated too - we've decided to postpone the <Hello, DAO!> step-by-step tutorial in favor of finishing the reference documentation.

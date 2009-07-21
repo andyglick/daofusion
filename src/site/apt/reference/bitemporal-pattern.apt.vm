@@ -1,12 +1,12 @@
  ----
- Persistent entity model
+ Bitemporal pattern
  ----
  Igor Mihalik
  ----
  20 July 2009
  ----
 
-Temporal pattern
+Bitemporal pattern
  
   Temporal database is a database with built-in time aspects, e.g. a temporal data model and a temporal version of structured query language.
 
