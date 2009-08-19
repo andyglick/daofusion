@@ -22,7 +22,9 @@ Sections
   
 External resources
   
-  * {{{http://en.wikipedia.org/wiki/Temporal_database} Wiki:Temporal Database}}
+  * [1] {{{http://en.wikipedia.org/wiki/Temporal_database} Wiki:Temporal Database}}
+    
+  * [2] {{{https://svn.ervacon.com/public/projects/bitemporal/trunk/readme.txt} com.ervacon.bitemporal Simple bitemporal framework in Java }}  
   
   []
   
@@ -36,7 +38,8 @@ External resources
 
  
   Temporal database is a database with built-in time aspects, e.g. a temporal data model and a temporal version of structured query language.
-
+  Typical application deals with current knowledge relevant to current time. User performs actions on objects, entities and expects them to update their internal state appropriatelly. In terms of time, we are talking about time as a value present in a model (e.g. date of birth) similarly to any other attribute (e.g. name).
+  Temporal category of problems to solve arises as soon as user wants to know the state of the object before he/she performed the action. This means to track the state of entity in time. In other words, given any time application should present user a state of entity or a state of entire entity graph. 
   More specifically the temporal aspects usually include valid-time and transaction-time. These attributes go together to form bitemporal data.
 
     * Valid time denotes the time period during which a fact is true with respect to the real world.
@@ -45,13 +48,19 @@ External resources
 
     * Bitemporal data combines both Valid and Transaction Time.
 
-  Note that these two time periods do not have to be the same for a single fact. Imagine that we come up with a temporal database storing data about the 18th century. The valid time of these facts is somewhere between 1701 and 1800, whereas the transaction time starts when we insert the facts into the database, for example, January 21, 1998.
+  
+* {Bitemporal suport in daofusion}
 
-  It is possible to have other timelines except Valid Time and Transaction Time, such as Decision Time, in the database. In that case the database would be called a multitemporal database as opposed to a bitemporal database. This approach introduces additional complexities, such as when dealing with the validity of (foreign) keys, however. 
+  The implementation in this project is based on work done by Erwin Vervaet and Christophe Vanfleteren [2].  Their implementation was extended to fit more in annotation based setup.
+  <<<Bitemporal>>> is main interface to understand. Any object implmenting <<<Bitemporal>>> is ment to track value in two dimensions:
+  * Validity time: indicates when the value was valid
+    
+  * Recording time: indicates when the value was known
+
+In most cases, application level should not directly implement this interface, but should instead wrap existing value classes bitemporally using a <<<BitemporalWrapper>>>.        
 
 * {TODO}
-
-  TODO....
+  TODO
 
 * {FAQ}
   
