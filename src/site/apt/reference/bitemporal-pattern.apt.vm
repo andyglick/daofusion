@@ -20,14 +20,6 @@ Sections
   
   []
   
-External resources
-  
-  * [1] {{{http://en.wikipedia.org/wiki/Temporal_database} Wiki:Temporal Database}}
-    
-  * [2] {{{https://svn.ervacon.com/public/projects/bitemporal/trunk/readme.txt} com.ervacon.bitemporal Simple bitemporal framework in Java }}  
-  
-  []
-  
 * {Overview}
   
   * Project: <${df-core}>
@@ -38,7 +30,7 @@ External resources
 
  
   Temporal database is a database with built-in time aspects, e.g. a temporal data model and a temporal version of structured query language.
-  Typical application deals with current knowledge relevant to current time. User performs actions on objects, entities and expects them to update their internal state appropriatelly. In terms of time, we are talking about time as a value present in a model (e.g. date of birth) similarly to any other attribute (e.g. name).
+  Typical application deals with current knowledge relevant to current time. User performs actions on objects, entities and expects them to update their internal state appropriatelly. In terms of time, we are talking about time as a value present in a model (e.g. date of birth) similarly to any other attribute (e.g. name).
   Temporal category of problems to solve arises as soon as user wants to know the state of the object before he/she performed the action. This means to track the state of entity in time. In other words, given any time application should present user a state of entity or a state of entire entity graph. 
   More specifically the temporal aspects usually include valid-time and transaction-time. These attributes go together to form bitemporal data.
 
@@ -52,15 +44,28 @@ External resources
 * {Bitemporal suport in daofusion}
 
   The implementation in this project is based on work done by Erwin Vervaet and Christophe Vanfleteren [2].  Their implementation was extended to fit more in annotation based setup.
-  <<<Bitemporal>>> is main interface to understand. Any object implmenting <<<Bitemporal>>> is ment to track value in two dimensions:
+  <<<Bitemporal>>> is the main interface to understand. Any object implmenting <<<Bitemporal>>> is ment to track value in two dimensions:
+
   * Validity time: indicates when the value was valid
     
-  * Recording time: indicates when the value was known
+  * Recording time: indicates when the value was known (also known as transaction time)
 
-In most cases, application level should not directly implement this interface, but should instead wrap existing value classes bitemporally using a <<<BitemporalWrapper>>>.        
+  []
+
+  In most cases, application level should not directly implement this interface, but should instead wrap existing value classes bitemporally using a <<<BitemporalWrapper>>>.        
 
 * {TODO}
+
   TODO
+
+* {References}
+  
+  * [1] {{{http://en.wikipedia.org/wiki/Temporal_database} Wiki:Temporal Database}}
+    
+  * [2] {{{https://svn.ervacon.com/public/projects/bitemporal/trunk/readme.txt} com.ervacon.bitemporal Simple bitemporal framework in Java }}  
+  
+  []
+  
 
 * {FAQ}
   
