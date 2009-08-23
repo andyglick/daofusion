@@ -1,0 +1,239 @@
+ ----
+ Temporal Aspects in Domain Models
+ ----
+ Vojtech Szocs
+ ----
+ 21 August 2009
+ ----
+
+Temporal Aspects in Domain Models
+  
+  Many applications work with domains which are inherently temporal. While it is natural to think in a non-temporal way, everyone should be aware of temporal issues and patterns which aim to solve them.
+  
+Sections
+  
+  * {{{./temporal-aspects.html#Overview} Overview}}
+  
+  * {{{./temporal-aspects.html#Temporal_domain_models} Temporal domain models}}
+  
+  * {{{./temporal-aspects.html#Levels_of_temporality} Levels of temporality}}
+  
+  * {{{./temporal-aspects.html#Bitemporal_example} Bitemporal example}}
+  
+  * {{{./temporal-aspects.html#Bitemporal_pattern_in_relational_databases} Bitemporal pattern in relational databases}}
+  
+  []
+  
+External resources
+  
+  * {{{http://en.wikipedia.org/wiki/Temporal_database} Temporal database}}
+  
+  * {{{http://martinfowler.com/eaaDev/timeNarrative.html} Temporal patterns}} by Martin Fowler
+  
+  * {{{https://svn.ervacon.com/public/projects/bitemporal/trunk/doc/Temporal%20Issues%20in%20a%20Rich%20Domain%20Model%20-%20TSE%202007.pdf} Temporal Issues in a Rich Domain Model}} by Erwin Vervaet and Christophe Vanfleteren
+  
+  * {{{http://www.cs.arizona.edu/people/rts/tdbbook.pdf} Developing Time-Oriented Database Applications in SQL}} by Richard Snodgrass
+  
+  []
+  
+* {Overview}
+  
+  Things change, people use to say. Change as the omnipresent property of our existence leads us into thinking about the concept of time. Regardless of whether the time {{{http://www.freewebs.com/timedoesnotexist/time%20does%20not%20exist.pdf} actually exists}}
+  or not, it has proven to be a vital part of our everyday life. We use time to sequence events and compare durations and intervals between them. Temporality is pervasive to all things around us,
+  including the world of domain modeling.
+  
+  Many applications work with domains which are inherently temporal. Some people realize this and try to apply various {{{http://martinfowler.com/eaaDev/timeNarrative.html} temporal patterns}} at the very
+  beginning of business requirement analysis, while others find themselves trapped in a tricky situation during later phases where additional changes to existing domain models incur high costs (time, code
+  and model integrity). While it is natural to think in a non-temporal way, everyone should be aware of temporal issues and patterns which aim to solve them.
+  
+* {Temporal domain models}
+  
+  Temporal domain models are simply domain models with built-in time aspects, along with appropriate query mechanism taking such aspects into account.
+  
+  There are basically two kinds of temporal patterns applicable to domain models in general:
+  
+  * {{{http://martinfowler.com/eaaDev/TemporalProperty.html} Temporal property}} - object property that is being tracked in time (part of a non-temporal or immutable object)
+  
+  * {{{http://martinfowler.com/eaaDev/TemporalObject.html} Temporal object}} - object that is being tracked in time (multiple versions of temporally tracked data, with each data change resulting in a new version)
+  
+  []
+  
+  There are also some concepts derived from the patterns mentioned above, such as the {{{http://martinfowler.com/eaaDev/Snapshot.html} snapshot}} representing a view of a temporal object in the given point in time
+  with all temporal aspects removed. 
+  
+* {Levels of temporality}
+  
+  An object or its property can be temporally tracked at various levels, depending on the situation:
+  
+  * <<Non-temporal>>
+  
+  No time tracking. Allows us to answer questions about the <current> situation only.  
+  
+  Example: "Where does John Doe (currently) live?"
+  
+  * <<Actual temporal>>
+   
+  Adds a {{{http://en.wikipedia.org/wiki/Valid-time} validity interval}} (also known as actual time): time period during which a fact is true with respect to the real world. Allows us to answer questions about
+  the situation at the given point in time (e.g. what was valid at the given moment). Can be implemented using the {{{http://martinfowler.com/eaaDev/Effectivity.html} effectivity}} pattern.
+  
+  Example: "Where did John Doe live on September 1, 1994?"
+  
+  * <<Record temporal>>
+  
+  Adds a {{{http://en.wikipedia.org/wiki/Transaction-time} record interval}} (also known as transaction time): time period during which a fact is known. This is equivalent to saying that the record interval
+  represents the state of the database and our knowledge of the given fact for its duration. Allows us to answer questions about what we knew at the given point in time (e.g. what was known at the given moment).
+  
+  Example: "On October 1, 1994, what did we know about John Doe's residence?"
+  
+  * <<Bitemporal>>
+  
+  Combines <actual temporal> and <record temporal> concepts together. Allows us to answer questions about what we knew at the given point in time about the situation at another moment. Note that the validity
+  interval and record interval are completely independent of each other. For example, we can store temporal data about events in the 18th century (valid time) which we are aware of in the 20th century (record time).
+  Later on in 21st century, someone can reason for facts which were true during the 18th century given the knowledge of the 20th century.
+  
+  Example: "On October 1, 1994, what did we know about John Doe's residence on September 1, 1994?"
+  
+  []
+  
+  We can even have more timelines beside valid and record time, resulting in a multitemporal concept. Given that every additional timeline adds complexity to the overall implementation, the {{{http://en.wikipedia.org/wiki/Bitemporal} bitemporal}}
+  pattern is suitable for most issues related to time tracking.
+  
+  Note that there can be multiple validity intervals for a single record interval and vice versa. Valid time and record time are two completely orthogonal timelines, each one having a different meaning
+  within the bitemporal pattern. Despite different meanings, both intervals are formally defined as closed-open, e.g. <<<\[from, to)>>>.
+  
+** Control over the validity timeline
+  
+  Using the bitemporal pattern, not only can we change the validity of recorded events in the "past" (e.g. in 21st century, we might update our knowledge about the 18th century that supersedes the knowledge
+  of the 20th century); we can also change the validity of events in the "future" as well (e.g. in 22nd century, scientists discover that an asteroid hits the Earth in the 24th century, recording this event
+  before it has happened). In other words, the application has free control over the validity timeline:
+  
+  * Additive (active) changes - ending the validity of a record and adding a new one (with possibly updated data) to the end of the history
+  
+  * Retroactive changes - modifying validity (with possibly updated data) for records in the "past"
+  
+  * Proactive changes - modifying validity (with possibly updated data) for records in the "future"
+  
+  []
+  
+  All types of operations listed above are assumed to be known (recorded) starting from "now" on.
+  
+* {Bitemporal example}
+  
+  Things are best explained using examples. Suppose we want to store data about the life of a fictional man called John Doe in a relational database. We will store this data in a table called <<<Person>>>:
+  
+*----------+------------+-------------+-------------+-------------+-------------*
+| Name     | Residence  | Valid-From  | Valid-To    | Record-From | Record-To   |
+*----------+------------+-------------+-------------+-------------+-------------*
+| Type: <Text> | Type: <Text> | Type: <Date> | Type: <Date> | Type: <Date> | Type: <Date> |
+*----------+------------+-------------+-------------+-------------+-------------*
+  
+  John Doe was born on April 3, 1975 in Smallville. On April 4, 1975 John's father proudly registered his son's birth. An official inserted a new entry to the database stating that John lives in Smallville
+  from the April, 3rd. Notice that although the data was inserted on the 4th, the database states that the information is valid since the 3rd.
+  
+*----------+------------+-------------+-------------+-------------+-------------*
+||Name     ||Residence  ||Valid-From  ||Valid-To    ||Record-From ||Record-To   |
+*----------+------------+-------------+-------------+-------------+-------------*
+| John Doe | Smallville | 3-Apr-1975  | infinity    | 4-Apr-1975  | infinity    |
+*----------+------------+-------------+-------------+-------------+-------------*
+  
+  August 26, 1994 John moves to Bigtown. He forgets to register the change of address officially until his mother reminds him to do so. December 27, 1994 John reports his new address in Bigtown
+  where he has been living since August 26, 1994.
+  
+*----------+------------+-------------+-------------+-------------+-------------*
+||Name     ||Residence  ||Valid-From  ||Valid-To    ||Record-From ||Record-To   |
+*----------+------------+-------------+-------------+-------------+-------------*
+| John Doe | Smallville | 3-Apr-1975  | infinity    | 4-Apr-1975  | 27-Dec-1994 |
+*----------+------------+-------------+-------------+-------------+-------------*
+| John Doe | Smallville | 3-Apr-1975  | 26-Aug-1994 | 27-Dec-1994 | infinity    |
+*----------+------------+-------------+-------------+-------------+-------------*
+| John Doe | Bigtown    | 26-Aug-1994 | infinity    | 27-Dec-1994 | infinity    |
+*----------+------------+-------------+-------------+-------------+-------------*
+  
+  Note that we are making additive changes to existing records by updating the value of <Record-To> column. Essentially, any change of the data and/or its validity results in a new <version> represented by a new row
+  in the <<<Person>>> table. Explicit changes to the record interval are not allowed as this would cause {{{http://en.wikipedia.org/wiki/Data_corruption} data corruption}}. Furthermore, the time we record events
+  should be always "now" - changing our knowledge of data in the past is similar to causing a {{{http://en.wikipedia.org/wiki/Temporal_paradox} temporal paradox}}. Since the record time is always "now", there's
+  a guarantee that the value is strictly increasing and our knowledge of facts is consistent throughout the record timeline. Application developers should really care about the record time only when querying for temporal
+  data.
+  
+  There are several important things recorded in the table above:
+  
+  * From 4-Apr-1975 to 27-Dec-1994, it is known that John Doe:
+    
+    * lives in Smallville from 3-Apr-1975 onwards.
+  
+  []
+  
+  * From 27-Dec-1994 onwards, it is known that John Doe: 
+  
+    * lives in Smallville from 3-Apr-1975 to 26-Aug-1994, <and>
+  
+    * lives in Bigtown from 26-Aug-1994 onwards.
+  
+  []
+  
+  You can see that one record interval such as <<<\[27-Dec-1994, infinity)>>> can have two validity intervals associated. This is because our knowledge during this period encompasses two events: John's residence in Smallville
+  during <<<\[3-Apr-1975, 26-Aug-1994)>>> and in Bigtown during <<<\[26-Aug-1994, infinity)>>>.
+  
+** Temporal reasoning
+  
+  Following table lists some sample questions and related answers according to the latest state of the <<<Person>>> table. All questions assume "now" and "currently" as 1-Jan-2000.
+  
+*----------+--------*
+||Question ||Answer |
+*----------+--------*
+| Where does John (currently) live (as now known)? | Bigtown |
+*----------+--------*
+| Where does John (currently) live, as known on 1-Oct-1994? | Smallville |
+*----------+--------*
+| Where did John live on 1-Sep-1994 (as now known)? | Bigtown |
+*----------+--------*
+| Where did John live on 1-May-1994 (as now known)? | Smallville |
+*----------+--------*
+| Where did John live on 1-Apr-1975 (as now known)? | (no record) |
+*----------+--------*
+| Where did John live on 1-Sep-1994, as known on 1-Oct-1994? | Smallville |
+*----------+--------*
+  
+* {Bitemporal pattern in relational databases}
+  
+  {{{http://en.wikipedia.org/wiki/Relational_database} Relational databases}} have been around for quite a while now, yet nearly none of them provides any kind of support for temporal aspects.
+  TSQL2, being developed by the temporal database community during 1993 and finalized in late 1994, made its way into SQL3 as a new substandard called SQL/Temporal. However, the ISO project
+  responsible for temporal support was canceled near the end of 2001.
+  
+  Today, only few database software vendors provide such support:
+  
+  * {{{http://www.timeconsult.com/Software/Software.html} TimeDB}} (bitemporal) - translates TSQL2 statements into standard SQL statements which then are executed against the (non-temporal)
+    relational database
+  
+  * {{{http://www.oracle.com/technology/deploy/availability/htdocs/Flashback_Overview.htm} Oracle Flashback}} (record temporal) - records the history of data changes throughout the time for recovery
+    or auditing purposes
+  
+  * {{{http://www.oracle.com/technology/products/database/workspace_manager/index.html} Oracle Workspace Manager}} (record temporal) - version control for table data
+  
+  []
+  
+  As you can see, there is no database software that natively supports the bitemporal pattern or TSQL2 as its standard. The most straightforward solution is therefore to implement this pattern
+  on top of a non-temporal relational database on your own. There are, however, certain issues you may encounter on this path, as described below.
+  
+** Temporal object identity
+  
+  There can be multiple versions of temporally tracked data (object) with same properties. This essentially breaks the uniqueness of the object identity on its own.
+  
+  For example, rows one and two in the latest state of the <<<Person>>> table contain same values for <Name> and <Residence> columns. These two rows differ only by means of validity and record intervals.
+  
+  The obvious solution is to have an immutable or non-temporal master entity that holds a reference to the temporal object as a property.
+  
+** Data immutability
+  
+  Temporal object defines that each change to the data results in a new version with new data values. Essentially, trying to modify data of existing temporal records means we are actually rewriting
+  the data history, corrupting our knowledge of such data throughout both timelines. This is why data changes should result in additive changes to existing temporal records.
+  
+** Controlling record time
+  
+  Applications working with temporal domain models need a way of controlling the record time between multiple business operations. Imagine that we need to retrieve data as known on August 26, 1994
+  by performing multiple database queries (assume that such data cannot be accessed by a single query). In order to have consistent results, the record time needs to be August 26, 1994 for all temporal
+  queries. Let's store the record time as a constant, you might say. But what if the record time needs to be initialized according to user input? Or what if the record time needs to be shared by various
+  business components across the application?
+  
+  One solution would be to have a static thread-local variable holding the record time which is accessible to all components in the same thread across the application. This solution might be suitable
+  for web applications where each request is mapped to a new worker thread within the application server.
