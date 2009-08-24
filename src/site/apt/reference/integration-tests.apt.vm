@@ -1,9 +1,10 @@
  ----
  Integration test support
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Take advantage of an out-of-the-box integration test support to write your own custom integration tests for the database of your choice.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Integration test support
@@ -214,3 +215,6 @@ External resources
 * {FAQ}
   
   We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

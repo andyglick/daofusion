@@ -9,6 +9,10 @@
 	
 	<body>
     <release version="1.2 M3" date="N/A" description="Milestone 3 of the 1.2.x branch">
+      <action dev="igor.mihalik" type="update">
+        Cleanup of Maven dependencies in POM files. All external compile-scoped dependencies are now marked as optional
+        for more control over the dependency resolution process.
+      </action>
     </release>
     
     <release version="1.2 M2" date="2009-07-21" description="Milestone 2 of the 1.2.x branch">

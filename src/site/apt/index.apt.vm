@@ -1,9 +1,10 @@
  ----
  Welcome
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=${df} is a lightweight yet comprehensive and extensible Java based Data Access Object (DAO) pattern implementation built on top of Java Persistence API and Hibernate.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Welcome to ${df}

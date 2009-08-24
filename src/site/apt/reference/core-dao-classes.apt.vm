@@ -1,9 +1,10 @@
  ----
  Core DAO classes
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Build your DAO layer by extending standard persistent entity DAO interfaces / abstract implementations which already provide most of the usual DAO functionality.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Core DAO classes
@@ -149,3 +150,6 @@ Related tech notes
 * {FAQ}
   
   We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

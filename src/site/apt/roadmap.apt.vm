@@ -1,15 +1,15 @@
  ----
  ${df} roadmap
  ----
- Michal Jemala
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Roadmap describing planned feature releases and their milestones.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 ${df} roadmap
   
-  This page lists project milestones for upcoming feature releases according to our {{{./release-policy.html} release policy}}.
+  This page lists planned feature releases and their milestones according to our {{{./release-policy.html} release policy}}.
   
 1.2.0
   
@@ -54,3 +54,6 @@ ${df} roadmap
   * removal of code marked as deprecated
   
   []
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

@@ -1,9 +1,10 @@
  ----
  Transaction Management
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Transactions aim to improve integrity and consistency of your data by grouping data access operations into logical units of work.
  ----
- 17 July 2009
+ 14 August 2009
  ----
 
 Transaction Management
@@ -119,3 +120,6 @@ External resources
   On the other hand, the <<<NOT_SUPPORTED>>> transaction propagation mode is useful for situations which forbid the use of transactions within a transaction context (for example, situations
   where you want to avoid nested transactions such as stored procedures using transactions on their own). However, the overall impact is similar to the <<<REQUIRES_NEW>>> propagation mode - atomicity
   of the underlying transaction is violated.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

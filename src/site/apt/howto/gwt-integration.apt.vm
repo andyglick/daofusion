@@ -1,9 +1,10 @@
  ----
  Google Web Toolkit Integration
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Guide to integrating ${df} client classes into Google Web Toolkit (GWT) applications.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Google Web Toolkit Integration
@@ -33,3 +34,6 @@ Google Web Toolkit Integration
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/howto/gwt-integration-module.gwt.xml}
   
   Now you're ready to use ${df} in your GWT applications.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

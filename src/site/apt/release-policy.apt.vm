@@ -1,9 +1,10 @@
  ----
  Release Policy
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Release policy and conventions regarding official ${df} releases.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Release Policy
@@ -47,6 +48,8 @@ Release Policy
   
   * <<<bugfix>>> number change indicates bugfixes, performance enhancements and minor functionality additions that don't break the general API
   
+  []
+  
 * General conventions
   
   Tags should be created from a corresponding <maintenance branch> upon new project release. <Milestones> are part of a transition between
@@ -63,10 +66,15 @@ Release Policy
   
 * Maven artifact versioning
   
-  Artifact versions within <<<pom.xml>>> files reflect the versioning policy in a way that is appropriate for Maven projects:
+  Artifact versions within <<<pom.xml>>> files reflect the versioning policy in a way that is appropriate for {{{http://maven.apache.org/} Maven}} projects:
   
   * <<<SNAPSHOT>>> for the trunk
   
   * <<<major.minor-SNAPSHOT>>> for maintenance branches
   
   * <<<major.minor.bugfix>>> for tags (releases)
+  
+  []
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

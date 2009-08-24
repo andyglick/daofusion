@@ -1,9 +1,10 @@
  ----
  ${df} on Google Groups
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=${df} discussion group hosted on Google Groups is a good place to discuss new features or known issues.
  ----
- 20 April 2009
+ 14 August 2009
  ----
 
 ${df} on Google Groups
@@ -15,3 +16,5 @@ ${df} on Google Groups
   for reporting new issues (e.g. bugs or feature requests).
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-groups-promotion-box.html|paramFile=src/site/snippet/html/google-groups-promotion-box.properties}
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}

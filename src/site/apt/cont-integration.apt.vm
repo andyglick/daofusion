@@ -1,9 +1,10 @@
  ----
  Continuous integration
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Continuous integration system which reacts to changes in the source code repository ensures that problems are detected early within each project build.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Continuous integration
@@ -29,3 +30,6 @@ Continuous integration
   * commit often (avoid big-bang commits)
   
   []
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

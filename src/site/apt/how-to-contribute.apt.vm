@@ -1,9 +1,10 @@
  ----
  How to Contribute
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=General notes on how to get involved with ${df}.
  ----
- 26 February 2009
+ 14 August 2009
  ----
 
 Contributing to ${df}
@@ -21,3 +22,6 @@ How to join the project
   Users participating to a higher extent (reporting issues, submitting patches, etc.) will be invited to join the project as contributors.
   
   Becoming a committer is possible for contributors showing high commitment to the project and its community as well as proven technical abilities.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

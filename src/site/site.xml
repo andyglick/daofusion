@@ -2,8 +2,8 @@
 <project name="${project.parent.name}">
 	
 	<skin>
-		<groupId>m2st</groupId>
-		<artifactId>stylus-ext-skin</artifactId>
+		<groupId>com.anasoft.os</groupId>
+		<artifactId>m2st-stylus-ext-skin</artifactId>
 		<version>${m2st.version}</version>
 	</skin>
 	
@@ -15,11 +15,6 @@
 	<bannerRight>
 		<src>images/top-right.gif</src>
 	</bannerRight>
-	
-	<poweredBy>
-		<logo name="GNU Lesser General Public License" href="http://www.gnu.org/licenses/lgpl.html"
-			img="images/logos/lgpl.gif" />
-	</poweredBy>
 	
 	<body>
 		
@@ -67,6 +62,7 @@
 		
 		<menu name="Tech Notes">
 			<item name="Transaction Management" href="technote/transaction-management.html" />
+			<item name="Temporal Aspects" href="technote/temporal-aspects.html" />
 		</menu>
 		
 		<menu name="Community">

@@ -1,9 +1,10 @@
  ----
  Coding Conventions
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Simple set of coding conventions and best practices to ensure readability, maintainability and overall quality of the source code.
  ----
- 19 May 2009
+ 14 August 2009
  ----
 
 Coding Conventions
@@ -32,3 +33,6 @@ Coding Conventions
   
   Practicing {{{./code-review.html} code reviews}} when proposing or committing source code patches for a particular revision is highly recommended.
   Patch sets representing non-trivial issue fixes or other major changes should definitely go through the code review process in any case.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

@@ -1,9 +1,10 @@
  ----
  Dependencies
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=List of libraries and APIs ${df} depends on during runtime.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Project dependencies
@@ -23,7 +24,7 @@ Project dependencies
 *-------------------------+---------+-------------*
 | <<{{{http://joda-time.sourceforge.net/} Joda Time}}>> | <<1.6>> | ${df-core} |
 *-------------------------+---------+-------------*
-| <<{{{http://www.junit.org/} JUnit}}>> | <<4.6>> / <<4.4>> | ${df-core} / ${df-test} (see {{{http://jira.springframework.org/browse/SPR-5145} this issue}} for more information) |
+| <<{{{http://www.junit.org/} JUnit}}>> | <<4.4>> | ${df-test} (see {{{http://jira.springframework.org/browse/SPR-5145} this issue}} for more information) |
 *-------------------------+---------+-------------*
 | <<{{{http://www.springsource.org/about} Spring}}>> | <<2.5.6>> | ${df-test} |
 *-------------------------+---------+-------------*
@@ -32,3 +33,6 @@ Project dependencies
   
   Note that all artifacts mentioned above represent {{{http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope} compile and runtime scoped}}
   Maven dependencies which are required by the corresponding ${df} project (excluding cross-project dependencies).
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

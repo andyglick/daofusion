@@ -1,9 +1,10 @@
  ----
  Bitemporal pattern
  ----
- Igor Mihalik
+ Igor Mihalik;
+ meta-description=Temporal database is a database with built-in time aspects, e.g. a temporal data model and a temporal version of structured query language.
  ----
- 20 July 2009
+ 14 August 2009
  ----
 
 Bitemporal pattern
@@ -70,3 +71,6 @@ Sections
 * {FAQ}
   
   We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

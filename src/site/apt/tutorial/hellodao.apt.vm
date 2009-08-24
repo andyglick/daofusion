@@ -1,9 +1,10 @@
  ----
  Hello, DAO! tutorial
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Hello, DAO! sample application aims to help developers get familiar with ${df} concepts using popular web technologies and tools.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Hello, DAO! tutorial
@@ -55,3 +56,6 @@ http://localhost:8080/hellodao/init
 Step-by-step tutorial
   
   We are currently working on a step-by-step tutorial for <Hello, DAO!> which will demonstrate basic steps when building DAO layers with ${df}.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-ratings-and-reviews-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-ratings-and-reviews-gadget.properties}
+  

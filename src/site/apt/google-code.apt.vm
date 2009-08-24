@@ -1,9 +1,10 @@
  ----
  ${df} on Google Code
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=${df} uses Google Code for managing source codes, issues and Maven artifacts.
  ----
- 25 May 2009
+ 14 August 2009
  ----
 
 ${df} on Google Code
@@ -15,3 +16,6 @@ ${df} on Google Code
   * {{{./issue-tracking.html} issue tracker}}
   
   * {{{ ${anasoft-os-repo-googleCodeUrl} } Maven artifact repository}}
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

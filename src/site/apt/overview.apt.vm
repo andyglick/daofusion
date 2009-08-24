@@ -1,9 +1,10 @@
  ----
  ${df} overview
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Brief overview of what ${df} is and what features it offers from a high-level perspective.
  ----
- 17 June 2009
+ 14 August 2009
  ----
 
 ${df} overview
@@ -43,3 +44,6 @@ ${df} overview
   The fact that ${df} went {{{http://en.wikipedia.org/wiki/Open_source_software} open source}} after its initial release was a natural step in its evolution. After all, what's the real
   benefit of having such library hidden inside a company with a couple of people responsible for its maintenance and further development? <Open source projects involve many people
   collaborating together to build a software that is useful to each and every community member>, and that's the value ${df} aims to achieve.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

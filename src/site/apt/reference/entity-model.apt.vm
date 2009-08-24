@@ -1,9 +1,10 @@
  ----
  Persistent entity model
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Model your business domain using a standard persistent entity model with out-of-the-box default persistent entity implementations.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Persistent entity model
@@ -173,3 +174,6 @@ External resources
 * {FAQ}
   
   We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

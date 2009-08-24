@@ -1,12 +1,28 @@
  ----
  ${df} news
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=${df} news and announcements.
  ----
- 21 July 2009
+ 24 August 2009
  ----
 
 ${df} news
+  
+* 2009-08-24
+  
+  A new version of {{{http://code.google.com/p/m2-site-tools/} m2-site-tools}} has been officially released and linked to the {{{http://code.google.com/p/anasoft-os-repo/} ANASOFT OpenSource repository}}.
+  
+* 2009-08-14
+  
+  Michal created a {{{http://www.facebook.com/pages/Open-Source-DAO-FUSION/115735348805} Facebook page}} devoted to ${df}.
+  
+* 2009-08-12
+  
+  We've been experimenting with {{{http://www.google.com/friendconnect/} Google Friend Connect}} gadgets to add some nice social features to the project site. You can join and sign in to ${df}
+  site community using the Members gadget located at the bottom of menu on the left side. After signing in, you can post comments and reviews to most of our pages.
+  
+  Work on ${df} milestone 3 nears to its end as well so stay tuned for the next release.
   
 * 2009-07-21
   

@@ -1,9 +1,10 @@
  ----
  Temporal Aspects in Domain Models
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Temporal domain models are domain models with built-in time aspects, along with appropriate query mechanism taking such aspects into account.
  ----
- 21 August 2009
+ 24 August 2009
  ----
 
 Temporal Aspects in Domain Models
@@ -237,3 +238,5 @@ External resources
   
   One solution would be to have a static thread-local variable holding the record time which is accessible to all components in the same thread across the application. This solution might be suitable
   for web applications where each request is mapped to a new worker thread within the application server.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}

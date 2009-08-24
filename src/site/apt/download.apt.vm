@@ -1,9 +1,10 @@
  ----
  Download
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Stable releases as well as milestones available for download.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Download ${df}
@@ -37,3 +38,6 @@ Download ${df}
 *------------+--------+---------+---------*
   
   See the {{{./roadmap.html} roadmap}} for more information about project milestones and their progress.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

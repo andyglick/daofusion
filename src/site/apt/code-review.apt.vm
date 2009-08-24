@@ -1,9 +1,10 @@
  ----
  Code Review
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Code reviews enable project members to comment on patch sets made by other members to improve the overall source code quality.
  ----
- 19 May 2009
+ 14 August 2009
  ----
 
 Code Review
@@ -42,3 +43,8 @@ Performing code review
     for related issues within the {{{../issue-tracking.html} issue tracker}}.
   
   * See {{{http://code.google.com/p/rietveld/wiki/CodeReviewHelp} this guide}} for detailed information about the code review process.
+  
+  []
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

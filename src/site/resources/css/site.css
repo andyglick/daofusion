@@ -25,12 +25,29 @@ h4 {
 	margin-left: 250px;
 }
 
-#navcolumn img {
-	margin-bottom: 10px;
+.navcolumn img {
+	margin-top: 8px;
+	margin-bottom: 24px;
 	margin-left: 10px;
 }
 
 tt {
-  color: #8A0808;
-  font-size: 13px;
+	color: #8A0808;
+	font-size: 13px;
+}
+
+#gfcMembersGadget {
+	margin-top: 24px;
+	margin-bottom: 8px;
+}
+
+.fc-topcap-color {
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+#gfcCommentsGadget,#gfcRatingsAndReviewsGadget {
+	width: 100%;
+	margin-top: 24px;
+	padding-bottom: 24px;
 }

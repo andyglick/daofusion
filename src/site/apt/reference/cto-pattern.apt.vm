@@ -1,9 +1,10 @@
  ----
  Criteria transfer object pattern
  ----
- Vojtech Szocs
+ Vojtech Szocs;
+ meta-description=Use the criteria transfer object (CTO) pattern to construct client-side versions of persistent entity criteria instances and pass them through the chosen communication mechanism to remote server-side components.
  ----
- 21 July 2009
+ 14 August 2009
  ----
 
 Criteria transfer object pattern
@@ -155,3 +156,6 @@ External resources
 * {FAQ}
   
   We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
+  

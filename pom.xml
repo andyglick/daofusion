@@ -16,7 +16,7 @@
 	
 	<properties>
 		<maven-site-plugin.version>2.0</maven-site-plugin.version>
-		<m2st.version>1.2b</m2st.version>
+		<m2st.version>2.0</m2st.version>
 		
 		<df>DAO Fusion</df>
 		<df-short>daofusion</df-short>
@@ -37,6 +37,12 @@
 		<m2st-syntaxHighlighter-config>config.clipboardSwf='%ROOT%/scripts/clipboard.swf'</m2st-syntaxHighlighter-config>
 		<m2st-gatc-id>UA-3757971-5</m2st-gatc-id>
 		<m2st-privacyPolicyUrl>http://maven.apache.org/privacy-policy.html</m2st-privacyPolicyUrl>
+		<m2st-gfc-siteId>11227093046098628034</m2st-gfc-siteId>
+		<m2st-gfc-parentUrl>/daofusion-site/</m2st-gfc-parentUrl>
+		<m2st-gfc-membersGadgetPosition>left-bottom</m2st-gfc-membersGadgetPosition>
+		<m2st-gfc-membersGadgetDivId>gfcMembersGadget</m2st-gfc-membersGadgetDivId>
+		<m2st-gfc-membersGadgetSkinOptions>skin['NUMBER_ROWS']='2',skin['ENDCAP_BG_COLOR']='#f0f0f0'</m2st-gfc-membersGadgetSkinOptions>
+		<m2st-renderDefaultPoweredByLogoIfNotSpecified>false</m2st-renderDefaultPoweredByLogoIfNotSpecified>
 	</properties>
 	
 	<build>
@@ -50,8 +56,8 @@
 				</configuration>
 				<dependencies>
 					<dependency>
-						<groupId>m2st</groupId>
-						<artifactId>doxia-macros</artifactId>
+						<groupId>com.anasoft.os</groupId>
+						<artifactId>m2st-doxia-macros</artifactId>
 						<version>${m2st.version}</version>
 					</dependency>
 				</dependencies>
