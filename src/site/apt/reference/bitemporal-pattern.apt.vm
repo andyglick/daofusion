@@ -42,22 +42,60 @@ Sections
     * Bitemporal data combines both Valid and Transaction Time.
 
   
-* {Bitemporal suport in daofusion}
+* {Bitemporal suport in ${df} }
 
   The implementation in this project is based on work done by Erwin Vervaet and Christophe Vanfleteren [2].  Their implementation was extended to fit more in annotation based setup.
   <<<Bitemporal>>> is the main interface to understand. Any object implmenting <<<Bitemporal>>> is ment to track value in two dimensions:
 
-  * Validity time: indicates when the value was valid
+  * Validity interval: indicates when the value was valid
     
-  * Recording time: indicates when the value was known (also known as transaction time)
+  * Recording interval: indicates when the value was known (also known as transaction interval)
 
   []
 
-  In most cases, application level should not directly implement this interface, but should instead wrap existing value classes bitemporally using a <<<BitemporalWrapper>>>.        
+  In most cases, application level should not directly implement this interface, but should instead wrap existing value classes bitemporally using a specific <<<BitemporalWrapper>>>. The example of such implementation is shown in folowing snippet:
 
-* {TODO}
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/bitemporal-bitemporal-wrapper.java}
 
-  TODO
+  This snippet shows bitemporal wrapper for Long value. This bitemporal wrapper tracks long values in time. To clarify usage, next snippet shows entity Person with bitemporal property tracking number of childrens in time. Bitemporal values are internally stored in collection:
+
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/bitemporal-entity.java}
+
+
+* {Manipulating Bitemporal Collections}
+
+  To access bitemporal values one will use <<<BitemporalProperty>>>. It's a convenient class to access values in bitemporal collection:
+
+  * access value known and valid on given time
+
+  * access history of values as known on given time
+
+  * access evolution of values as valid on given time
+  
+  []
+
+  In order to prevent the API pollution with tuple of dates (known on and valid on), the decision was made to set known on date value via <<<TimeUtils.setReference(Date recordAt)>>> method. The value is stored in <<<ThreadLocal>>> so it's used everywhere in the scope of the running thread. 
+
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/bitemporal-property.java}
+
+  Bitemporal property needs <<<ValueAccessor>>> as a factory to bind specific value into bitemporal wrapper and retrieve the value from bitemporal wrapper. So in our example the value accessor for Long value and it's BitemporalLong:
+
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/bitemporal-value-accessor.java}
+
+  to be specific, LongBitemporalProperty will look like this:
+
+
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/bitemporal-long-property.java}
+
+* {History and Evolution}
+
+  History and evolution provide 
+
+
+* {Persistent entity criteria API and Bitemporal}
+
+  TODO: this part will describe how to query entities with bitemporal property criteria.
+
 
 * {References}
   

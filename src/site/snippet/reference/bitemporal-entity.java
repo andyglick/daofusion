@@ -1,0 +1,6 @@
+public class Person {
+    // ...
+    private Collection<BitemporalLong> numberOfChildres = new LinkedList<BitemporalLong>();
+    // ...
+}
+
