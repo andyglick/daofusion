@@ -1,3 +1,5 @@
+import com.anasoft.os.daofusion.bitemporal.BitemporalWrapper;
+
 private static class BitemporalLong extends BitemporalWrapper<Long> {
 	private Long value;
 

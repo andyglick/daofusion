@@ -1,4 +1,4 @@
-BitemporalProperty<Long, BitemporalLong> numOfChildren  = new BitemporalProperty<Long, BitemporalLong>(values, new LongValueAccessor());
+BitemporalProperty<Long, BitemporalLong> numOfChildren  = new BitemporalProperty<Long, BitemporalLong>(numberOfChildren, new LongValueAccessor());
 
 // set transaction time to system time
 TimeUtils.setReference(new DateTime());

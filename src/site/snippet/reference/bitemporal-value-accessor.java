@@ -1,3 +1,6 @@
+import com.anasoft.os.daofusion.bitemporal.ValueAccessor;
+import org.joda.time.Interval;
+
 public class LongValueAccessor implements ValueAccessor<Long, BitemporalLong> {
 	public Long extractValue(BitemporalLong bitemporalLong) {
 		return bitemporalLong.getValue();

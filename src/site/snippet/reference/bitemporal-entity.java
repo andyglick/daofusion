@@ -1,6 +1,6 @@
 public class Person {
     // ...
-    private Collection<BitemporalLong> numberOfChildres = new LinkedList<BitemporalLong>();
+    private Collection<BitemporalLong> numberOfChildren = new LinkedList<BitemporalLong>();
     // ...
 }
 
