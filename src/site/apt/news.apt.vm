@@ -13,6 +13,8 @@ ${df} news
   
   A new version of {{{http://code.google.com/p/m2-site-tools/} m2-site-tools}} has been officially released and linked to the {{{http://code.google.com/p/anasoft-os-repo/} ANASOFT OpenSource repository}}.
   
+  We also added a new tech note called {{{./technote/temporal-aspects.html} Temporal Aspects in Domain Models}} which explains the bitemporal pattern using examples.
+  
 * 2009-08-14
   
   Michal created a {{{http://www.facebook.com/pages/Open-Source-DAO-FUSION/115735348805} Facebook page}} devoted to ${df}.
