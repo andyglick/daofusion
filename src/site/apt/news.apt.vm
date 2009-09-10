@@ -4,10 +4,14 @@
  Vojtech Szocs;
  meta-description=${df} news and announcements.
  ----
- 24 August 2009
+ 10 September 2009
  ----
 
 ${df} news
+  
+* 2009-09-10
+  
+  We have finalized the reference documentation for the upcoming <<1.2.0>> release. ${df} milestone 3 will be out very soon, followed by the actual final release.
   
 * 2009-08-24
   

@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=${df} is a lightweight yet comprehensive and extensible Java based Data Access Object (DAO) pattern implementation built on top of Java Persistence API and Hibernate.
  ----
- 9 September 2009
+ 10 September 2009
  ----
 
 Welcome to ${df}
@@ -16,7 +16,7 @@ Welcome to ${df}
   
 * Features
   
-  You could think of ${df} as a solid foundation for your own DAO layers, doing most of the usual heavy lifting for you and providing support for common DAO-related tasks,
+  You could think of ${df} as a solid foundation for your own DAO layers, doing most of the usual heavy lifting for you and providing support for common DAO-related tasks and patterns,
   such as:
   
   * {{{./reference/entity-model.html} Persistent entity model}}

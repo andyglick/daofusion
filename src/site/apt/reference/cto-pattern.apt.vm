@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Use the criteria transfer object (CTO) pattern to construct client-side versions of persistent entity criteria instances and pass them through the chosen communication mechanism to remote server-side components.
  ----
- 9 September 2009
+ 10 September 2009
  ----
 
 Criteria transfer object pattern
@@ -41,7 +41,7 @@ External resources
 * {Introduction}
   
   Even though the criteria transfer object (CTO) pattern might sound like a buzzword, it's actually a concept that aims for application scenarios with loose coupling between the client
-  and the server. The primary goal here is to enable clients to construct <serializable> versions of persistent entity criteria instances (criteria transfer objects) and pass them through
+  and server. The primary goal here is to enable clients to construct <serializable> versions of persistent entity criteria instances (criteria transfer objects) and pass them through
   the chosen communication mechanism to remote components which can convert them into corresponding <<<PersistentEntityCriteria>>> seamlessly.
   
   Using this concept, building complex data grids that use filtering, sorting and paging functionality can be accomplished in a very efficient and easy way, assuming that:

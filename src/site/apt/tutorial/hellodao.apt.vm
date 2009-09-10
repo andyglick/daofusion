@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Hello, DAO! sample application aims to help developers get familiar with ${df} concepts using popular web technologies and tools.
  ----
- 14 August 2009
+ 10 September 2009
  ----
 
 Hello, DAO! tutorial
@@ -23,13 +23,15 @@ Hello, DAO! tutorial
   
   []
   
-  Hey, but where is {{{http://static.springframework.org/spring/docs/2.5.x/reference/index.html} Spring}} ? The truth is, our sample application doesn't use Spring at all during its runtime. Why?
+  Hey, but where is {{{http://static.springframework.org/spring/docs/2.5.x/reference/index.html} Spring}} ? The truth is, our sample application doesn't use Spring at all. Why?
   
   * to prove ${df} usability in non-managed application environments (no Spring or EJB container)
   
   * to think more deeply about concepts such as the <Open EntityManager In View> pattern
   
   * to make things a bit more simple
+  
+  []
   
 Instructions
   
@@ -41,8 +43,9 @@ http://daofusion.googlecode.com/svn/trunk/samples/hello-dao/
   
   If you use {{{http://www.eclipse.org/} Eclipse IDE}}, you can generate Eclipse project files via <<<mvn eclipse:eclipse>>>.
   
-  Next, start the application via <<<mvn jetty:run>>>. It can take some time though since Maven needs to look for required dependencies. Please note that <Hello, DAO!> uses
-  an embedded {{{http://www.h2database.com/} H2}} database instance running <<in the same JVM>> as the application itself.
+  Next, start the application via <<<mvn jetty:run>>>. It can take some time though since Maven needs to look for required dependencies.
+  
+  Please note that <Hello, DAO!> uses an embedded {{{http://www.h2database.com/} H2}} database instance running <<in the same JVM>> as the application itself.
   
   Once you see something like <<<[INFO] Started Jetty Server>>> on the console, you can launch the application by pointing your browser to:
   

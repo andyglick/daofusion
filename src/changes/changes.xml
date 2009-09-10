@@ -19,6 +19,9 @@
       <action dev="vojtech.szocs" type="fix">
         Maven dependency cleanup in "Hello, DAO!" sample application (Hibernate Core, Google Web Toolkit).
       </action>
+      <action dev="vojtech.szocs" type="add">
+        Added original bitemporal framework license files (BSD and Apache) under src/main/resources in daofusion-core.
+      </action>
     </release>
     
     <release version="1.2 M2" date="2009-07-21" description="Milestone 2 of the 1.2.x branch">
@@ -30,8 +33,8 @@
         update.
       </action>
       <action dev="igor.mihalik" type="add">
-        Added bitemporal pattern support that extends the standard persistent entity model along with corresponding
-        test cases. Bitemporal classes are placed in package "com.anasoft.os.daofusion.bitemporal".
+        Added bitemporal pattern implementation that integrates with the standard persistent entity model along
+        with corresponding test cases. Bitemporal classes are placed in package "com.anasoft.os.daofusion.bitemporal".
       </action>
       <action dev="igor.mihalik" type="remove">
         Removed advisor-based transaction configuration in testContext-hibernate-baseIntegration.xml (daofusion-test)
