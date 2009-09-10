@@ -2,9 +2,10 @@
  ${df} roadmap
  ----
  Vojtech Szocs;
+ Michal Jemala;
  meta-description=Roadmap describing planned feature releases and their milestones.
  ----
- 14 August 2009
+ 9 September 2009
  ----
 
 ${df} roadmap
@@ -17,7 +18,7 @@ ${df} roadmap
   
   * {{{./roadmap.html#Milestone_2} Milestone 2}}: <<complete>>
   
-  * {{{./roadmap.html#Milestone_3} Milestone 3}}: Early August 2009
+  * {{{./roadmap.html#Milestone_3} Milestone 3}}: very soon
   
   []
   
@@ -52,6 +53,12 @@ ${df} roadmap
 1.2.1
   
   * removal of code marked as deprecated
+  
+  []
+  
+Unscheduled
+  
+  * <${df} meets Flex> sample application
   
   []
   

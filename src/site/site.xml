@@ -57,7 +57,6 @@
 			<item name="Criteria transfer object pattern" href="reference/cto-pattern.html" />
 			<item name="Bitemporal pattern" href="reference/bitemporal-pattern.html" />
 			<item name="Integration test support" href="reference/integration-tests.html" />
-			<item name="Frequently Asked Questions" href="reference/reference-faq.html" />
 		</menu>
 		
 		<menu name="Tech Notes">

@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Take advantage of an out-of-the-box integration test support to write your own custom integration tests for the database of your choice.
  ----
- 14 August 2009
+ 9 September 2009
  ----
 
 Integration test support
@@ -24,8 +24,6 @@ Sections
   * {{{./integration-tests.html#DAO_versus_service} DAO versus service}}
   
   * {{{./integration-tests.html#Writing_a_custom_core_integration_test} Writing a custom core integration test}}
-  
-  * {{{./integration-tests.html#FAQ} FAQ}}
   
   []
   
@@ -211,10 +209,6 @@ External resources
   
   How cool is that? Using the standard integration test infrastructure that takes care of the JPA / Hibernate test environment, we are able to write custom core integration tests with
   only a few lines of Java code and configuration. Notice that we're using the <<<test-core-orm.xml>>> file defining entity mappings for the sample <eShop> domain model.
-  
-* {FAQ}
-  
-  We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
   

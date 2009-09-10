@@ -9,6 +9,9 @@
 	
 	<body>
     <release version="1.2 M3" date="N/A" description="Milestone 3 of the 1.2.x branch">
+      <action dev="igor.mihalik" type="fix" issue="9" system="GoogleCode">
+        Resolved issue "Incorporate support for bitemportal pattern".
+      </action>
       <action dev="igor.mihalik" type="update">
         Cleanup of Maven dependencies in POM files. All external compile-scoped dependencies are now marked as optional
         for more control over the dependency resolution process.
@@ -42,16 +45,16 @@
 		
 		<release version="1.2 M1" date="2009-06-16" description="Milestone 1 of the 1.2.x branch">
       <action dev="vojtech.szocs" type="fix" issue="5" system="GoogleCode">
-        Fixed issue "Add countAll() methods to PersistentEntityDao".
+        Resolved issue "Add countAll() methods to PersistentEntityDao".
       </action>
       <action dev="vojtech.szocs" type="fix" issue="6" system="GoogleCode">
-        Fixed issue "CriteriaTransferObject#add() Javadoc update".
+        Resolved issue "CriteriaTransferObject#add() Javadoc update".
       </action>
       <action dev="vojtech.szocs" type="fix" issue="7" system="GoogleCode">
-        Fixed issue "Utility class for commonly used PropertyFilterCriterionProvider instances".
+        Resolved issue "Utility class for commonly used PropertyFilterCriterionProvider instances".
       </action>
       <action dev="vojtech.szocs" type="fix" issue="8" system="GoogleCode">
-        Fixed issue "Property path refactoring". Original methods working with the propertyPath / associationJoinType
+        Resolved issue "Property path refactoring". Original methods working with the propertyPath / associationJoinType
         concept are now marked as deprecated in favor of the associationPath / targetPropertyName approach.
       </action>
       <action dev="vojtech.szocs" type="update">
@@ -91,13 +94,13 @@
 		
 		<release version="1.1.1" date="2009-04-24" description="Maintenance release of the 1.1.x branch">
 			<action dev="vojtech.szocs" type="fix" issue="2" system="GoogleCode">
-				Fixed issue "Request for merging functionality - NestedPropertyCriteria".
+				Resolved issue "Request for merging functionality - NestedPropertyCriteria".
 			</action>
 			<action dev="vojtech.szocs" type="fix" issue="3" system="GoogleCode">
-				Fixed issue "Problem with findSubCriteria in com.anasoft.os.daofusion.criteria.NestedPropertyCriteria - incorrect result criteria hierarchy".
+				Resolved issue "Problem with findSubCriteria in com.anasoft.os.daofusion.criteria.NestedPropertyCriteria - incorrect result criteria hierarchy".
 			</action>
 			<action dev="vojtech.szocs" type="fix" issue="4" system="GoogleCode">
-				Fixed issue "org.h2.jdbc.JdbcSQLException thrown after running core integration tests for H2 database".
+				Resolved issue "org.h2.jdbc.JdbcSQLException thrown after running core integration tests for H2 database".
 			</action>
 			<action dev="vojtech.szocs" type="update">
 				Persistent property name constant NAME changed to _NAME in PersistentEnumeration.
@@ -113,7 +116,7 @@
 		
 		<release version="1.1.0" date="2009-03-19" description="Initial release of the the 1.1.x branch">
 			<action dev="vojtech.szocs" type="fix" issue="1" system="GoogleCode">
-				Fixed issue "H2: NestedPropertyCriteria created by NestedPropertyCriteriaBasedConverter fails
+				Resolved issue "H2: NestedPropertyCriteria created by NestedPropertyCriteriaBasedConverter fails
 				within AbstractHibernateEntityDao#count()". Implementation includes a server-side CriteriaTransferObject
 				wrapper for entity instance count purposes (CriteriaTransferObjectCountWrapper) along with the
 				corresponding unit test.

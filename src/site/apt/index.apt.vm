@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=${df} is a lightweight yet comprehensive and extensible Java based Data Access Object (DAO) pattern implementation built on top of Java Persistence API and Hibernate.
  ----
- 14 August 2009
+ 9 September 2009
  ----
 
 Welcome to ${df}
@@ -38,7 +38,7 @@ Welcome to ${df}
   
   * {{{./reference/bitemporal-pattern.html} Bitemporal pattern}}
   
-  <Coming soon!>
+  Add temporal aspects to your business domain, tracking persistent entities in two distinct timelines denoting the validity of facts and your knowledge of such facts throughout the time.
   
   []
   
@@ -61,5 +61,6 @@ Welcome to ${df}
   
 * Get involved
   
-  ${df} team is currently preparing for a new feature release (see the {{{./roadmap.html} roadmap}} for more information about project milestones and their progress). Everyone is welcome
-  to join the community and contribute with his or her ideas (e.g. what you would like to see in the next feature release).
+  Everyone is welcome to join the project and {{{./how-to-contribute.html} contribute}} with his or her ideas. See our {{{./roadmap.html} roadmap}} to get an overview of planned feature releases
+  and their milestones.
+  

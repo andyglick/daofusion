@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Construct persistent entity criteria with advanced filtering, sorting and paging capabilities and pass them to DAO methods to query for desired results.
  ----
- 14 August 2009
+ 9 September 2009
  ----
 
 Persistent entity criteria API
@@ -22,8 +22,6 @@ Sections
   * {{{./entity-criteria-api.html#Property_criterion_classes} Property criterion classes}}
   
   * {{{./entity-criteria-api.html#Sample_DAO_using_both_filter_value_strategies} Sample DAO using both filter value strategies}}
-  
-  * {{{./entity-criteria-api.html#FAQ} FAQ}}
   
   []
   
@@ -218,10 +216,6 @@ External resources
   or {{{http://en.wikipedia.org/wiki/Action_Message_Format} AMF}} for {{{http://www.adobe.com/products/flex/} Flex}}), direct filter object changes are not possible since the client side typically
   uses some local data model bound to the GUI together with remote service calls. Although it's possible to change the filter object accordingly using some server-side request processor,
   it is much more convenient to use the {{{./cto-pattern.html} criteria transfer object pattern}} such situations.
-  
-* {FAQ}
-  
-  We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
   

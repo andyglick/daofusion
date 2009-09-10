@@ -4,12 +4,14 @@
  Vojtech Szocs;
  meta-description=Temporal domain models are domain models with built-in time aspects, along with appropriate query mechanism taking such aspects into account.
  ----
- 24 August 2009
+ 9 September 2009
  ----
 
 Temporal Aspects in Domain Models
   
-  Many applications work with domains which are inherently temporal. While it is natural to think in a non-temporal way, everyone should be aware of temporal issues and patterns which aim to solve them.
+  A typical application deals with data that is assumed to be currently true and relevant to the current time. Users perform actions which modify the state of persistent entities,
+  overwriting any previously valid data with new (current) values. Many applications, however, work with domains which are inherently temporal. While it is natural to think in
+  a non-temporal way, everyone should be aware of temporal issues and patterns which aim to solve them.
   
 Sections
   
@@ -43,9 +45,11 @@ External resources
   or not, it has proven to be a vital part of our everyday life. We use time to sequence events and compare durations and intervals between them. Temporality is pervasive to all things around us,
   including the world of domain modeling.
   
-  Many applications work with domains which are inherently temporal. Some people realize this and try to apply various {{{http://martinfowler.com/eaaDev/timeNarrative.html} temporal patterns}} at the very
-  beginning of business requirement analysis, while others find themselves trapped in a tricky situation during later phases where additional changes to existing domain models incur high costs (time, code
-  and model integrity). While it is natural to think in a non-temporal way, everyone should be aware of temporal issues and patterns which aim to solve them.
+  A typical application deals with data that is assumed to be currently true and relevant to the current time. Users perform actions which modify the state of persistent entities,
+  overwriting any previously valid data with new (current) values. Many applications, however, work with domains which are inherently temporal. Some people realize this and try to apply various
+  {{{http://martinfowler.com/eaaDev/timeNarrative.html} temporal patterns}} at the very beginning of business requirement analysis, while others find themselves trapped in a tricky situation during
+  later phases where additional changes to existing domain models incur high costs (time, code and model integrity). While it is natural to think in a non-temporal way, everyone should be aware
+  of temporal issues and patterns which aim to solve them.
   
 * {Temporal domain models}
   
@@ -68,12 +72,12 @@ External resources
   
   * <<Non-temporal>>
   
-  No time tracking. Allows us to answer questions about the <current> situation only.  
+  No time tracking. Allows us to answer questions about the <current> situation only.
   
   Example: "Where does John Doe (currently) live?"
   
   * <<Actual temporal>>
-   
+  
   Adds a {{{http://en.wikipedia.org/wiki/Valid-time} validity interval}} (also known as actual time): time period during which a fact is true with respect to the real world. Allows us to answer questions about
   the situation at the given point in time (e.g. what was valid at the given moment). Can be implemented using the {{{http://martinfowler.com/eaaDev/Effectivity.html} effectivity}} pattern.
   
@@ -108,7 +112,7 @@ External resources
   of the 20th century); we can also change the validity of events in the "future" as well (e.g. in 22nd century, scientists discover that an asteroid hits the Earth in the 24th century, recording this event
   before it has happened). In other words, the application has free control over the validity timeline:
   
-  * Additive (active) changes - ending the validity of a record and adding a new one (with possibly updated data) to the end of the history
+  * Additive (active) changes - ending validity of the current record and adding a new one (with possibly updated data) to the end of the history
   
   * Retroactive changes - modifying validity (with possibly updated data) for records in the "past"
   
@@ -203,7 +207,7 @@ External resources
   
   Today, only few database software vendors provide such support:
   
-  * {{{http://www.timeconsult.com/Software/Software.html} TimeDB}} (bitemporal) - translates TSQL2 statements into standard SQL statements which then are executed against the (non-temporal)
+  * {{{http://www.timeconsult.com/Software/Software.html} TimeDB}} (bitemporal) - translates TSQL2 statements into standard SQL statements which are executed against the (non-temporal)
     relational database
   
   * {{{http://www.oracle.com/technology/deploy/availability/htdocs/Flashback_Overview.htm} Oracle Flashback}} (record temporal) - records the history of data changes throughout the time for recovery
@@ -213,8 +217,8 @@ External resources
   
   []
   
-  As you can see, there is no database software that natively supports the bitemporal pattern or TSQL2 as its standard. The most straightforward solution is therefore to implement this pattern
-  on top of a non-temporal relational database on your own. There are, however, certain issues you may encounter on this path, as described below.
+  The bottom line is that there is no database that natively supports the bitemporal pattern or TSQL2 as the standard. The most straightforward solution is therefore to implement this pattern
+  on top of a non-temporal relational database on your own. There are, however, certain pitfalls you may encounter on this path, as described below.
   
 ** Temporal object identity
   
@@ -227,7 +231,7 @@ External resources
 ** Data immutability
   
   Temporal object defines that each change to the data results in a new version with new data values. Essentially, trying to modify data of existing temporal records means we are actually rewriting
-  the data history, corrupting our knowledge of such data throughout both timelines. This is why data changes should result in additive changes to existing temporal records.
+  the data history, corrupting our knowledge of such data throughout both timelines. This is why data changes should result in new temporal records.
   
 ** Controlling record time
   
@@ -237,6 +241,6 @@ External resources
   business components across the application?
   
   One solution would be to have a static thread-local variable holding the record time which is accessible to all components in the same thread across the application. This solution might be suitable
-  for web applications where each request is mapped to a new worker thread within the application server.
+  for web applications where each request is served by a new worker thread spawned by the application server.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}

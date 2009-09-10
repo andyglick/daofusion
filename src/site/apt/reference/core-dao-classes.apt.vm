@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Build your DAO layer by extending standard persistent entity DAO interfaces / abstract implementations which already provide most of the usual DAO functionality.
  ----
- 14 August 2009
+ 9 September 2009
  ----
 
 Core DAO classes
@@ -22,8 +22,6 @@ Sections
   * {{{./core-dao-classes.html#Managing_transactions} Managing transactions}}
   
   * {{{./core-dao-classes.html#Sample_persistent_entity_DAO} Sample persistent entity DAO}}
-  
-  * {{{./core-dao-classes.html#FAQ} FAQ}}
   
   []
   
@@ -146,10 +144,6 @@ Related tech notes
   
   In this example we use Spring's JPA support to inject an open entity manager instance into the <<<EntityManagerHolder>>> bean. <<<EntityManagerAwareEntityDao>>> acts as a base class
   for domain-specific DAO implementations, providing the <getHibernateEntityManager> method implementation via the <<<EntityManagerHolder>>>.
-  
-* {FAQ}
-  
-  We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
   

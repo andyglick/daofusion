@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Use the criteria transfer object (CTO) pattern to construct client-side versions of persistent entity criteria instances and pass them through the chosen communication mechanism to remote server-side components.
  ----
- 14 August 2009
+ 9 September 2009
  ----
 
 Criteria transfer object pattern
@@ -24,8 +24,6 @@ Sections
   
   * {{{./cto-pattern.html#Sample_CTO_converter} Sample CTO converter}}
   
-  * {{{./cto-pattern.html#FAQ} FAQ}}
-  
   []
   
 External resources
@@ -38,7 +36,7 @@ External resources
   
   * Project: <${df-core}>
   
-  * Package reference: <<<com.anasoft.os.daofusion.cto.*>>>
+  * Package reference: <<<com.anasoft.os.daofusion.cto>>>
   
 * {Introduction}
   
@@ -152,10 +150,6 @@ External resources
   of the <<<FilterCriterionProvider>>> interface could be used for disabling filtering within the given <<<FilterAndSortMapping>>> (just like in the sample <<<OrderDaoImpl>>> from the
   {{{./entity-criteria-api.html} previous section}}). Additionally, our <<<SampleConverter>>> uses the <<<FilterValueConverters>>> utility class for standard value converter implementations
   (string, integer and date).
-  
-* {FAQ}
-  
-  We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
   

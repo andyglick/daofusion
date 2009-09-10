@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Model your business domain using a standard persistent entity model with out-of-the-box default persistent entity implementations.
  ----
- 14 August 2009
+ 9 September 2009
  ----
 
 Persistent entity model
@@ -28,8 +28,6 @@ Sections
   * {{{./entity-model.html#Implementing_clone} Implementing <clone>}}
   
   * {{{./entity-model.html#Using_composite_primary_keys} Using composite primary keys}}
-  
-  * {{{./entity-model.html#FAQ} FAQ}}
   
   []
   
@@ -70,6 +68,8 @@ External resources
   
   * When the associated persistence session ends or an entity gets evicted from the current session, it is treated as <detached>. A detached entity needs to be reattached to the
     current persistence context in order to use persistence services again.
+  
+  []
   
 * {Persistent entity model overview}
   
@@ -126,10 +126,6 @@ External resources
   list manipulation (<addOrderItem> and <removeOrderItem>). The <getUnmodifiableOrderItemList> method returns an unmodifiable list of <<<OrderItem>>> instances for inspecting <orderItems> list
   values in a read-only fashion.
   
-  Our sample persistent entity contains one extra method that performs a simple business logic (calculating the total price of an order). The general rule of thumb is to put all
-  the major business logic into the service layer to avoid entity classes getting cluttered up with logic and tight coupling. However, for the most simple cases such as this
-  one, this is an acceptable solution.
-  
 * {Sample persistent enumeration}
   
   The following code shows a sample persistent enumeration:
@@ -170,10 +166,6 @@ External resources
   fact that the business key essentially combines two orthogonal concepts: object identity and object state. Uniqueness of the business key might be broken if any of the "semi"-unique attributes change.
   Additionally, a persistent entity instance has to have all "semi"-unique attributes set in advance (e.g. within its constructor) for <hashCode> / <equals> methods to work properly. Synthetic generated
   value approach, on the other hand, tries to separate object identity and object value concepts from each other by adding an auto-generated object identity field.
-  
-* {FAQ}
-  
-  We recommend browsing through the {{{./reference-faq.html} Reference Documentation FAQ}} for detailed information on related issues.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
   
