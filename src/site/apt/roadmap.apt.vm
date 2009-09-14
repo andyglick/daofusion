@@ -62,7 +62,7 @@ Unscheduled
   
 Experimental
   
-  * DAO layer merged into domain layer (repository entities)
+  * DAO layer merged with domain layer (repository entity concept)
   
   []
   
