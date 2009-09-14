@@ -4,10 +4,19 @@
  Vojtech Szocs;
  meta-description=${df} news and announcements.
  ----
- 10 September 2009
+ 14 September 2009
  ----
 
 ${df} news
+  
+* 2009-09-14
+  
+  <<${df} milestone 3>> has been released. Changes include general Maven dependency cleanup and final touches to the bitemporal package. See the {{{./changes-report.html} changelog}}
+  for more information about this milestone release.
+  
+  We've added some notes regarding unscheduled and experimental features to our {{{./roadmap.html} roadmap}}. More information on these will be given upon the final release.
+  
+  Please note that the reference FAQ has been temporarily removed and should be added later on.
   
 * 2009-09-10
   

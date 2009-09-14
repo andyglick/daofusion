@@ -5,7 +5,7 @@
  Michal Jemala;
  meta-description=Roadmap describing planned feature releases and their milestones.
  ----
- 9 September 2009
+ 10 September 2009
  ----
 
 ${df} roadmap
@@ -18,7 +18,7 @@ ${df} roadmap
   
   * {{{./roadmap.html#Milestone_2} Milestone 2}}: <<complete>>
   
-  * {{{./roadmap.html#Milestone_3} Milestone 3}}: very soon
+  * {{{./roadmap.html#Milestone_3} Milestone 3}}: <<complete>>
   
   []
   
@@ -42,9 +42,7 @@ ${df} roadmap
   
 * {Milestone 3}
   
-  * documentation final touches
-  
-  * step-by-step tutorial for <Hello, DAO!>
+  * code and documentation final touches
   
   * any issues that come up until release (code base stabilization)
   
@@ -59,6 +57,12 @@ ${df} roadmap
 Unscheduled
   
   * <${df} meets Flex> sample application
+  
+  []
+  
+Experimental
+  
+  * DAO layer merged into domain layer (repository entities)
   
   []
   

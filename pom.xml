@@ -28,6 +28,7 @@
 		<df-groupIdPath>com/anasoft/os</df-groupIdPath>
 		
 		<df-googleCodeUrl>http://code.google.com/p/daofusion/</df-googleCodeUrl>
+		<df-googleCodeSvnUrl>http://daofusion.googlecode.com/svn</df-googleCodeSvnUrl>
 		<anasoft-os-repo-googleCodeUrl>http://code.google.com/p/anasoft-os-repo/</anasoft-os-repo-googleCodeUrl>
 		
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
