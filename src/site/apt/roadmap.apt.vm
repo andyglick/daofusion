@@ -5,12 +5,28 @@
  Michal Jemala;
  meta-description=Roadmap describing planned feature releases and their milestones.
  ----
- 10 September 2009
+ 30 September 2009
  ----
 
 ${df} roadmap
   
   This page lists planned feature releases and their milestones according to our {{{./release-policy.html} release policy}}.
+  
+Unscheduled / Experimental features
+  
+  * <${df} meets Flex> sample application
+  
+  * enabling ${df} artifacts as {{{http://en.wikipedia.org/wiki/OSGi} OSGi}} bundles
+  
+  * DAO layer merged with domain layer (repository entity concept)
+  
+  []
+  
+1.2.1
+  
+  * removal of code marked as deprecated
+  
+  []
   
 1.2.0
   
@@ -45,24 +61,6 @@ ${df} roadmap
   * code and documentation final touches
   
   * any issues that come up until release (code base stabilization)
-  
-  []
-  
-1.2.1
-  
-  * removal of code marked as deprecated
-  
-  []
-  
-Unscheduled
-  
-  * <${df} meets Flex> sample application
-  
-  []
-  
-Experimental
-  
-  * DAO layer merged with domain layer (repository entity concept)
   
   []
   

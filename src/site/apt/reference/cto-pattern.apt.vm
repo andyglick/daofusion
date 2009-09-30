@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Use the criteria transfer object (CTO) pattern to construct client-side versions of persistent entity criteria instances and pass them through the chosen communication mechanism to remote server-side components.
  ----
- 10 September 2009
+ 30 September 2009
  ----
 
 Criteria transfer object pattern
@@ -89,11 +89,11 @@ External resources
   <<<CriteriaTransferObjectConverter>>> uses the notion of property mapping groups to decide which mapping rules to apply for which CTO instance.
   
   <<<NestedPropertyCriteriaBasedConverter>>> is the default general purpose <<<CriteriaTransferObjectConverter>>> implementation that uses <<<NestedPropertyCriteria>>> as the server-side criteria
-  implementation to be returned by the <convert> method. <<<NestedPropertyCriteriaBasedConverter>>> acts as map-based container for <<<NestedPropertyMappingGroup>>> instances, which in turn contain
-  a map of <<<NestedPropertyMapping>>> instances for specific properties of the target persistent entity. Note that each <<<NestedPropertyMappingGroup>>> holds a name that is unique within the default
-  CTO converter.
+  implementation to be returned by the <convert> method. <<<NestedPropertyCriteriaBasedConverter>>> acts as map-based container for <<<NestedPropertyMappingGroup>>> instances, which in turn hold
+  mappings (<<<NestedPropertyMapping>>> instances) for specific <propertyId> values. Note that there can be multiple property mappings for handling the same <propertyId> during CTO conversion.
+  Each <<<NestedPropertyMappingGroup>>> holds a name that is unique within the CTO converter and represents a set of mappings for a particular persistent entity in a specific usage scenario.
   
-  Managing mapping groups as well as individual property mappings can be quite complex. <<<NestedPropertyCriteriaBasedConverter>>> ties to hide internal <<<NestedPropertyMappingGroup>>> processing away
+  Managing mapping groups as well as individual property mappings can be quite complex. <<<NestedPropertyCriteriaBasedConverter>>> tries to hide internal <<<NestedPropertyMappingGroup>>> processing away
   from its users via the <addMapping> method, which is the preferred way of configuring this CTO converter implementation:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/cto-pattern-NestedPropertyCriteriaBasedConverter-AddMappingMethod.java}

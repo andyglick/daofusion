@@ -8,7 +8,17 @@
 	</properties>
 	
 	<body>
-    <release version="1.2 M3" date="N/A" description="Milestone 3 of the 1.2.x branch">
+    <release version="1.2.0" date="N/A" description="Initial release of the the 1.2.x branch">
+      <action dev="vojtech.szocs" type="update">
+        Reworked NestedPropertyMappingGroup so that there can be multiple property mappings for handling the same
+        propertyId during the criteria transfer object conversion.
+      </action>
+      <action dev="vojtech.szocs" type="add">
+        Added FilterValueConverter "NOOP" implementation to FilterValueConverters.
+      </action>
+    </release>
+    
+    <release version="1.2 M3" date="2009-09-14" description="Milestone 3 of the 1.2.x branch">
       <action dev="igor.mihalik" type="fix" issue="9" system="GoogleCode">
         Resolved issue "Incorporate support for bitemportal pattern".
       </action>
