@@ -63,6 +63,11 @@
 			<item name="Integration test support" href="reference/integration-tests.html" />
 		</menu>
 		
+		<menu name="Javadoc">
+			<item name="${df-core}" href="javadoc/core/index.html" />
+			<item name="${df-test}" href="javadoc/test/index.html" />
+		</menu>
+		
 		<menu name="Tech Notes">
 			<item name="Transaction Management" href="technote/transaction-management.html" />
 			<item name="Temporal Aspects" href="technote/temporal-aspects.html" />

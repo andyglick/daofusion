@@ -56,6 +56,10 @@ ${df} news
   Imagine you take the DAO layer and merge it with your domain model - resulting entities are DAOs on their own. This reduces complexity of the application architecture but essentially
   ties persistence technologies with your domain model. We have a working concept of such entities and plan to provide official support for this alternative DAO approach in the future.
   
+** On the side note
+  
+  Some people have been asking for live Javadocs so we've added a new Javadoc section in the site menu.
+  
   We are also pleased that {{{http://code.google.com/p/m2-site-tools/} m2-site-tools}} is now {{{http://www.anasoft.com/en/press/ANASOFTpresentSecondOpenSourceProject-m2-site-tools.shtml} recognized}}
   as our second OpenSource project.
   

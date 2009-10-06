@@ -46,6 +46,24 @@
 		<m2st-renderDefaultPoweredByLogoIfNotSpecified>false</m2st-renderDefaultPoweredByLogoIfNotSpecified>
 	</properties>
 	
+	<!-- Used by maven-dependency-plugin -->
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>${df-core}</artifactId>
+			<version>${df-latestStableVersion}</version>
+			<classifier>javadoc</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>${df-test}</artifactId>
+			<version>${df-latestStableVersion}</version>
+			<classifier>javadoc</classifier>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -76,6 +94,41 @@
 						</goals>
 						<configuration>
 							<failOnError>true</failOnError>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<configuration>
+					<includeGroupIds>${project.groupId}</includeGroupIds>
+					<includeClassifiers>javadoc</includeClassifiers>
+					<includeScope>provided</includeScope>
+					<includes>**/*.html,**/*.css,**/*.gif</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>unpack-javadoc-core</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>pre-site</phase>
+						<configuration>
+							<outputDirectory>${project.reporting.outputDirectory}/javadoc/core</outputDirectory>
+							<includeArtifactIds>${df-core}</includeArtifactIds>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-javadoc-test</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>pre-site</phase>
+						<configuration>
+							<outputDirectory>${project.reporting.outputDirectory}/javadoc/test</outputDirectory>
+							<includeArtifactIds>${df-test}</includeArtifactIds>
 						</configuration>
 					</execution>
 				</executions>
