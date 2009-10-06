@@ -1,0 +1,55 @@
+ ----
+ ${df} meets Flex
+ ----
+ Vojtech Szocs;
+ meta-description=${df} meets Flex sample application shows the use of ${df} in an exciting technology mix of Java and Flex.
+ ----
+ 6 October 2009
+ ----
+
+${df} meets Flex
+  
+  <${df} meets Flex> is our first non-trivial sample application that shows the use of ${df} in an exciting technology mix of Java and Flex.
+  
+  The application consists of two parts:
+  
+  * <Server>
+  
+    * {{{http://static.springframework.org/spring/docs/2.5.x/reference/index.html} Spring}}
+  
+    * {{{http://static.springsource.org/spring-security/site/docs/2.0.x/reference/springsecurity.html} Spring Security}} with AspectJ security interceptor
+  
+    * {{{http://static.springsource.org/spring-flex/docs/1.0.x/reference/html/index.html} Spring BlazeDS Integration}}
+  
+    * declarative transaction management using AspectJ
+  
+    * service command pattern
+  
+    * declarative validation using annotations and AspectJ
+  
+  []
+  
+  * <Client>
+  
+    * {{{http://www.adobe.com/products/flex/} Flex}}
+  
+    * {{{http://code.google.com/p/swizframework/} Swiz}}
+  
+    * {{{http://en.wikipedia.org/wiki/Model_view_controller} MVC pattern}}
+  
+  []
+  
+  Both parts are managed and built by {{{http://maven.apache.org/} Maven}}.
+  
+Getting started
+  
+  <${df} meets Flex> sources are currently in the trunk of our {{{../source-repository.html} source code repository}}:
+  
++--+
+${df-googleCodeSvnUrl}/trunk/samples/df-meets-flex
++--+
+  
+  <This is a work in progress. More details will be given when things get stable enough.>
+  
+%{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-ratings-and-reviews-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-ratings-and-reviews-gadget.properties}
+  

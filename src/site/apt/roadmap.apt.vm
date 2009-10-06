@@ -14,11 +14,13 @@ ${df} roadmap
   
 Unscheduled / Experimental features
   
-  * <${df} meets Flex> sample application
+  * {{{./sample/df-meets-flex.html} ${df} meets Flex}} sample application
+  
+  * DAO layer merged with domain layer (repository entity concept)
   
   * enabling ${df} artifacts as {{{http://en.wikipedia.org/wiki/OSGi} OSGi}} bundles
   
-  * DAO layer merged with domain layer (repository entity concept)
+  * application of DAO pattern in {{{http://en.wikipedia.org/wiki/Cloud_computing} Cloud computing}} / {{{http://en.wikipedia.org/wiki/Platform_as_a_service} Platform as a Service}}
   
   []
   

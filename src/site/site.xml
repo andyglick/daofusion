@@ -45,6 +45,10 @@
 			<item name="Hello, DAO!" href="tutorial/hellodao.html" />
 		</menu>
 		
+		<menu name="Sample Applications">
+			<item name="${df} meets Flex" href="sample/df-meets-flex.html" />
+		</menu>
+		
 		<menu name="How To...">
 			<item name="Maven Integration" href="howto/maven-integration.html" />
 			<item name="GWT Integration" href="howto/gwt-integration.html" />

@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Stable releases as well as milestones available for download.
  ----
- 14 August 2009
+ 6 October 2009
  ----
 
 Download ${df}
@@ -27,17 +27,19 @@ Download ${df}
   
 * Milestone releases
   
-  Latest milestone release: <<${df-latestMilestoneVersion}>>
+  There are currently no milestones set for the upcoming feature release.
   
-*------------+--------+---------+---------*
-||           ||Binary ||Sources ||Javadoc |
-*------------+--------+---------+---------*
-| <<${df-core}>> | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-core}/${df-latestMilestoneVersion}/${df-core}-${df-latestMilestoneVersion}.jar} ${df-core}-${df-latestMilestoneVersion}.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-core}/${df-latestMilestoneVersion}/${df-core}-${df-latestMilestoneVersion}-sources.jar} ${df-core}-${df-latestMilestoneVersion}-sources.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-core}/${df-latestMilestoneVersion}/${df-core}-${df-latestMilestoneVersion}-javadoc.jar} ${df-core}-${df-latestMilestoneVersion}-javadoc.jar}} |
-*------------+--------+---------+---------*
-| <<${df-test}>> | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-test}/${df-latestMilestoneVersion}/${df-test}-${df-latestMilestoneVersion}.jar} ${df-test}-${df-latestMilestoneVersion}.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-test}/${df-latestMilestoneVersion}/${df-test}-${df-latestMilestoneVersion}-sources.jar} ${df-test}-${df-latestMilestoneVersion}-sources.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-test}/${df-latestMilestoneVersion}/${df-test}-${df-latestMilestoneVersion}-javadoc.jar} ${df-test}-${df-latestMilestoneVersion}-javadoc.jar}} |
-*------------+--------+---------+---------*
-  
-  See the {{{./roadmap.html} roadmap}} for more information about project milestones and their progress.
+~~   Latest milestone release: <<${df-latestMilestoneVersion}>>
+~~   
+~~ *------------+--------+---------+---------*
+~~ ||           ||Binary ||Sources ||Javadoc |
+~~ *------------+--------+---------+---------*
+~~ | <<${df-core}>> | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-core}/${df-latestMilestoneVersion}/${df-core}-${df-latestMilestoneVersion}.jar} ${df-core}-${df-latestMilestoneVersion}.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-core}/${df-latestMilestoneVersion}/${df-core}-${df-latestMilestoneVersion}-sources.jar} ${df-core}-${df-latestMilestoneVersion}-sources.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-core}/${df-latestMilestoneVersion}/${df-core}-${df-latestMilestoneVersion}-javadoc.jar} ${df-core}-${df-latestMilestoneVersion}-javadoc.jar}} |
+~~ *------------+--------+---------+---------*
+~~ | <<${df-test}>> | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-test}/${df-latestMilestoneVersion}/${df-test}-${df-latestMilestoneVersion}.jar} ${df-test}-${df-latestMilestoneVersion}.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-test}/${df-latestMilestoneVersion}/${df-test}-${df-latestMilestoneVersion}-sources.jar} ${df-test}-${df-latestMilestoneVersion}-sources.jar}} | {{{http://anasoft-os-repo.googlecode.com/svn/repository/releases/${df-groupIdPath}/${df-test}/${df-latestMilestoneVersion}/${df-test}-${df-latestMilestoneVersion}-javadoc.jar} ${df-test}-${df-latestMilestoneVersion}-javadoc.jar}} |
+~~ *------------+--------+---------+---------*
+~~   
+~~   See the {{{./roadmap.html} roadmap}} for more information about project milestones and their progress.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-comments-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-comments-gadget.properties}
   

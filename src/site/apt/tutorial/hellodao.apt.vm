@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Hello, DAO! sample application aims to help developers get familiar with ${df} concepts using popular web technologies and tools.
  ----
- 10 September 2009
+ 5 October 2009
  ----
 
 Hello, DAO! tutorial
@@ -33,17 +33,37 @@ Hello, DAO! tutorial
   
   []
   
-Instructions
+  Please note that <Hello, DAO!> is essentially a very simple application illustrating basic ${df} concepts - it's definitely not a showcase of best practices or design patterns.
   
-  First, check out <Hello, DAO!> sources from the trunk:
+Sections
+  
+  * {{{./hellodao.html#Getting_started} Getting started}}
+  
+  * {{{./hellodao.html#Domain_model} Domain model}}
+  
+  * {{{./hellodao.html#DAO_classes} DAO classes}}
+  
+  * {{{./hellodao.html#CTO_classes} CTO classes}}
+  
+  * {{{./hellodao.html#RPC_service} RPC service}}
+  
+  * {{{./hellodao.html#Client_classes} Client classes}}
+  
+  * {{{./hellodao.html#Whats_next} What's next?}}
+  
+  []
+  
+* {Getting started}
+  
+  First, check out <Hello, DAO!> sources from the {{{../source-repository.html} source code repository}}:
   
 +--+
-http://daofusion.googlecode.com/svn/trunk/samples/hello-dao/
+${df-googleCodeSvnUrl}/tags/${df-short}-${df-latestStableVersion}/samples/hello-dao/
 +--+
   
   If you use {{{http://www.eclipse.org/} Eclipse IDE}}, you can generate Eclipse project files via <<<mvn eclipse:eclipse>>>.
   
-  Next, start the application via <<<mvn jetty:run>>>. It can take some time though since Maven needs to look for required dependencies.
+  Next, start the application via <<<mvn jetty:run>>>. It can take some time though since Maven needs to look for required dependencies and plugins.
   
   Please note that <Hello, DAO!> uses an embedded {{{http://www.h2database.com/} H2}} database instance running <<in the same JVM>> as the application itself.
   
@@ -53,12 +73,94 @@ http://daofusion.googlecode.com/svn/trunk/samples/hello-dao/
 http://localhost:8080/hellodao/init
 +--+
   
-  There should be enough Javadocs / comments hanging around in source files to figure out how things work. We recommend to start with <<<WEB-INF/web.xml>>> first and explore
-  the service and DAO layer after.
+  This executes the <<<DatabaseInitializationServlet>>>, populating the database with some sensible test data and redirecting the browser to the actual application URL:
   
-Step-by-step tutorial
++--+
+http://localhost:8080/hellodao
++--+
   
-  We are currently working on a step-by-step tutorial for <Hello, DAO!> which will demonstrate basic steps when building DAO layers with ${df}.
+[../images/tutorial/hellodao.png] Screenshot of Hello, DAO! application
+  
+  The application consists of a data grid with filterable and sortable columns. Attributes of records displayed in this grid are mapped either to direct (id, first name and last name), nested (contact e-mail
+  and phone) or collection-based (total orders) properties of the sample <<<Customer>>> entity.
+  
+  As you can see, there are no navigation widgets for paging through the result set. Instead, we are using SmartGWT's <<<ListGrid>>> with dynamic data paging as the user scrolls through records. The difference
+  between "Refresh" and "Clean refresh" buttons relates to <<<ListGrid>>>'s data cache policy - records that were previously fetched are cached on the client, while it's also possible to invalidate this cache
+  to fetch "clean" data from the server. Note that changing filter or sort criteria invalidates the data cache automatically.
+  
+* {Domain model}
+  
+  We are generally working with a single root persistent entity with its attributes displayed in the data grid - a fictional <<<Customer>>>:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-Customer.java}
+  
+  There are a couple of <<<public static final>>> fields here which will be used later on. For now, all you need to know is that the <<<Customer>>> is a {{{../reference/entity-model.html} persistent entity}}
+  with its <hashCode> / <equals> methods taken care of by the <<<OidBasedMutablePersistentEntity>>> superclass.
+  
+* {DAO classes}
+  
+  Server code will be working with <<<Customer>>> entities via the <<<CustomerDao>>> interface:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-CustomerDaoClasses.java}
+  
+  In addition to our {{{../reference/core-dao-classes.html} DAOs}}, there are a couple of infrastructure-style classes for storing and providing the injected <<<HibernateEntityManager>>> instance: <<<EntityManagerHolder>>> and <<<EntityManagerAwareEnumerationDao>>>.
+  This is necessary in order to satisfy the <<<AbstractHibernateEntityDao>>>'s <getHibernateEntityManager> method contract:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-DaoInfrastructureClasses.java}
+  
+  In its <doFilter> method, our <<<OpenEntityManagerInViewFilter>>> basically retrieves an appropriate <<<EntityManagerFactory>>> and creates an <<<EntityManager>>> to be used by the current thread.
+  The <<<EntityManager>>> is set into <<<EntityManagerHolder>>> and a transaction is started. Note that this filter provides a single transaction for the entire request processing, which means that
+  it is NOT possible to use various transaction propagation modes in our service methods. You would normally use declarative transaction model supported by Spring or EJB container in serious applications.
+  After the filter chain has completed, transaction is committed, the <<<EntityManager>>> is closed and its reference held by <<<EntityManagerHolder>>> is cleared.
+  
+* {CTO classes}
+  
+  Since we're using GWT on the client, we can use the {{{../reference/cto-pattern.html} criteria transfer object pattern}} to express filter, sort and paging constraints in a concise and elegant way:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-CustomerCtoClasses.java}
+  
+  <<<CustomerCtoConverter>>> contains property mappings for all attributes we want to show in the data grid. All the client needs to do when fetching data is send appropriate <<<CriteriaTransferObject>>>
+  to the server, resting safe in knowledge that our CTO converter transforms it into corresponding <<<PersistentEntityCriteria>>> to be passed to <<<CustomerDao>>> methods. Should we decide not to use
+  the CTO pattern, we would have to create a <<<PersistentEntityCriteria>>> instance manually and populate it with any constraints coming from the client request.
+  
+* {RPC service}
+  
+  Client and server communicate with each other using GWT RPC mechanism. This means that the server exposes a service interface with methods which can be (asynchronously) called by the client.
+  What we're really into in this tutorial are some very basic {{{http://en.wikipedia.org/wiki/Create,_read,_update_and_delete} CRUD}} (create, read, update and delete) operations:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-CustomerServiceClasses.java}
+  
+  Note that the asynchronous versions of service classes required by GWT RPC (<<<CustomerServiceAsync>>> and <<<GridServiceAsync>>>) are left out for the sake of simplicity. The <<<CustomerService>>>
+  works with <<<CustomerDto>>> as its transfer object that holds data about <<<Customer>>> attributes to be shown in the data grid:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-CustomerDtoClasses.java}
+  
+  The final piece of the RPC puzzle is a servlet that is responsible for servicing RPC requests while implementing the <<<CustomerService>>> interface:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-RpcServiceServlet.java}
+  
+  That's it! All we have to do now is to use the asynchronous version of <<<CustomerService>>> on the client when fetching grid data.
+  
+* {Client classes}
+  
+  SmartGWT's <<<ListGrid>>> displays and manipulates data managed by the <<<DataSource>>>. After realizing there is {{{http://code.google.com/p/smartgwt/issues/detail?id=303} no official data source for GWT RPC}},
+  we were lucky enough to find an "unofficial" implementation - the <<<GwtRpcDataSource>>> (credits to Aleksandras Novikovas).
+  
+  SmartGWT's <<<DataSource>>> essentially defines four basic operations corresponding to CRUD: <fetch>, <add>, <update> and <remove>. If you look at the <<<GridService>>> shown above, you will notice it already
+  defines these operations. Knowing this, we are able to extend the <<<GwtRpcDataSource>>> by providing appropriate CRUD implementations which delegate to <<<GridService>>> as well as proper DTO / CTO handling:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-GridServiceDataSource.java}
+  
+  Things are now as simple as implementing those three abstract methods dealing with data transfer objects representing records in the data grid. Note that we need to do DTO / <<<ListGridRecord>>> conversion
+  explicitly since SmartGWT's list grid records are essentially JavaScript objects that work in terms of attributes and their values.
+  
+  Following code shows the actual data source implementation:
+  
+%{code-snippet|brush-autodetect=1|file=src/site/snippet/tutorial/hellodao-CustomerDataSource.java}
+  
+* {What's next?}
+  
+  We recommend checking out <<<WEB-INF/web.xml>>>, <<<META-INF/persistence.xml>>> and <<<HelloDAO.gwt.xml>>> files as well to get an overview of how ${df} integrates with SmartGWT in a typical servlet environment.
   
 %{html-template-snippet|missingValuesToEmptyStrings=1|htmlFile=src/site/snippet/html/google-friend-connect-ratings-and-reviews-gadget.html|paramFile=src/site/snippet/html/google-friend-connect-ratings-and-reviews-gadget.properties}
   

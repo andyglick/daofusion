@@ -4,10 +4,60 @@
  Vojtech Szocs;
  meta-description=${df} news and announcements.
  ----
- 14 September 2009
+ 6 October 2009
  ----
 
 ${df} news
+  
+* 2009-10-06
+  
+  <<${df} 1.2.0>> has been released.
+  
+  We are pleased to let you know that our milestone journey towards next feature release is finally over. We've managed to do some minor enhancements to M3 as well as completing the {{{./tutorial/hellodao.html} Hello, DAO!}}
+  tutorial. Check out the {{{./changes-report.html} changelog}} for more information about this release.
+  
+  As mentioned earlier, we are considering several unscheduled and experimental features in our {{{./roadmap.html} roadmap}}. In particular, we are currently working on {{{./sample/df-meets-flex.html} ${df} meets Flex}}
+  sample application and the repository entity concept.
+  
+** ${df} meets Flex
+  
+  Our first non-trivial sample application consists of two parts:
+  
+  * <Server>
+  
+    * {{{http://static.springframework.org/spring/docs/2.5.x/reference/index.html} Spring}}
+  
+    * {{{http://static.springsource.org/spring-security/site/docs/2.0.x/reference/springsecurity.html} Spring Security}} with AspectJ security interceptor
+  
+    * {{{http://static.springsource.org/spring-flex/docs/1.0.x/reference/html/index.html} Spring BlazeDS Integration}}
+  
+    * declarative transaction management using AspectJ
+  
+    * service command pattern
+  
+    * declarative validation using annotations and AspectJ
+  
+  []
+  
+  * <Client>
+  
+    * {{{http://www.adobe.com/products/flex/} Flex}}
+  
+    * {{{http://code.google.com/p/swizframework/} Swiz}}
+  
+    * {{{http://en.wikipedia.org/wiki/Model_view_controller} MVC pattern}}
+  
+  []
+  
+  Both parts are managed and built by {{{http://maven.apache.org/} Maven}}.
+  
+** Repository entity concept
+  
+  Imagine you take the DAO layer and merge it with your domain model - resulting entities are DAOs on their own. This reduces complexity of the application architecture but essentially
+  ties persistence technologies with your domain model. We have a working concept of such entities and plan to provide official support for this alternative DAO approach in the future.
+  
+  We are also pleased that {{{http://code.google.com/p/m2-site-tools/} m2-site-tools}} is now {{{http://www.anasoft.com/en/press/ANASOFTpresentSecondOpenSourceProject-m2-site-tools.shtml} recognized}}
+  as our second OpenSource project.
   
 * 2009-09-14
   

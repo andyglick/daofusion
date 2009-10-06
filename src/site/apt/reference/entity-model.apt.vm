@@ -4,7 +4,7 @@
  Vojtech Szocs;
  meta-description=Model your business domain using a standard persistent entity model with out-of-the-box default persistent entity implementations.
  ----
- 9 September 2009
+ 2 October 2009
  ----
 
 Persistent entity model
@@ -56,7 +56,7 @@ External resources
   domain model in predictable iterations that are short enough to get a valuable feedback on the progress of your project.
   
   Having the domain model defined and understood, the next step is to implement it in Java via persistent entities. Persistent entities are classes that implement entities of the business
-  problem which are intended to be stored within the underlying database.
+  problem which are intended to be stored in the underlying database.
   
   Each persistent entity follows a standard lifecycle as declared by the {{{http://java.sun.com/developer/technicalArticles/J2EE/jpa/} JPA}} specification:
   
@@ -106,8 +106,8 @@ External resources
   
 * {Implementing <hashCode> and <equals> via synthetic object id}
   
-  Implementing <hashCode> / <equals> methods correctly can be very tricky and lead to strange errors regarding the application behavior. As mentioned above,
-  there are basically two approaches to their implementation. The following code demonstrates the synthetic generated value approach based on the <<<UUID>>> class:
+  Implementing <hashCode> / <equals> methods correctly can be very tricky and can lead to strange errors regarding the application behavior. As mentioned above,
+  there are basically two approaches to their implementation. The following code demonstrates the synthetic generated value approach based on the <<<java.util.UUID>>> class:
   
 %{code-snippet|brush-autodetect=1|file=src/site/snippet/reference/entity-model-OidBasedMutablePersistentEntity.java}
   
