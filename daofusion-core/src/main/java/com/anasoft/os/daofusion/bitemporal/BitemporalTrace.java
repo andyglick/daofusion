@@ -144,7 +144,7 @@ public class BitemporalTrace implements Serializable {
             data.add(toBeAdded);
         }
 
-        data.add(newValue);
+        data.add(newValue.copyWith(newValue.getValidityInterval()));
     }
 
     Collection<Bitemporal> getItemsThatNeedToBeEnded(Bitemporal newValue) {
