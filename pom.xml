@@ -16,7 +16,7 @@
 	
 	<properties>
 		<maven-site-plugin.version>2.0</maven-site-plugin.version>
-		<m2st.version>2.0</m2st.version>
+		<m2st.version>SNAPSHOT</m2st.version>
 		
 		<df>DAO Fusion</df>
 		<df-short>daofusion</df-short>

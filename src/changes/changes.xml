@@ -8,6 +8,15 @@
 	</properties>
 	
 	<body>
+	<release version="SNAPSHOT" date="N/A" description="Current development version">
+      <action dev="vojtech.szocs" type="update">
+        Removed final declaration for getSession, getHibernateCriteria and rowCount methods in BaseHibernateDataAccessor.
+      </action>
+      <action dev="vojtech.szocs" type="fix">
+        Fixed ClassCastException in BaseHibernateDataAccessor's rowCount method by using Number class.
+      </action>
+	</release>
+	
     <release version="1.2.0" date="2009-10-06" description="Initial release of the the 1.2.x branch">
       <action dev="vojtech.szocs" type="update">
         Reworked NestedPropertyMappingGroup so that there can be multiple property mappings for handling the same
